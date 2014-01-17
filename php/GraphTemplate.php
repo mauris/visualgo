@@ -660,7 +660,7 @@ class GraphTemplate{
     if($params["connected"]) $connected = true;
 
     self::reduceVertexUndirected($template, $params["numVertex"], $connected);
-    if(!$connected && !self::isConnected($template, $params["directed"])) self::disconnect($template);
+    if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
     self::randomizeWeight($template);
 
     return $template;
@@ -743,7 +743,17 @@ class GraphTemplate{
   }
 
   protected static function disconnect(&$template, $directed){
-
+    while(self::isConnected($template, $directed) || count($template["internalEdgeList"]) == 0){
+        if(!$directed){
+          $edgeListId = array_keys($template["internalEdgeList"]);
+          $edgeToBeRemoved = $edgeListId[rand(0, count($edgeListId)-1)];
+          $vertexA = $template["internalEdgeList"][$edgeToBeRemoved]["vertexA"];
+          $vertexB = $template["internalEdgeList"][$edgeToBeRemoved]["vertexB"];
+          unset($template["internalAdjList"][$vertexA][$vertexB]);
+          unset($template["internalAdjList"][$vertexB][$vertexA]);
+          unset($template["internalEdgeList"][$edgeToBeRemoved]);
+        }
+    }
   }
 
   protected static function isConnected($template, $directed){
