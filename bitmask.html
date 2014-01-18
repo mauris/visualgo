@@ -60,22 +60,39 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
-    	<div id="setFlags-input"><input type="text" id="setS" title="Enter an integer" autocomplete="off" value=75 /></div>
-        <div id="setFlags-go" class="execAction" onclick=setFlags()><p>GO</p></div>
-        <div id="setFlags-err" class="err"></div>
-        <div id="set-input"><input type="text" id="set-j" title="Enter an integer" autocomplete="off" value=3 /></div>
-        <div id="set-go" class="execAction" onclick=set()><p>GO</p></div>
-        <div id="set-err" class="err"></div>
-        <div id="check-input"><input type="text" id="check-j" title="Enter an integer" autocomplete="off" value=3 /></div>
-        <div id="check-go" class="execAction" onclick=check()><p>GO</p></div>
-        <div id="check-err" class="err"></div>
-        <div id="toggle-input"><input type="text" id="toggle-j" title="Enter an integer" autocomplete="off" value=3 /></div>
-        <div id="toggle-go" class="execAction" onclick=toggle()><p>GO</p></div>
-        <div id="toggle-err" class="err"></div>
-        <div id="clear-input"><input type="text" id="clear-j" title="Enter an integer" autocomplete="off" value=3 /></div>
-        <div id="clear-go" class="execAction" onclick=clearBit()><p>GO</p></div>
-        <div id="clear-err" class="err"></div>
-        <div id="lsone-err" class="err"></div>
+    	<div class="setFlags action-menu-pullout">
+            <div id="setFlags-input" class="new-menu-option"><input type="text" id="setS" title="Enter an integer" autocomplete="off" value=75 /></div>
+            <div id="setFlags-go" class="execAction coloured-menu-option" onclick=setFlags()><p>GO</p></div>
+            <div id="setFlags-err" class="err"></div>
+        </div>
+        
+        <div class="set action-menu-pullout">
+            <div id="set-input" class="new-menu-option"><input type="text" id="set-j" title="Enter an integer" autocomplete="off" value=3 /></div>
+            <div id="set-go" class="execAction coloured-menu-option" onclick=set()><p>GO</p></div>
+            <div id="set-err" class="err"></div>
+        </div>
+        
+        <div class="check action-menu-pullout">
+            <div id="check-input" class="new-menu-option"><input type="text" id="check-j" title="Enter an integer" autocomplete="off" value=3 /></div>
+            <div id="check-go" class="execAction coloured-menu-option" onclick=check()><p>GO</p></div>
+            <div id="check-err" class="err"></div>
+        </div>
+        
+        <div class="toggle action-menu-pullout">
+            <div id="toggle-input" class="new-menu-option"><input type="text" id="toggle-j" title="Enter an integer" autocomplete="off" value=3 /></div>
+            <div id="toggle-go" class="execAction coloured-menu-option" onclick=toggle()><p>GO</p></div>
+            <div id="toggle-err" class="err"></div>
+        </div>
+        
+        <div class="clear action-menu-pullout">
+            <div id="clear-input" class="new-menu-option"><input type="text" id="clear-j" title="Enter an integer" autocomplete="off" value=3 /></div>
+            <div id="clear-go" class="execAction coloured-menu-option" onclick=clearBit()><p>GO</p></div>
+            <div id="clear-err" class="err"></div>
+        </div>
+        
+        <div class="lsone action-menu-pullout">
+            <div id="lsone-err" class="err"></div>
+        </div>
     </div>
     
     <div id="status" class="panel"><p></p></div>

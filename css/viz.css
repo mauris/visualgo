@@ -201,6 +201,9 @@ html { overflow-y: auto; } /*override common.css*/
 		padding-left: 14px;
 		padding-right: 15px;
 	}
+	.action-menu-pullout { display: none; position: fixed; }
+	.new-menu-option { margin-left: 3px; }
+	.err { color: red; margin-left: 6px; }
 	
 #status {
 	bottom: 255px;

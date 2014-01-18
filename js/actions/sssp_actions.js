@@ -8,104 +8,53 @@ var isDijkstrasOpen = false;
 
 function openSamples() {
 	if(!isSamplesOpen) {
-		$('#samples-submenu').animate({
-			width: "+="+550
-		}, 350);
+		$('.samples').fadeIn('fast');
+		isSamplesOpen = true;
 	}
-	isSamplesOpen = true;
 }
 function closeSamples() {
-	if(true) {
+	if(isSamplesOpen) {
+		$('.samples').fadeOut('fast');
 		$('#samples-err').html("");
-		$('#samples-submenu').animate({
-			width: "-="+550
-		}, 350);
 		isSamplesOpen = false;
 	}
 }
-
 function openBFS() {
 	if(!isBFSOpen) {
-		$('#bfs-input').animate({
-			width: "+="+32
-		}, 100, function() {
-			$('#bfs-go').animate({
-				width: "+="+34
-			},100);
-		});
+		$('.bfs').fadeIn('fast');
+		isBFSOpen = true;
 	}
-	isBFSOpen = true;
 }
 function closeBFS() {
-	if(true) {
+	if(isBFSOpen) {
+		$('.bfs').fadeOut('fast');
 		$('#bfs-err').html("");
-		$('#bfs-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#bfs-input').animate({
-				width: "-="+32
-			}, 100);
-		});
 		isBFSOpen = false;
 	}
 }
 function openBellmanFords() {
 	if(!isBellmanFordsOpen) {
-		$('#bellmanford-input').animate({
-			width: "+="+32
-		}, 100, function() {
-			$('#bellmanford-go').animate({
-				width: "+="+34
-			},100);
-		});
+		$('.bellmanford').fadeIn('fast');
+		isBellmanFordsOpen = true;
 	}
-	isBellmanFordsOpen = true;
 }
 function closeBellmanFords() {
-	if(true) {
+	if(isBellmanFordsOpen) {
+		$('.bellmanford').fadeOut('fast');
 		$('#bellmanford-err').html("");
-		$('#bellmanford-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#bellmanford-input').animate({
-				width: "-="+32
-			}, 100);
-		});
 		isBellmanFordsOpen = false;
 	}
 }
 function openDijkstras() {
 	if(!isDijkstrasOpen) {
-		$('#dijkstra-input').animate({
-			width: "+="+32
-		}, 100, function() {
-			$('#dijkstra-go1').animate({
-				width: "+="+61
-			},100, function(){
-				$('#dijkstra-go2').css('border-left', '1px solid black');
-				$('#dijkstra-go2').animate({
-					width: "+="+64
-				},100);
-			});
-		});
+		$('.dijkstra').fadeIn('fast');
+		isDijkstrasOpen = true;
 	}
-	isDijkstrasOpen = true;
 }
 function closeDijkstras() {
-	if(true) {
+	if(isDijkstrasOpen) {
+		$('.dijkstra').fadeOut('fast');
 		$('#dijkstra-err').html("");
-		$('#dijkstra-go2').animate({
-			width: "-="+64
-		}, 100, function() {
-			$('#dijkstra-go2').css('border-left', 'none');
-			$('#dijkstra-go1').animate({
-				width: "-="+61
-			}, 100, function() {
-				$('#dijkstra-input').animate({
-					width: "-="+32
-				}, 100);
-			});
-		});
 		isDijkstrasOpen = false;
 	}
 }
@@ -146,13 +95,6 @@ $( document ).ready(function() {
 		closeBellmanFords();
 		openDijkstras();
 	});
-	
-	//overwrite some viz.js stuff here
-  	$('#samples-submenu').css('background-color','#eee');
-	$('#samples-submenu').children().css('background-color', colourTheSecond);
-	if(colourTheSecond == '#fec515' || colourTheSecond == '#a7d41e') {
-		$('#samples-submenu').children().css('color', 'black');
-	}
 		
 	//tutorial mode
 	$('#sssp-tutorial-1 .tutorial-next').click(function() {

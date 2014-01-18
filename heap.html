@@ -60,19 +60,33 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
-    	<div id="buildv1-input"><input type="text" id="arrv1" autocomplete="off" value="2,7,26,25,19,17,1,90,3,36" /></div>
-        <div id="buildv1-go" class="execAction" onclick=buildv1()><p>GO</p></div>
-        <div id="buildv1-sample" class="execAction" onclick=buildv1Sample()><p>Sorted sample</p></div>
-        <div id="buildv1-err" class="err"></div>
-        <div id="buildv2-input"><input type="text" id="arrv2" autocomplete="off" value="2,7,26,25,19,17,1,90,3,36" /></div>
-        <div id="buildv2-go" class="execAction" onclick=buildv2()><p>GO</p></div>
-        <div id="buildv2-sample" class="execAction" onclick=buildv2Sample()><p>Sorted sample</p></div>
-        <div id="buildv2-err" class="err"></div>
-        <div id="insert-input"><input type="text" id="v" autocomplete="off" value=26 /></div>
-        <div id="insert-go" class="execAction" onclick=insert()><p>GO</p></div>
-        <div id="insert-err" class="err"></div>
-        <div id="extractmax-err" class="err"></div>
-        <div id="heapsort-err" class="err"></div>
+    	<div class="buildv1 action-menu-pullout">
+            <div id="buildv1-input" class="new-menu-option"><input type="text" id="arrv1" autocomplete="off" value="2,7,26,25,19,17,1,90,3,36" /></div>
+            <div id="buildv1-go" class="execAction coloured-menu-option" onclick=buildv1()><p>GO</p></div>
+            <div id="buildv1-sample" class="execAction new-menu-option coloured-menu-option" onclick=buildv1Sample()><p>Sorted sample</p></div>
+            <div id="buildv1-err" class="err"></div>
+        </div>
+        
+        <div class="buildv2 action-menu-pullout">
+            <div id="buildv2-input" class="new-menu-option"><input type="text" id="arrv2" autocomplete="off" value="2,7,26,25,19,17,1,90,3,36" /></div>
+            <div id="buildv2-go" class="execAction coloured-menu-option" onclick=buildv2()><p>GO</p></div>
+            <div id="buildv2-sample" class="execAction new-menu-option coloured-menu-option" onclick=buildv2Sample()><p>Sorted sample</p></div>
+            <div id="buildv2-err" class="err"></div>
+        </div>
+        
+        <div class="insert action-menu-pullout">
+            <div id="insert-input" class="new-menu-option"><input type="text" id="v" autocomplete="off" value=26 /></div>
+            <div id="insert-go" class="execAction coloured-menu-option" onclick=insert()><p>GO</p></div>
+            <div id="insert-err" class="err"></div>
+        </div>
+        
+        <div class="extractmax action-menu-pullout">
+        	<div id="extractmax-err" class="err"></div>
+        </div>
+        
+        <div class="heapsort action-menu-pullout">
+        	<div id="heapsort-err" class="err"></div>
+        </div>
     </div>
     
     <div id="status" class="panel"><p></p></div>
@@ -171,7 +185,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Build heap - O(n log n): "+ $('#arrv1').val());
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeBuildv1(); //in heap_actions.js
 				triggerRightPanels();
 				isPlaying = true; //in viz.js
 			}
@@ -186,7 +199,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Build heap - O(n log n): sorted sample 1 - 31");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeBuildv1(); //in heap_actions.js
 				triggerRightPanels();
 				isPlaying = true; //in viz.js
 			}
@@ -200,7 +212,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Build heap - O(n): "+ $('#arrv2').val());
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeBuildv2();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -215,7 +226,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Build heap - O(n): sorted sample 1 - 31");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeBuildv2(); //in heap_actions.js
 				triggerRightPanels();
 				isPlaying = true; //in viz.js
 			}
@@ -229,7 +239,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Insert "+ $('#v').val());
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeInsert();
 				triggerRightPanels();
 				isPlaying = true;
 				document.getElementById("v").value=1+Math.floor(Math.random()*98); // 1..99
@@ -245,9 +254,6 @@
 				$('#current-action p').html("Extract max");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
 				$('#extractmax-err').html("");
-				closeBuildv1();
-				closeBuildv2();
-				closeInsert();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -262,9 +268,6 @@
 				$('#current-action p').html("Heapsort");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
 				$('#heapsort-err').html("");
-				closeBuildv1();
-				closeBuildv2();
-				closeInsert();
 				triggerRightPanels();
 				isPlaying = true;
 			}

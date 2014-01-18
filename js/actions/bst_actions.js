@@ -5,132 +5,97 @@ var statusCodetraceWidth = 420;
 var isSearchOpen = false;
 var isInsertOpen = false;
 var isRemoveOpen = false;
+var isInorderOpen = false;
 
 function openSearch() {
 	if(!isSearchOpen) {
-		$('#find-min').animate({
-			width: "+="+65
-		}, 100, function() {
-			$('#find-max').animate({
-				width: "+="+69
-			}, 100, function() {
-				$('#search-input').animate({
-					width: "+="+32
-				}, 100, function() {
-					$('#search-go').animate({
-						width: "+="+34
-					},100);
-				});
-			});
-		});
+		$('.search').fadeIn('fast');
+		isSearchOpen = true;
 	}
-	isSearchOpen = true;
 }
 function closeSearch() {
-	if(true) {
+	if(isSearchOpen) {
+		$('.search').fadeOut('fast');
 		$('#search-err').html("");
-		$('#search-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#search-input').animate({
-				width: "-="+32
-			}, 100, function() {
-				$('#find-max').animate({
-					width: "-="+69
-				}, 100, function() {
-					$('#find-min').animate({
-						width: "-="+65
-					},100);
-				});
-			});
-		});
 		isSearchOpen = false;
 	}
 }
 function openInsert() {
 	if(!isInsertOpen) {
-		$('#insert-input').animate({
-			width: "+="+132
-		}, 250, function() {
-			$('#insert-go').animate({
-				width: "+="+34
-			},100);
-		});
+		$('.insert').fadeIn('fast');
+		isInsertOpen = true;
 	}
-	isInsertOpen = true;
 }
 function closeInsert() {
-	if(true) {
+	if(isInsertOpen) {
+		$('.insert').fadeOut('fast');
 		$('#insert-err').html("");
-		$('#insert-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#insert-input').animate({
-				width: "-="+132
-			}, 250);
-		});
 		isInsertOpen = false;
 	}
 }
 function openRemove() {
 	if(!isRemoveOpen) {
-		$('#remove-input').animate({
-			width: "+="+132
-		}, 250, function() {
-			$('#remove-go').animate({
-				width: "+="+34
-			},100);
-		});
+		$('.remove').fadeIn('fast');
+		isRemoveOpen = true;
 	}
-	isRemoveOpen = true;
 }
 function closeRemove() {
-	if(true) {
+	if(isRemoveOpen) {
+		$('.remove').fadeOut('fast');
 		$('#remove-err').html("");
-		$('#remove-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#remove-input').animate({
-				width: "-="+132
-			}, 250);
-		});
 		isRemoveOpen = false;
 	}
 }
+function openInorder() {
+	if(!isInorderOpen) {
+		$('.inorder').fadeIn('fast');
+		isInorderOpen = true;
+	}
+}
+function closeInorder() {
+	if(isInorderOpen) {
+		$('.inorder').fadeOut('fast');
+		$('#inorder-err').html("");
+		isInorderOpen = false;
+	}
+}
+
+//
 function hideEntireActionsPanel() {
 	closeSearch();
 	closeInsert();
 	closeRemove();
+	closeInorder();
 	hideActionsPanel();
 }
 
 $( document ).ready(function() {
 	
-	//the actions with pullout inputs
+	//action pullouts
 	$('#search').click(function() {
 		closeInsert();
 		closeRemove();
+		closeInorder();
 		openSearch();
-		$('#inorder-err').html("");
 	});
 	$('#insert').click(function() {
 		closeSearch();
 		closeRemove();
+		closeInorder();
 		openInsert();
-		$('#inorder-err').html("");
 	});
 	$('#remove').click(function() {
 		closeSearch();
 		closeInsert();
+		closeInorder();
 		openRemove();
-		$('#inorder-err').html("");
 	});
 	
-	//and the others
 	$('#inorder').click(function() {
 		closeSearch();
 		closeInsert();
 		closeRemove();
+		openInorder();
 	});
 	
 	//tutorial mode

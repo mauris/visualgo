@@ -79,7 +79,7 @@ function hideCodetracePanel() {
 	}
 }
 function triggerRightPanels() {
-	hideActionsPanel();
+	hideEntireActionsPanel();
 	showStatusPanel();
 	showCodetracePanel();
 }
@@ -106,12 +106,14 @@ $( document ).ready(function() {
 	
 	$('#actions').css("background-color", colourTheSecond);
 	$('#actions-hide').css("background-color", colourTheSecond);
-	$('#actions-extras').children().not('input').not('.err').css("background-color", colourTheSecond);
+	$('.action-menu-pullout').css('left', actionsWidth+43+'px');
+	$('.action-menu-pullout').children().css('float','left');
+	$('.coloured-menu-option').css("background-color", colourTheSecond).css('color','white');
 	if(colourTheSecond == '#fec515' || colourTheSecond == '#a7d41e') {
 		$('#actions p').css('color', 'black');
 		$('#actions p').hover(function() { $(this).css('color', 'white');}, function() {$(this).css('color', 'black');});
-		$('.execAction p').css('color', 'black');
-		$('.execAction p').hover(function() { $(this).css('color', 'white');}, function() {$(this).css('color', 'black');});
+		$('.coloured-menu-option').css('color', 'black');
+		$('.coloured-menu-option').hover(function() { $(this).css('color', 'white');}, function() {$(this).css('color', 'black');});
 		$('#actions-hide img').attr('src', 'img/arrow_black_right.png');
 	}
 	

@@ -32,7 +32,7 @@
 <div id="top-bar">
 	<a id="home" href="index.html">we<span class="colour">need</span>a<span class="colour">name</span></a>
     <span id="title">
-    	<a id="title-BST">Binary Search Tree</a>&nbsp&nbsp
+    	<a id="title-BST">Binary Search Tree</a>
         <a id="title-AVL" class="selected-viz">AVL Tree</a>
     </span>
     <a id="fb-login" href="#" target="_blank">Facebook connect</a>
@@ -60,18 +60,29 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
-    	<div id="find-min" class="execAction" style="white-space: nowrap;" onClick=findMin()><p>Find Min</p></div>
-        <div id="find-max" class="execAction" style="white-space: nowrap;" onClick=findMax()><p>Find Max</p></div>
-    	<div id="search-input"><input type="text" id="v-search" title="Enter an integer" autocomplete="off" value=5 /></div>
-        <div id="search-go" class="execAction" onclick=searchVertex()><p>GO</p></div>
-        <div id="search-err" class="err"></div>
-        <div id="insert-input"><input type="text" id="v-insert" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=20 /></div>
-        <div id="insert-go" class="execAction" onclick=insertVertex()><p>GO</p></div>
-        <div id="insert-err" class="err"></div>
-        <div id="remove-input"><input type="text" id="v-remove" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=23 /></div>
-        <div id="remove-go" class="execAction" onclick=removeVertex()><p>GO</p></div>
-        <div id="remove-err" class="err"></div>
-        <div id="inorder-err" class="err"></div>
+    	<div class="search action-menu-pullout">
+            <div id="find-min" class="execAction new-menu-option coloured-menu-option" onClick=findMin()><p>Find Min</p></div>
+            <div id="find-max" class="execAction new-menu-option coloured-menu-option" onClick=findMax()><p>Find Max</p></div>
+            <div id="search-input" class="new-menu-option"><input type="text" id="v-search" title="Enter an integer" autocomplete="off" value=5 /></div>
+            <div id="search-go" class="execAction coloured-menu-option" onclick=searchVertex()><p>GO</p></div>
+            <div id="search-err" class="err"></div>
+        </div>
+        
+        <div class="insert action-menu-pullout">
+            <div id="insert-input" class="new-menu-option"><input type="text" id="v-insert" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=20 /></div>
+            <div id="insert-go" class="execAction coloured-menu-option" onclick=insertVertex()><p>GO</p></div>
+            <div id="insert-err" class="err"></div>
+        </div>
+        
+        <div class="remove action-menu-pullout">
+       		<div id="remove-input" class="new-menu-option"><input type="text" id="v-remove" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=23 /></div>
+        	<div id="remove-go" class="execAction coloured-menu-option" onclick=removeVertex()><p>GO</p></div>
+        	<div id="remove-err" class="err"></div>
+        </div>
+        
+        <div class="inorder action-menu-pullout">
+        	<div id="inorder-err" class="err"></div>
+        </div>
     </div>
     
     <div id="status" class="panel"><p></p></div>
@@ -196,7 +207,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Find minimum");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeSearch();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -210,7 +220,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Find maximum");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeSearch();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -226,7 +235,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Search for "+ input);
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeSearch();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -242,7 +250,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Insert "+ input);
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeInsert();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -258,7 +265,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Remove "+ input);
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeRemove();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -272,9 +278,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("In-order Traversal");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				$('#inorder-err').html("");
-				closeSearch();
-				closeInsert();
 				triggerRightPanels();
 				isPlaying = true;
 			}

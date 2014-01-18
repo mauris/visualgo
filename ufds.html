@@ -61,21 +61,36 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <!--put all the extra action pullouts (input) and error messages here-->
     <div id="actions-extras">
-    	<div id="init-input"><input type="text" id="arrn" autocomplete="off" value="10" /></div>
-        <div id="init-go" class="execAction" onclick=init()><p>GO</p></div>
-        <div id="init-err" class="err"></div>
-        <div id="sample-input"><input type="text" id="arrver" autocomplete="off" value="2" title="choose a sample number"/></div>
-        <div id="sample-go" class="execAction" onclick=sample()><p>GO</p></div>
-        <div id="sample-err" class="err"></div>
-    	<div id="find-input"><input type="text" id="arrfindi" autocomplete="off" value="0" /></div>
-        <div id="find-go" class="execAction" onclick=find()><p>GO</p></div>
-        <div id="find-err" class="err"></div>
-        <div id="isSameSet-input"><input type="text" style="border-right: 1px solid #777" id="arrissameseti" autocomplete="off" value="0" /><input type="text" id="arrissamesetj" autocomplete="off" value="5" /></div>
-		<div id="isSameSet-go" class="execAction" onclick=issameset()><p>GO</p></div>
-        <div id="isSameSet-err" class="err"></div>
-    	<div id="union-input"><input type="text" style="border-right: 1px solid #777" id="arrunioni" autocomplete="off" value="0" /><input type="text" id="arrunionj" autocomplete="off" value="5" /></div>
-        <div id="union-go" class="execAction" onclick=union()><p>GO</p></div>
-        <div id="union-err" class="err"></div>
+    	
+        <div class="init action-menu-pullout">
+            <div id="init-input" class="new-menu-option"><input type="text" id="arrn" autocomplete="off" value="10" /></div>
+            <div id="init-go" class="execAction coloured-menu-option" onclick=init()><p>GO</p></div>
+            <div id="init-err" class="err"></div>
+        </div>
+        
+        <div class="sample action-menu-pullout">
+            <div id="sample-input" class="new-menu-option"><input type="text" id="arrver" autocomplete="off" value="2" title="choose a sample number"/></div>
+            <div id="sample-go" class="execAction coloured-menu-option" onclick=sample()><p>GO</p></div>
+            <div id="sample-err" class="err"></div>
+        </div>
+        
+        <div class="find action-menu-pullout">
+            <div id="find-input" class="new-menu-option"><input type="text" id="arrfindi" autocomplete="off" value="0" /></div>
+            <div id="find-go" class="execAction coloured-menu-option" onclick=find()><p>GO</p></div>
+            <div id="find-err" class="err"></div>
+        </div>
+        
+        <div class="isSameSet action-menu-pullout">
+            <div id="isSameSet-input" class="new-menu-option"><input type="text" style="border-right: 1px solid #777" id="arrissameseti" autocomplete="off" value="0" /><input type="text" id="arrissamesetj" autocomplete="off" value="5" /></div>
+            <div id="isSameSet-go" class="execAction coloured-menu-option" onclick=issameset()><p>GO</p></div>
+            <div id="isSameSet-err" class="err"></div>
+        </div>
+        
+        <div class="union action-menu-pullout">
+            <div id="union-input" class="new-menu-option"><input type="text" style="border-right: 1px solid #777" id="arrunioni" autocomplete="off" value="0" /><input type="text" id="arrunionj" autocomplete="off" value="5" /></div>
+            <div id="union-go" class="execAction coloured-menu-option" onclick=union()><p>GO</p></div>
+            <div id="union-err" class="err"></div>
+        </div>
     </div>
     
     <div id="status" class="panel"><p></p></div>
@@ -166,7 +181,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Find("+ $('#arrfindi').val() + ")");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeFind();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -180,7 +194,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("isSameSet(" + $('#arrissameseti').val() + "," + $('#arrissamesetj').val() + ")");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeIsSameSet();
 				triggerRightPanels();
 				isPlaying = true;
 			}
@@ -194,7 +207,6 @@
 				$('#current-action').show();
 				$('#current-action p').html("Union(" + $('#arrunioni').val() + "," + $('#arrunionj').val() + ")");
 				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-				closeUnion();
 				triggerRightPanels();
 				isPlaying = true;
 			}

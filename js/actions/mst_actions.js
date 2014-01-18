@@ -2,85 +2,76 @@ var actionsWidth = 150;
 var statusCodetraceWidth = 430;
 
 var isSamplesOpen = false;
+var isKruskalsOpen = false;
 var isPrimsOpen = false;
 
 function openSamples() {
 	if(!isSamplesOpen) {
-		$('#samples-submenu').animate({
-			width: "+="+320
-		}, 250);
+		$('.samples').fadeIn('fast');
+		isSamplesOpen = true;
 	}
-	isSamplesOpen = true;
 }
 function closeSamples() {
-	if(true) {
+	if(isSamplesOpen) {
+		$('.samples').fadeOut('fast');
 		$('#samples-err').html("");
-		$('#samples-submenu').animate({
-			width: "-="+320
-		}, 250);
 		isSamplesOpen = false;
 	}
 }
-
+function openKruskals() {
+	if(!isKruskalsOpen) {
+		$('.kruskals').fadeIn('fast');
+		isKruskalsOpen = true;
+	}
+}
+function closeKruskals() {
+	if(isKruskalsOpen) {
+		$('.kruskals').fadeOut('fast');
+		$('#kruskals-err').html("");
+		isKruskalsOpen = false;
+	}
+}
 function openPrims() {
 	if(!isPrimsOpen) {
-		$('#prims-input').animate({
-			width: "+="+32
-		}, 100, function() {
-			$('#prims-go').animate({
-				width: "+="+34
-			},100);
-		});
+		$('.prims').fadeIn('fast');
+		isPrimsOpen = true;
 	}
-	isPrimsOpen = true;
 }
 function closePrims() {
-	if(true) {
+	if(isPrimsOpen) {
+		$('.prims').fadeOut('fast');
 		$('#prims-err').html("");
-		$('#prims-go').animate({
-			width: "-="+34
-		}, 100, function() {
-			$('#prims-input').animate({
-				width: "-="+32
-			}, 100);
-		});
 		isPrimsOpen = false;
 	}
 }
 
 function hideEntireActionsPanel() {
 	closeSamples();
+	closeKruskals();
 	closePrims();
 	hideActionsPanel();
 }
 
 $( document ).ready(function() {
 	
-	//the actions with pullout inputs
+	//action pullouts
 	$('#samples').click(function() {
 		closePrims();
-		$('#kruskals-err').html("");
+		closeKruskals();
 		openSamples();
 	})
 	
 	$('#prims').click(function() {
 		closeSamples();
-		$('#kruskals-err').html("");
+		closeKruskals();
 		openPrims();
 	});
 	
-	//and the others
 	$('#kruskals').click(function() {
 		closeSamples();
 		closePrims();
+		openKruskals();
 	});
-	
-	//overwrite some viz.js stuff here
-  	$('#samples-submenu').css('background-color','#eee');
-	$('#samples-submenu').children().css('background-color', colourTheSecond);
-	if(colourTheSecond == '#fec515' || colourTheSecond == '#a7d41e') {
-		$('#samples-submenu').children().css('color', 'black');
-	}
 		
 	//tutorial mode
 	$('#heap-tutorial-1 .tutorial-next').click(function() {

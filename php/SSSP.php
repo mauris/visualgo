@@ -30,7 +30,7 @@ class SSSP {
 		}
 	}
 	
-	//returns an array of integers
+	//returns an array of integers (SPs starting from $start)
 	public function BFS($start) {
 		$Q = array();
 		$visited = array();
@@ -53,6 +53,7 @@ class SSSP {
 		return $shortestPath;
 	}
 	
+	//returns an array of integers (SPs starting from $start)
 	public function bellmanFord($start) {
 		$shortestPath = array(); //from $start
 		$parent = array();
@@ -68,7 +69,7 @@ class SSSP {
 			//for all edges
 			for($iu=0; $iu<count($akeys); $iu++) { //iu goes from 0 to number of vertices-1
 				$u = $akeys[$iu]; //u is the key of the vertex
-				for($iv=0; $iv<count($this->adjList[$u]); $iv++) { //iu goes from 0 to number of adjacent vertices-1
+				for($iv=0; $iv<count($this->adjList[$u]); $iv++) { //iv goes from 0 to number of adjacent vertices-1
 					$v = $this->adjList[$u][$iv]->v(); //v is the key of the adjacent vertex
 					$w = $this->adjList[$u][$iv]->w(); //w is the weight of edge u-->v
 					if (($shortestPath[$u] + $w) < $shortestPath[$v]) {
