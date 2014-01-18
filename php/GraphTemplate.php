@@ -442,35 +442,35 @@ class GraphTemplate{
     GRAPH_TEMPLATE_CP3_4_17 => array(
         "internalAdjList" => array(
           0 => array(
-              "cx" => 210,
-              "cy" => 190,
+              "cxPercentage" => 23.3,
+              "cyPercentage" => 38,
               "text" => 0,
               4 =>3
             ),
           1 => array(
-              "cx" => 50,
-              "cy" => 50,
+              "cxPercentage" => 5.6,
+              "cyPercentage" => 10,
               "text" => 1,
               3 =>1,
               4 =>0
             ),
           2 => array(
-              "cx" => 170,
-              "cy" => 120,
+              "cxPercentage" => 18.9,
+              "cyPercentage" => 24,
               "text" => 2,
               0 =>4,
               1 =>2,
               3 =>6
             ),
           3 => array(
-              "cx" => 330,
-              "cy" => 50,
+              "cxPercentage" => 36.7,
+              "cyPercentage" => 10,
               "text" => 3,
               4 =>5
             ),
           4 => array(
-              "cx" => 240,
-              "cy" => 280,
+              "cxPercentage" => 26.7,
+              "cyPercentage" => 56,
               "text" => 4,
             )
           ),
@@ -508,33 +508,33 @@ class GraphTemplate{
     GRAPH_TEMPLATE_CP3_4_18 => array(
         "internalAdjList" => array(
           0 => array(
-              "cx" => 50,
-              "cy" => 125,
+              "cxPercentage" => 5.6,
+              "cyPercentage" => 25,
               "text" => 0,
               1 =>0,
               2 =>3
             ),
           1 => array(
-              "cx" => 150,
-              "cy" => 50,
+              "cxPercentage" => 16.7,
+              "cyPercentage" => 10,
               "text" => 1,
               3 =>2
             ),
           2 => array(
-              "cx" => 150,
-              "cy" => 200,
+              "cxPercentage" => 16.7,
+              "cyPercentage" => 40,
               "text" => 2,
               3 =>4
             ),
           3 => array(
-              "cx" => 250,
-              "cy" => 125,
+              "cxPercentage" => 27.8,
+              "cyPercentage" => 25,
               "text" => 3,
               4 =>2
             ),
           4 => array(
-              "cx" => 350,
-              "cy" => 125,
+              "cxPercentage" => 38.9,
+              "cyPercentage" => 25,
               "text" => 4,
             )
           ),
@@ -564,33 +564,33 @@ class GraphTemplate{
     GRAPH_TEMPLATE_CP3_4_19 => array(
         "internalAdjList" => array(
           0 => array(
-            "cx" => 50,
-            "cy" => 50,
+            "cxPercentage" => 5.6,
+            "cyPercentage" => 10,
             "text" => 0,
             1 =>0,
             4 =>4
             ),
           1 => array(
-            "cx" => 150,
-            "cy" => 50,
+            "cxPercentage" => 16.7,
+            "cyPercentage" => 10,
             "text" => 1,
             2 =>1
             ),
           2 => array(
-            "cx" => 250,
-            "cy" => 50,
+            "cxPercentage" => 27.8,
+            "cyPercentage" => 10,
             "text" => 2,
             1 =>2,
             3 =>3
             ),
           3 => array(
-            "cx" => 350,
-            "cy" => 50,
+            "cxPercentage" => 38.9,
+            "cyPercentage" => 10,
             "text" => 3
             ),
           4 => array(
-            "cx" => 150,
-            "cy" => 125,
+            "cxPercentage" => 16.7,
+            "cyPercentage" => 25,
             "text" => 4
             )
           ),
@@ -646,20 +646,23 @@ class GraphTemplate{
   public static function getGraph($params){
     $template = array_copy(self::$graphTemplate[GRAPH_TEMPLATE_EMPTY]);
     $templateBank;
+    $loopBreaker = 0;
+    $loopLimit = 10;
 
     if($params["directed"]) $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED];
     else $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED];
 
-    while(count($template["internalAdjList"]) < $params["numVertex"]){
+    while(count($template["internalAdjList"]) < $params["numVertex"] && $loopBreaker < $loopLimit){
       $templateName = $templateBank[rand(0, count($templateBank)-1)];
       $template = array_copy(self::$graphTemplate[$templateName]);
+      $loopBreaker++;
     }
 
     $weightList = array(0);
     $connected = false;
     if($params["connected"]) $connected = true;
 
-    self::reduceVertexUndirected($template, $params["numVertex"], $connected);
+    if(!$params["directed"])self::reduceVertexUndirected($template, $params["numVertex"], $connected);
     if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
     self::randomizeWeight($template);
 
@@ -789,33 +792,15 @@ class GraphTemplate{
       return count($visited) == count($template["internalAdjList"]);
     }
     else{
-      // $vertexList = array_keys($template["internalAdjList"]);
-      // $ufds = new UFDS();
+      // Weakly connected check
+      // Convert AdjList to undirected version, then call the function again
 
-      // foreach($vertexList as $key){
-      //   $ufds->insert($key);
-      // }
+      foreach($template["internalEdgeList"] as $key => $value){
+        $template["internalAdjList"][$value["vertexA"]] = $value["vertexB"];
+        $template["internalAdjList"][$value["vertexB"]] = $value["vertexA"];
+      }
 
-      // while(count($visited) != count($template["internalAdjList"])){
-      //   $vertex = array_shift($vertexList);
-      //   if(in_array($vertex, $visited)) continue;
-      //   $queue = array($vertex);
-
-      //   while(count($queue) > 0){
-      //     $currVertex = array_shift($queue);
-      //     if(in_array($currVertex, $visited)) continue;
-      //     $visited[] = $currVertex;
-      //     $ufds->unionSet($currVertex, $vertex);
-      //     $adjacent = $template["internalAdjList"][$currVertex];
-      //     unset($adjacent["cxPercentage"]);
-      //     unset($adjacent["cyPercentage"]);
-      //     foreach($adjacent as $key){
-      //       $queue[] = $key;
-      //     }
-      //   }
-      // }
-
-      // return $ufds->getSetAmt() == 1;
+      return self::isConnected($template, false);
     }
   }
 

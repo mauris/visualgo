@@ -1,6 +1,8 @@
 <?php
   require 'Everything.php';
 
+  // while (@ob_end_flush()); // Debug mode
+
   $bstQuestionGen = new BstQuestionGenerator();
   $heapQuestionGen = new HeapQuestionGenerator();
   $bitmaskQuestionGen = new BitmaskQuestionGenerator();

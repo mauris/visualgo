@@ -7,7 +7,6 @@ class MstQuestionGenerator{
       );
 
     public function __construct(){
-      // while (@ob_end_flush());
     }
 
     public function generateQuestion($amt){
