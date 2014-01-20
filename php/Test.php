@@ -8,14 +8,16 @@
   $bitmaskQuestionGen = new BitmaskQuestionGenerator();
   $ufdsQuestionGen = new UfdsQuestionGenerator();
   $mstQuestionGen = new MstQuestionGenerator();
+  $ssspQuestionGen = new SsspQuestionGenerator();
 
   $questionGenerator = array(
     QUESTION_TOPIC_BST => $bstQuestionGen,
     QUESTION_TOPIC_HEAP => $heapQuestionGen,
     QUESTION_TOPIC_BITMASK => $bitmaskQuestionGen,
     QUESTION_TOPIC_UFDS => $ufdsQuestionGen,
-    QUESTION_TOPIC_MST => $mstQuestionGen
-    );
+    QUESTION_TOPIC_MST => $mstQuestionGen,
+	QUESTION_TOPIC_SSSP => $ssspQuestionGen
+  );
 
   $qSeed = 0;
   $qArr = array();

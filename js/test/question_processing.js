@@ -63,7 +63,7 @@ function extractQnText(topic, type, params) { //returns string
 			}
 		case QUESTION_TOPIC_SSSP:
 			switch(type) {
-				
+				case QUESTION_TYPE_GREATER_LESS:	toReturn = SSSP_GREATER_LESS; break;
 			}
 		default: //nothing
 	}

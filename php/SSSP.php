@@ -2,15 +2,18 @@
 
 class SSSP {
 	
-	protected $weighted; //boolean
 	protected $adjList; //array of arrays of pairs (use Pair class from MST)
+	protected $graphTemplate;
+	protected $size;
 	
 	public function __construct(){
 		$this->init();
     }
 	
 	protected function init() {
-		
+		$this->size = rand(6,10);
+		$this->graphTemplate = GraphTemplate::getGraph(array("numVertex" => $this->size, "directed" => true, "connected" => true));
+		$this->generateAdjList($this->graphTemplate); //array of array of Pairs
 	}
 	
 	public function clearAll() {
@@ -21,15 +24,37 @@ class SSSP {
 		return array_keys($this->adjList);
 	}
 	
-	//returns an array of integers
-	public function sssp($start) {
-		if($this->weighted) {
-			return $this->bellmanFord($start);
-		} else {
-			return $this->BFS($start);
+	protected function generateAdjList($graph) {
+		$a = $graph["internalAdjList"];
+		$e = $graph["internalEdgeList"];
+	  
+	  	$akeys = array_keys($a);
+		for($i=0; $i<count($akeys); $i++) { //for each vertex
+			$temp = array();
+			foreach ($a[$akeys[$i]] as $key => $value) {
+				if(!is_string($key)) {
+					$new = new Pair($key, $e[$value]["weight"]);
+					$temp[] = $new;
+				}
+			}
+			$this->adjList[$akeys[$i]] = $temp;
 		}
 	}
 	
+	public function toGraphState(){
+		return GraphTemplate::createState($this->graphTemplate, array("displayWeight" => true, "directed" => true));
+    }
+	
+	//returns an array of integers
+	public function sssp($start) {
+		//if($this->weighted) {
+			return $this->bellmanFord($start);
+		//} else {
+			//return $this->BFS($start);
+		//}
+	}
+	
+	//currently not being used -- needs to be debugged
 	//returns an array of integers (SPs starting from $start)
 	public function BFS($start) {
 		$Q = array();
@@ -44,7 +69,7 @@ class SSSP {
 			$nNeighbours = count($this->adjList[$u]);
 			for($i=0; $i<$nNeighbours; $i++) {
 				$v = $this->adjList[$u][$i]->v();
-				if(!$visited[$v]) {
+				if(!$visited[$v]) { //error originating here
 					$Q[] = $v;
 					$shortestPath[$v] = $shortestPath[$u]+1;
 				}
@@ -63,6 +88,7 @@ class SSSP {
 		for($i=0; $i<count($akeys); $i++) {
 			$shortestPath[$akeys[$i]] = INFINITY;
 		}
+		$shortestPath[$start] = 0;
 		
 		//relax edges
 		for($i=1; $i<count($akeys); $i++) { // V-1 times
