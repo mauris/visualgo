@@ -839,8 +839,33 @@ class GraphTemplate{
     }
   }
 
-  protected static function toposort($template){
+  protected static function isDag($template, $directed){
+    if(!$directed) return false;
 
+    $vertexAmt = count($template["internalAdjList"]);
+    $toposort = array();
+    $noIncomingEdge = array_keys($template["internalAdjList"]);
+
+    foreach($template["internalEdgeList"] as $key => $value){
+      $noIncomingEdge = array_diff($noIncomingEdge, array($value["vertexB"]));
+    }
+
+    while(count($noIncomingEdge) > 0){
+      $currVertex = array_shift($noIncomingEdge);
+      foreach($template["internalAdjList"] as $key=>$value){
+        if($key == "cxPercentage" || $key == "cyPercentage") continue;
+
+        unset($template["internalEdgeList"][$value]);
+        $noIncomingEdge[] = $key;
+      }
+
+      foreach($template["internalEdgeList"] as $key => $value){
+        $noIncomingEdge = array_diff($noIncomingEdge, array($value["vertexB"]));
+      }
+    }
+
+    if(count($toposort) != $vertexAmt) return false;
+    else return true;
   }
 }
 ?>
