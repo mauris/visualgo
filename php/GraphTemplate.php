@@ -806,6 +806,11 @@ class GraphTemplate{
       unset($adjacent["cxPercentage"]);
       unset($adjacent["cyPercentage"]);
 
+	  if(!is_array($adjacent)) {
+		  $temp = $adjacent;
+		  $adjacent = array();
+		  $adjacent[] = $temp;
+	  }
       foreach($adjacent as $key => $value){
         $queue[] = $key;
       }

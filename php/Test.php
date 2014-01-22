@@ -9,6 +9,7 @@
   $ufdsQuestionGen = new UfdsQuestionGenerator();
   $mstQuestionGen = new MstQuestionGenerator();
   $ssspQuestionGen = new SsspQuestionGenerator();
+  $graphTraversalQuestionGen = new GraphTraversalQuestionGenerator();
 
   $questionGenerator = array(
     QUESTION_TOPIC_BST => $bstQuestionGen,
@@ -16,7 +17,8 @@
     QUESTION_TOPIC_BITMASK => $bitmaskQuestionGen,
     QUESTION_TOPIC_UFDS => $ufdsQuestionGen,
     QUESTION_TOPIC_MST => $mstQuestionGen,
-	QUESTION_TOPIC_SSSP => $ssspQuestionGen
+	QUESTION_TOPIC_SSSP => $ssspQuestionGen,
+	QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 
   $qSeed = 0;

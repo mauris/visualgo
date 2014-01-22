@@ -40,4 +40,6 @@ const MST_PRIM_SEQUENCE = "Given the undirected weighted graph as shown in the p
 const MST_KRUSKAL_SEQUENCE = "Given the undirected weighted graph as shown in the picture, click the first |amt| edges (the order matters) that are added to the MST by Kruskal\'s algorithm!";
 const MST_MINIMAX_EDGE = "Click the edge that has the maximum edge weight along the minimax path from vertex |vertexA| to vertex |vertexB|. The minimax path between two vertices is defined as the path that minimizes the maximum edge weight between the two vertices.";
 
-const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed weighted graph that have shortest path values |greaterless| than |value| from source vertex |source|."
+const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed weighted graph that have shortest path values |greaterless| than |value| from source vertex |source|.";
+
+const GRAPH_TRAVERSAL_TRAVERSAL = "Click the sequence of vertices that are visited by |subtype| from source vertex |value|. The neighbours of a vertex are listed in ascending vertex number.";

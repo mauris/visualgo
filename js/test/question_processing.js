@@ -65,6 +65,10 @@ function extractQnText(topic, type, params) { //returns string
 			switch(type) {
 				case QUESTION_TYPE_GREATER_LESS:	toReturn = SSSP_GREATER_LESS; break;
 			}
+		case QUESTION_TOPIC_GRAPH_TRAVERSAL:
+			switch(type) {
+				case QUESTION_TYPE_TRAVERSAL:		toReturn = GRAPH_TRAVERSAL_TRAVERSAL; break;
+			}
 		default: //nothing
 	}
 	var matches = toReturn.match(/\|[^|]+\|/g); //words between 2 pipes: |something|

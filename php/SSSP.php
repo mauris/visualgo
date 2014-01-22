@@ -47,35 +47,7 @@ class SSSP {
 	
 	//returns an array of integers
 	public function sssp($start) {
-		//if($this->weighted) {
-			return $this->bellmanFord($start);
-		//} else {
-			//return $this->BFS($start);
-		//}
-	}
-	
-	//currently not being used -- needs to be debugged
-	//returns an array of integers (SPs starting from $start)
-	public function BFS($start) {
-		$Q = array();
-		$visited = array();
-		$shortestPath = array(); //from $start
-		
-		$Q[] = $start;
-		$visted[$start] = true;
-		$shortestPath[$start] = 0;
-		while(!empty($Q)) {
-			$u = array_shift($Q);
-			$nNeighbours = count($this->adjList[$u]);
-			for($i=0; $i<$nNeighbours; $i++) {
-				$v = $this->adjList[$u][$i]->v();
-				if(!$visited[$v]) { //error originating here
-					$Q[] = $v;
-					$shortestPath[$v] = $shortestPath[$u]+1;
-				}
-			}
-		}
-		return $shortestPath;
+		return $this->bellmanFord($start);
 	}
 	
 	//returns an array of integers (SPs starting from $start)

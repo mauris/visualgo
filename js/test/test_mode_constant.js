@@ -10,6 +10,7 @@ const QUESTION_TOPIC_HEAP = "Heap";
 const QUESTION_TOPIC_UFDS = "UFDS";
 const QUESTION_TOPIC_MST = "MST";
 const QUESTION_TOPIC_SSSP = "SSSP";
+const QUESTION_TOPIC_GRAPH_TRAVERSAL = "GraphTraversal";
 
 // General in several data-structures
 const QUESTION_TYPE_DELETION = "Deletion";
@@ -21,6 +22,7 @@ const QUESTION_TYPE_INTERNAL = "Internal";
 const QUESTION_TYPE_LEAVES = "Leaves";
 const QUESTION_TYPE_ROOT = "Root";
 const QUESTION_TYPE_GREATER_LESS = "greaterLess"; //heap and SSSP
+const QUESTION_TYPE_TRAVERSAL = "Traversal"; //BST and GraphTraversal
 
 // BST-Specific
 const QUESTION_TYPE_AVL_ROTATION_INSERT = "avlRotationInsert";
@@ -32,7 +34,6 @@ const QUESTION_TYPE_PREDECESSOR = "Predecessor";
 const QUESTION_TYPE_SEARCH = "Search";
 const QUESTION_TYPE_SUCCESSOR = "Successor";
 const QUESTION_TYPE_SWAP = "Swap";
-const QUESTION_TYPE_TRAVERSAL = "Traversal";
 
 // Heap-Specific
 const QUESTION_TYPE_EXTRACT = "extract";
@@ -77,6 +78,10 @@ const QUESTION_SUB_TYPE_OR = "OR";
 const QUESTION_SUB_TYPE_XOR = "XOR";
 const QUESTION_SUB_TYPE_BINARY = "binary";
 const QUESTION_SUB_TYPE_DECIMAL = "integer";
+
+// Graph Traversal-Specific
+const QUESTION_SUB_TYPE_DFS = "DFS";
+const QUESTION_SUB_TYPE_BFS = "BFS";
 
 const ANSWER_TYPE_VERTEX = "vertex";
 const ANSWER_TYPE_VERTEX_MCQ = "vertexMcq";

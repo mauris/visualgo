@@ -13,6 +13,8 @@
   require 'MstQuestionGenerator.php';
   require 'SSSP.php';
   require 'SsspQuestionGenerator.php';
+  require 'GraphTraversal.php';
+  require 'GraphTraversalQuestionGenerator.php';
   require 'Constant.php';
   require 'Misc.php';
   require 'GraphTemplate.php';
