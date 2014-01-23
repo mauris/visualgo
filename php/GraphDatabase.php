@@ -635,7 +635,7 @@
     protected $db;
 
     public function __construct() {
-      $this->db = mysqli_connect("localhost","ivan","fyp","graph_template");
+      $this->db = mysqli_connect("localhost","ivan","fyp","visualgo");
 
       if (mysqli_connect_errno()){
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -646,27 +646,27 @@
 
     protected function initBasicTemplates(){
       foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED] as $templateName){
-        mysqli_query($this->db, "INSERT IGNORE INTO `undirected` (`name`, `template`, `vertexAmount`, `connected`) 
+        mysqli_query($this->db, "INSERT IGNORE INTO `graph_template` (`name`, `template`, `directed`, `vertexAmount`, `connected`) 
           VALUES ('".$templateName."','".serialize(self::$graphTemplate[$templateName])."','"
-          .count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
+          ."0"."','".count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
         // echo mysqli_error($this->db);
       }
 
       foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED] as $templateName){
-        mysqli_query($this->db, "INSERT IGNORE INTO `directed` (`name`, `template`, `vertexAmount`, `connected`) 
+        mysqli_query($this->db, "INSERT IGNORE INTO `graph_template` (`name`, `template`, `directed`, `vertexAmount`, `connected`) 
           VALUES ('".$templateName."','".serialize(self::$graphTemplate[$templateName])."','"
-          .count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
+          ."1"."','".count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
         // echo mysqli_error($this->db);
       }
       // echo mysqli_error($this->db);
     }
 
     public function getSpecificTemplate($templateName){
-      $result = mysqli_query($this->db, "SELECT `template` FROM `undirected` WHERE `name`='".$templateName."'");
+      $result = mysqli_query($this->db, "SELECT `template` FROM `graph_template` WHERE `name`='".$templateName."'");
       $template = mysqli_fetch_assoc($result);
-      echo(serialize($template));
+      echo($template["template"]);
       echo mysqli_error($this->db);
-      return $template;
+      return $template["template"];
     }
 
     /*
@@ -682,14 +682,35 @@
      */
 
     public function getRandomTemplate($params){
+      $directed = $params["directed"]? 1:0;
 
+      $result = mysqli_query($this->db, "SELECT `template` FROM `graph_template` 
+        WHERE `vertexAmount`>='".$params["numVertex"]."'"."
+        AND `directed`='".$directed."'"
+        );
+      $templateList = array();
+
+      while(true){
+        $template = mysqli_fetch_assoc($result);
+        if(is_null($template)) break;
+        $templateList = $template["template"];
+        echo $template["template"];
+      }
+      echo mysqli_error($this->db);
+      $selectedTemplate = rand(0, count($templateList)-1);
+      return $templateList[$selectedTemplate];
     }
 
-    public function insertTemplate(){
-
+    public function insertTemplate($newTemplate, $templateName, $isConnected){
+      $connected = 0;
+      if($isConnected) $connected = 1;
+      mysqli_query($this->db, "INSERT IGNORE INTO `undirected` (`name`, `template`, `vertexAmount`, `connected`) 
+          VALUES ('".$templateName."','".serialize($newTemplate)."','"
+          .count($newTemplate["internalAdjList"])."','".$connected."')");
+        // echo mysqli_error($this->db);
     }
 
-    public function removeTemplate(){
+    public function removeTemplate($templateName){
 
     }
 
