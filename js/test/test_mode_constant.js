@@ -53,6 +53,9 @@ const QUESTION_TYPE_FIND_SET_SEQUENCE = "findSetSeq";
 const QUESTION_TYPE_FIND_SET_COMPRESSION = "findSetCompress";
 const QUESTION_TYPE_IS_SAME_SET = "isSameSet";
 
+//Graph Traversal-Specific
+const QUESTION_TYPE_DISCONNECT = "disconnect";
+
 // MST-Specific
 const QUESTION_TYPE_PRIM_SEQUENCE = "prim";
 const QUESTION_TYPE_KRUSKAL_SEQUENCE = "kruskal";

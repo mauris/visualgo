@@ -43,3 +43,4 @@ const MST_MINIMAX_EDGE = "Click the edge that has the maximum edge weight along 
 const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed weighted graph that have shortest path values |greaterless| than |value| from source vertex |source|.";
 
 const GRAPH_TRAVERSAL_TRAVERSAL = "Click the sequence of vertices that are visited by |subtype| from source vertex |value|. The neighbours of a vertex are listed in ascending vertex number.";
+const GRAPH_TRAVERSAL_DISCONNECT = "Click all vertices that will cause the graph to be disconnected if deleted. Note that the vertex deletion is independent.";

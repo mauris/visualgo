@@ -7,6 +7,7 @@ function extractInfo(q, qnJSON) {
 }
 
 function extractQnText(topic, type, params) { //returns string
+	toReturn = "";
 	switch(topic) {
 		case QUESTION_TOPIC_BST:
 			switch(type) {
@@ -68,6 +69,7 @@ function extractQnText(topic, type, params) { //returns string
 		case QUESTION_TOPIC_GRAPH_TRAVERSAL:
 			switch(type) {
 				case QUESTION_TYPE_TRAVERSAL:		toReturn = GRAPH_TRAVERSAL_TRAVERSAL; break;
+				case QUESTION_TYPE_DISCONNECT:		toReturn = GRAPH_TRAVERSAL_DISCONNECT; break;
 			}
 		default: //nothing
 	}
