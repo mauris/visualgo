@@ -662,10 +662,11 @@
     }
 
     public function getSpecificTemplate($templateName){
-      $template = mysqli_query($this->db, "SELECT `template` FROM `undirected` WHERE `name`='".$templateName."'");
-      echo($template);
+      $result = mysqli_query($this->db, "SELECT `template` FROM `undirected` WHERE `name`='".$templateName."'");
+      $template = mysqli_fetch_assoc($result);
+      echo(serialize($template));
       echo mysqli_error($this->db);
-      return unserialize($template);
+      return $template;
     }
 
     /*
