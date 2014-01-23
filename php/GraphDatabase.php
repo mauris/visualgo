@@ -3,6 +3,8 @@
    * PHP Class to store the graph templates inside the MySQL database and retrieve them
    */
   class GraphDatabase{
+    // TODO: Consider SQL injection issue
+
     protected static $graphTemplate = array(
       GRAPH_TEMPLATE_EMPTY => array(
           "internalAdjList" => array(),
@@ -643,22 +645,52 @@
     }
 
     protected function initBasicTemplates(){
-      foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED] as $graphName){
+      foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED] as $templateName){
         mysqli_query($this->db, "INSERT IGNORE INTO `undirected` (`name`, `template`, `vertexAmount`, `connected`) 
-          VALUES ('".$graphName."','".serialize(self::$graphTemplate[$graphName])."','"
-          .count(self::$graphTemplate[$graphName]["internalAdjList"])."','"."1"."')");
-        echo mysqli_error($this->db);
+          VALUES ('".$templateName."','".serialize(self::$graphTemplate[$templateName])."','"
+          .count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
+        // echo mysqli_error($this->db);
       }
 
-      foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED] as $graphName){
+      foreach(self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED] as $templateName){
         mysqli_query($this->db, "INSERT IGNORE INTO `directed` (`name`, `template`, `vertexAmount`, `connected`) 
-          VALUES ('".$graphName."','".serialize(self::$graphTemplate[$graphName])."','"
-          .count(self::$graphTemplate[$graphName]["internalAdjList"])."','"."1"."')");
-        echo mysqli_error($this->db);
+          VALUES ('".$templateName."','".serialize(self::$graphTemplate[$templateName])."','"
+          .count(self::$graphTemplate[$templateName]["internalAdjList"])."','"."1"."')");
+        // echo mysqli_error($this->db);
       }
-      echo mysqli_error($this->db);
+      // echo mysqli_error($this->db);
     }
 
+    public function getSpecificTemplate($templateName){
+      $template = mysqli_query($this->db, "SELECT `template` FROM `undirected` WHERE `name`='".$templateName."'");
+      echo($template);
+      echo mysqli_error($this->db);
+      return unserialize($template);
+    }
+
+    /*
+     * Pass in a variable called $params to getRandomTemplate, containing these informations =>
+     * - "numVertex" => number of vertex desired
+     * - "directed" => boolean, directed or undirected
+     * - Optionals =>
+     *   - "connected" => boolean, connected or disconnected
+     *   - "negativeEdge" => boolean, contains negative edges or not
+     *   - "negativeCycle" => boolean, contains negative cycles or not
+     * - Optionals for directed graphs =>
+     *   - "isDag" => boolean, is DAG or not
+     */
+
+    public function getRandomTemplate($params){
+
+    }
+
+    public function insertTemplate(){
+
+    }
+
+    public function removeTemplate(){
+
+    }
 
     // Add new templates
       // Validate template, then insert

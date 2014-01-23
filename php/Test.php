@@ -3,8 +3,6 @@
 
   // while (@ob_end_flush()); // Debug mode
 
-  $graphDb = new GraphDatabase(); // Testing database storage
-
   $bstQuestionGen = new BstQuestionGenerator();
   $heapQuestionGen = new HeapQuestionGenerator();
   $bitmaskQuestionGen = new BitmaskQuestionGenerator();
