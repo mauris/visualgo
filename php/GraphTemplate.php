@@ -649,6 +649,10 @@ class GraphTemplate{
     $loopBreaker = 0;
     $loopLimit = 10;
 
+    // $graphDb = new GraphDatabase();
+    // $template = $graphDb->getRandomTemplate($params);
+    // $template = unserialize($template);
+
     if($params["directed"]) $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED];
     else $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED];
 
