@@ -429,7 +429,8 @@ var GraphWidget = function(){
 
         currentEdge.changeVertexA(vertexList[currentEdgeState[key]["vertexA"]]);
         currentEdge.changeVertexB(vertexList[currentEdgeState[key]["vertexB"]]);
-        if(currentEdgeState[key]["type"] != null)currentEdge.changeType(currentEdgeState[key]["type"]);
+        if(currentEdgeState[key]["type"] == null) currentEdgeState[key]["type"] = EDGE_TYPE_UDE;
+        currentEdge.changeType(currentEdgeState[key]["type"]);
         if(currentEdgeState[key]["weight"] != null)currentEdge.changeWeight(currentEdgeState[key]["weight"]);
 
         currentEdge.refreshPath();
