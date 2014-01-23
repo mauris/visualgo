@@ -18,4 +18,5 @@
   require 'Constant.php';
   require 'Misc.php';
   require 'GraphTemplate.php';
+  require 'GraphDatabase.php';
 ?>

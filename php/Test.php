@@ -3,6 +3,8 @@
 
   // while (@ob_end_flush()); // Debug mode
 
+  $graphDb = new GraphDatabase(); // Testing database storage
+
   $bstQuestionGen = new BstQuestionGenerator();
   $heapQuestionGen = new HeapQuestionGenerator();
   $bitmaskQuestionGen = new BitmaskQuestionGenerator();
@@ -17,8 +19,8 @@
     QUESTION_TOPIC_BITMASK => $bitmaskQuestionGen,
     QUESTION_TOPIC_UFDS => $ufdsQuestionGen,
     QUESTION_TOPIC_MST => $mstQuestionGen,
-	QUESTION_TOPIC_SSSP => $ssspQuestionGen,
-	QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
+    QUESTION_TOPIC_SSSP => $ssspQuestionGen,
+    QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 
   $qSeed = 0;
