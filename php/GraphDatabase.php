@@ -657,7 +657,7 @@
 
   // Query a specific template
   else if($mode == 3){
-
+    
   }
 
   // Query a random template with desired property; return empty template if there is no such template
