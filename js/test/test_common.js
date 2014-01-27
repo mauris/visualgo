@@ -1,5 +1,4 @@
 var gw = new GraphWidget();
-var sitePrefix = document.URL.replace("/trainingmode.html","")+"/php/Test.php";
 
 //The following arrays use 1-based indexing. Index 0 is a dummy value.
 var qnTextArr = new Array(); //of question text for each qn
@@ -10,8 +9,6 @@ var qnNoAnsArr = new Array(); //1 for allow no answer option, 0 otherwise
 var ansArr = new Array(); //answers to be sent to server
 
 var topics = new Array();
-const seed = (Math.floor(Math.random()*1000000000));
-console.log("seed is: "+seed);
 var qnNo; //1-based
 var nQns; //total number of questions
 var nAnswered = 0;
