@@ -2,6 +2,17 @@
   /*
    * PHP Class to store the graph templates inside the MySQL database and retrieve them
    */
+
+  /*
+   * Table name: graph_template
+   * Schema:
+   * - name: template name (unique key)
+   * - template: serialized graphState (php-version)
+   * - directed: boolean
+   * - vertexAmount
+   * - connected: boolean
+   */
+
   class GraphDatabase{
     // TODO: Consider SQL injection issue
 
