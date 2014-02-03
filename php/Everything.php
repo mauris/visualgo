@@ -21,4 +21,5 @@
   require 'GraphDatabase.php';
   require 'AdminDatabase.php';
   require 'AdminPassword.php';
+  require 'TableName.php';
 ?>
