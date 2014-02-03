@@ -19,4 +19,6 @@
   require 'Misc.php';
   require 'GraphTemplate.php';
   require 'GraphDatabase.php';
+  require 'AdminDatabase.php';
+  require 'AdminPassword.php';
 ?>
