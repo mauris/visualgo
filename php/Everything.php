@@ -20,6 +20,6 @@
   require 'GraphTemplate.php';
   require 'GraphDatabase.php';
   require 'AdminDatabase.php';
-  require 'AdminPassword.php';
+  require 'Privilege.php';
   require 'TableName.php';
 ?>

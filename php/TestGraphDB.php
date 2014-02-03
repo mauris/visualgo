@@ -11,5 +11,5 @@
   $adminDb = new AdminDatabase();
   echo $adminDb->validate("test")? 1:0;
   echo "|";
-  echo json_encode($adminDb->getSettings("test"));
+  echo json_encode($adminDb->getConfig("test"));
 ?>

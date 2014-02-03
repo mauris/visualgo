@@ -141,6 +141,23 @@
     echo $score;
   }
 
+  else if($mode == TEST_BEGIN){
+    $username = $_GET["username"];
+    $password = $_GET["password"];
+    $attemptCount = 0;
+    $startTime = date('Y-m-d H:i:s');
+
+    
+  }
+
+  else if($mode == TEST_SUBMIT){
+
+  }
+
+  else if($mode == TEST_GET_ANSWERS){
+
+  }
+
   else if($mode == MODE_ADMIN){
     $password = $_GET["password"];
 
@@ -177,5 +194,10 @@
 
   else if($mode == MODE_ADMIN_RESET_ATTEMPT){
     $password = $_GET["password"];
+    $username = $_GET["username"];
+
+    $adminDb = new AdminDatabase();
+
+    echo $adminDb->resetAttempt($username, $password)? 1:0;
   }
 ?>
