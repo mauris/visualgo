@@ -140,4 +140,42 @@
 
     echo $score;
   }
+
+  else if($mode == MODE_ADMIN){
+    $password = $_GET["password"];
+
+    $adminDb = new AdminDatabase();
+
+    echo $adminDb->validate($password)? 1:0;
+  }
+
+  else if($mode == MODE_ADMIN_GET_CONFIG){
+    $password = $_GET["password"];
+
+    $adminDb = new AdminDatabase();
+
+    $config = json_encode($adminDb->getConfig($password));
+
+    echo $config;
+  }
+
+  else if($mode == MODE_ADMIN_EDIT_CONFIG){
+    $password = $_GET["password"];
+    $params = array();
+
+    $adminDb = new AdminDatabase();
+
+    if(isset($_GET["seed"])) $params["seed"] = $_GET["seed"];
+    if(isset($_GET["topics"])) $params["topics"] = explode(",", $_GET["topics"]);
+    if(isset($_GET["questionAmount"])) $params["questionAmount"] = $_GET["questionAmount"];
+    if(isset($_GET["timeLimit"])) $params["timeLimit"] = $_GET["timeLimit"];
+    if(isset($_GET["testIsOpen"])) $params["testIsOpen"] = $_GET["testIsOpen"];
+    if(isset($_GET["answerIsOpen"])) $params["answerIsOpen"] = $_GET["answerIsOpen"];
+
+    $adminDb->editConfig($params, $password);
+  }
+
+  else if($mode == MODE_ADMIN_RESET_ATTEMPT){
+    $password = $_GET["password"];
+  }
 ?>

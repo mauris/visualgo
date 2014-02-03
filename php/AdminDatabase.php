@@ -4,7 +4,7 @@
    * Schema:
    * - index: 0 (primary key) (just an identifier)
    * - seed
-   * - arrayOfTopics (serialized array)
+   * - topics (serialized array)
    * - questionAmount
    * - timeLimit (in seconds, int)
    * - testIsOpen (boolean)
@@ -25,7 +25,7 @@
     }
 
     protected function init(){
-      mysqli_query($this->db, "INSERT IGNORE INTO `test_config` (`index`, `seed`, `arrayOfTopics`, `questionAmount`, `timeLimit`,
+      mysqli_query($this->db, "INSERT IGNORE INTO `test_config` (`index`, `seed`, `topics`, `questionAmount`, `timeLimit`,
         `testIsOpen`, `answerIsOpen`) VALUES ('"."0"."','"."0"."','".serialize(array("BST"))."','"."10"."','"."60"."','"."0".
         "','"."0"."')");
     }
@@ -37,46 +37,48 @@
     /*
      * parameters (all optional):
      * - seed
-     * - arrayOfTopics
+     * - topics
      * - questionAmount
      * - timeLimit (in seconds, int)
      * - testIsOpen (boolean)
      * - answerIsOpen (boolean)
      */
 
-    public function changeSettings($params, $password){
+    public function editConfig($params, $password){
       if(!$this->validate($password)) return false;
 
       if(array_key_exists("seed", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `seed` = ".$params["seed"].
-        " WHERE `index` = "."0"."')");
+        " WHERE `index` = "."0");
 
-      if(array_key_exists("arrayOfTopics", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `arrayOfTopics` = ".
-        serialize($params["arrayOfTopics"])." WHERE `index` = "."0"."')");
+      echo mysqli_error($this->db);
+
+      if(array_key_exists("topics", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `topics` = ".
+        serialize($params["topics"])." WHERE `index` = "."0");
 
       if(array_key_exists("questionAmount", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `questionAmount` = ".
-        $params["questionAmount"]." WHERE `index` = "."0"."')");
+        $params["questionAmount"]." WHERE `index` = "."0");
 
       if(array_key_exists("timeLimit", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `timeLimit` = ".
-        $params["timeLimit"]." WHERE `index` = "."0"."')");
+        $params["timeLimit"]." WHERE `index` = "."0");
 
       if(array_key_exists("testIsOpen", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `testIsOpen` = ".
-        ($params["testIsOpen"]? "1":"0")." WHERE `index` = "."0"."')");
+        ($params["testIsOpen"]? "1":"0")." WHERE `index` = "."0");
 
       if(array_key_exists("answerIsOpen", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `answerIsOpen` = ".
-        ($params["answerIsOpen"]? "1":"0")." WHERE `index` = "."0"."')");
+        ($params["answerIsOpen"]? "1":"0")." WHERE `index` = "."0");
 
       return true;
     }
 
-    public function getSettings($password){
+    public function getConfig($password){
       if(!$this->validate($password)) return false;
 
       $result = mysqli_query($this->db, "SELECT * FROM `test_config` WHERE `index`='"."0"."'");
-      $settings = mysqli_fetch_assoc($result);
-      echo $settings;
-      unset($settings["index"]);
+      $config = mysqli_fetch_assoc($result);
+      $config["topics"] = unserialize($config["topics"]);
+      unset($config["index"]);
 
-      return $settings;
+      return $config;
     }
   }
 ?>
