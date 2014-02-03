@@ -2,6 +2,7 @@ var MODE = "TRAINING";
 var seed = (Math.floor(Math.random()*1000000000));
 nQns = 10;
 var sitePrefix = document.URL.replace("/controlpanel.html","")+"/php/Test.php";
+var timeLimit = 2400; // in seconds
 var testOn = true;
 var ansOn = true;
 
@@ -64,6 +65,22 @@ function getQnsAndStart() {
 }
 
 /*-------SETTINGS PANEL FUNCTIONS-------*/
+function displayConfig(data) { //data is a JSON object
+	seed = data.seed;
+	$('#set-seed').val(seed);
+	topics = data.topics;
+	for(var i=0; i<topics.length; i++) {
+		topicName = topics[i];
+		$('.topic[name='+topicName+']').addClass('topic-selected');
+	}
+	nQns = data.questionAmount;
+	$('#set-nqns').val(nQns);
+	timeLimit = data.timeLimit;
+	$('#set-time').val(timeLimit);
+	if(data.testIsOpen) { testOn = true;} else { testOn = false; }
+	if(data.answerIsOpen) { ansOn = true;} else { ansOn = false; }
+}
+
 function toggleQnSettings() {
 	if(qnSettingsOpen) {
 		$('.qn-settings').slideUp();
@@ -101,19 +118,6 @@ $(document).ready (function() {
 	});
 	
 	/*-------LOG IN CSS-------*/
-	$('#login-id').focusin(function() {
-		$(this).css('box-shadow','0px 0px 3px '+surpriseColour+' inset');
-		if ($(this).val() == "user id") {
-			$(this).css('color','black');
-			$(this).val("");
-		}
-	}).focusout(function() {
-		$(this).css('box-shadow','0px 0px 3px #929292 inset');
-		if ($(this).val() == "") {
-			$(this).css('color','#aaa');
-			$(this).val("user id");
-		}
-	});
 	$('#login-pw').focusin(function() {
 		$(this).css('box-shadow','0px 0px 3px '+surpriseColour+' inset');
 		if ($(this).val() == "password") {
@@ -132,19 +136,29 @@ $(document).ready (function() {
 	
 	/*-------LOG IN AUTHENTIFICATION-------*/
 	$('#login-go').click(function() {
-		adminid = $('#login-id').val();
 		adminpw = $('#login-pw').val();
 		//authentificate
-		//for now: just enter, later: use AJAX to query database
-		if(true) {
-			$('#login-err').html("");
-			$('#login-screen').fadeOut("fast");
-			$('#settings-screen').fadeIn("fast");
-			if(topics.length > 0) {
-				startTraining();
+		$.ajax({
+			url: sitePrefix+"?mode="+MODE_ADMIN+"&password="+adminpw
+		}).done(function(passed) {
+			passed = parseInt(passed);
+			if(passed == 1) {
+				$('#login-err').html("");
+				$('#login-screen').fadeOut("fast");
+				$.ajax({
+					url: sitePrefix+"?mode="+MODE_ADMIN_GET_CONFIG+"&password="+adminpw
+				}).done(function(data) {
+					//show current configurations
+					data = JSON.parse(data);
+					displayConfig(data);
+					$('#settings-screen').fadeIn("fast");
+					if(topics.length > 0) {
+						startTraining();
+					}
+				});
 			}
-			return false;
-		}
+		});
+		return false;
 	});
 	
 	/*-------SETTINGS MENUS-------*/

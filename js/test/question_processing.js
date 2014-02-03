@@ -65,6 +65,8 @@ function extractQnText(topic, type, params) { //returns string
 		case QUESTION_TOPIC_SSSP:
 			switch(type) {
 				case QUESTION_TYPE_GREATER_LESS:	toReturn = SSSP_GREATER_LESS; break;
+				case QUESTION_TYPE_PATH:			toReturn = SSSP_PATH; break;
+				case QUESTION_TYPE_PATH_WEIGHT:		toReturn = SSSP_PATH_WEIGHT; break;
 			}
 		case QUESTION_TOPIC_GRAPH_TRAVERSAL:
 			switch(type) {

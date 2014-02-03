@@ -40,7 +40,9 @@ const MST_PRIM_SEQUENCE = "Given the undirected weighted graph as shown in the p
 const MST_KRUSKAL_SEQUENCE = "Given the undirected weighted graph as shown in the picture, click the first |amt| edges (the order matters) that are added to the MST by Kruskal\'s algorithm!";
 const MST_MINIMAX_EDGE = "Click the edge that has the maximum edge weight along the minimax path from vertex |vertexA| to vertex |vertexB|. The minimax path between two vertices is defined as the path that minimizes the maximum edge weight between the two vertices.";
 
-const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed weighted graph that have shortest path values |greaterless| than |value| from source vertex |source|.";
+const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed weighted graph that are reachable from source vertex |source| and have shortest path values |greaterless| than |value| from the source.";
+const SSSP_PATH = "Click the sequence of vertices that constitutes the shortest path from source vertex |source| to vertex |value|. If vertex |value| is unreachable from the source, select 'No Answer'.";
+const SSSP_PATH_WEIGHT = "What is the weight of the shortest path from source vertex |source| to vertex |value|? If |value| is unreachable from the source, select 'No Answer'.";
 
 const GRAPH_TRAVERSAL_TRAVERSAL = "Click the sequence of vertices that are visited by |subtype| from source vertex |value|. The neighbours of a vertex are listed in ascending vertex number.";
 const GRAPH_TRAVERSAL_DISCONNECT = "Click all vertices that will cause the graph to be disconnected if deleted. Note that the vertex deletion is independent.";

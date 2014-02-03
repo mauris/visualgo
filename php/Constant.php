@@ -56,6 +56,10 @@
   const QUESTION_TYPE_PRIM_SEQUENCE = "prim";
   const QUESTION_TYPE_KRUSKAL_SEQUENCE = "kruskal";
   const QUESTION_TYPE_MINIMAX_EDGE = "minimax";
+  
+  // SSSP-Specific
+  const QUESTION_TYPE_PATH = "path";
+  const QUESTION_TYPE_PATH_WEIGHT = "pathWeight";
 
   // General
   const QUESTION_SUB_TYPE_NONE = "";

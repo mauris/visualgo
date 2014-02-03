@@ -81,6 +81,48 @@ class SSSP {
 		return $shortestPath;
 	}
 	
+	//returns an array of integers (path from $start to $end)
+	public function path($start, $end) {
+		$shortestPath = array(); //from $start
+		$parent = array();
+		
+		//initialize $shortestPath to infinity, and $parent to -1 (no parent)
+		$akeys = $this->getAllElements();
+		for($i=0; $i<count($akeys); $i++) {
+			$shortestPath[$akeys[$i]] = INFINITY;
+			$parent[$akeys[$i]] = -1;
+		}
+		$shortestPath[$start] = 0;
+		
+		//relax edges
+		for($i=1; $i<count($akeys); $i++) { // V-1 times
+			//for all edges
+			for($iu=0; $iu<count($akeys); $iu++) { //iu goes from 0 to number of vertices-1
+				$u = $akeys[$iu]; //u is the key of the vertex
+				for($iv=0; $iv<count($this->adjList[$u]); $iv++) { //iv goes from 0 to number of adjacent vertices-1
+					$v = $this->adjList[$u][$iv]->v(); //v is the key of the adjacent vertex
+					$w = $this->adjList[$u][$iv]->w(); //w is the weight of edge u-->v
+					if (($shortestPath[$u] + $w) < $shortestPath[$v]) {
+						$shortestPath[$v] = $shortestPath[$u] + $w;
+						$parent[$v] = $u;
+					}
+				}
+			}
+		}
+		//this bellman ford does not look for negative cycles
+		
+		//find path
+		$path = array();
+		if($shortestPath[$end] != INFINITY) { //reachable
+			$path[] = $end;
+			while($parent[$end] != -1) {
+				array_unshift($path, $parent[$end]);
+				$end = $parent[$end];
+			}
+		}
+		return $path;
+	}
+	
 }
 
 ?>

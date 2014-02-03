@@ -37,19 +37,14 @@
 
 #login-screen {
 	position: fixed;
-	height: 300px;
+	height: 50px;
 	width: 500px;
 	top: 50%;
 	left: 50%;
-	margin-top: -150px;
+	margin-top: -25px;
 	margin-left: -250px;
 }
-	#login-screen h1 {
-		text-align: center;
-		font-weight: bold;
-		font-size: 26px;
-	}
-	#login-screen form { text-align: center; padding-top: 40px; }
+	#login-screen form { text-align: center; }
 		#login-screen input[type=text], input[type=password] {
 			color: #aaa;
 			box-shadow: 0px 0px 3px #929292 inset;
@@ -60,7 +55,7 @@
 			border-radius: 2px; 
 		}
 		#login-go {
-			margin: 40px 5px 0px 5px;
+			margin: 0px 5px;
 			width: 80px; 
 		}
 		#login-err { margin-top: 20px; color: #df3939; font-weight: bold; }
@@ -78,7 +73,7 @@
 	box-shadow: 0px 0px 5px #929292;
 }
 	#settings-screen h1 {
-		font-size: 26px;
+		font-size: 24px;
 		font-weight: normal;
 		margin-bottom: 20px;
 		cursor: pointer;
@@ -120,8 +115,12 @@
 	#set-nqns { width: 85px; }
 	#load-test {
 		width: 105px;
-		margin-left: 10px;
 		display: inline-block;
+	}
+	#save {
+		width: 105px;
+		display: inline-block;
+		margin-left: 10px;
 	}
 	#toggle-test, #toggle-ans {
 		width: 105px;
@@ -130,10 +129,12 @@
 		font-weight: bold;
 		color: white;
 	}
+	#set-time { width: 85px; }
 	#reset-attempt { width: 85px; color: #aaa; }
 	#reset { width: 105px; }
 	
 /*test screen shift*/
+/*
 #qn-no {
 	top: 40px;
 	left: 340px;
@@ -164,4 +165,4 @@ svg {
 #result-screen {
 	margin-left: -100px;
 }
-
+*/

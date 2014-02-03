@@ -2,6 +2,8 @@
 class SsspQuestionGenerator{
   protected $answerFunctionList = array(
       QUESTION_TYPE_GREATER_LESS => "checkAnswerGreaterLess",
+	  QUESTION_TYPE_PATH => "checkAnswerPath",
+	  QUESTION_TYPE_PATH_WEIGHT => "checkAnswerPathWeight",
     );
 
     public function __construct(){
@@ -30,6 +32,8 @@ class SsspQuestionGenerator{
       $potentialQuestions = array();
 
       $potentialQuestions[] = "generateQuestionGreaterLess";
+	  $potentialQuestions[] = "generateQuestionPath";
+	  $potentialQuestions[] = "generateQuestionPathWeight";
 
       return $potentialQuestions;
     }
@@ -53,8 +57,6 @@ class SsspQuestionGenerator{
 	  $greaterLessIndex = rand(0,1);
 	  $ssspContent = $sssp->getAllElements();
       $startValue = $ssspContent[rand(0, count($ssspContent)-1)];
-	  //echo("source: ".$startValue." ");
-	  //echo(implode($sssp->sssp($startValue))."<br/>");
 	  $longestSP = 0;
 	  $ssspAns = $sssp->sssp($startValue);
 	  for($i=0; $i<count($ssspAns); $i++) {
@@ -87,7 +89,7 @@ class SsspQuestionGenerator{
       $ssspAns = $sssp->sssp($startValue);
 	  $ans = array();
 	  for($i=0; $i<count($ssspAns); $i++) {
-		if($greaterLess == "greater" && $ssspAns[$i] > $bound) {
+		if($greaterLess == "greater" && $ssspAns[$i] > $bound && $ssspAns[$i] != INFINITY) {
 		  $ans[] = $i;
 		} else if ($greaterLess == "less" && $ssspAns[$i] < $bound) {
 		  $ans[] = $i;
@@ -110,6 +112,93 @@ class SsspQuestionGenerator{
         }
       }
 
+      return $correctness;
+    }
+	
+	protected function generateQuestionPath(){
+      $sssp = $this->generateSSSP();
+	  $ssspContent = $sssp->getAllElements();
+      $startValue = $ssspContent[rand(0, count($ssspContent)-1)];
+	  $destValue = $ssspContent[rand(0, count($ssspContent)-1)];
+	  
+      $qObj = new QuestionObject();
+      $qObj->qTopic = QUESTION_TOPIC_SSSP;
+      $qObj->qType = QUESTION_TYPE_PATH;
+      $qObj->qParams = array("source" => $startValue, "value" => $destValue);
+      $qObj->aType = ANSWER_TYPE_VERTEX;
+      $qObj->aAmt = ANSWER_AMT_MULTIPLE;
+      $qObj->ordered = true;
+      $qObj->allowNoAnswer = true;
+      $qObj->graphState = $sssp->toGraphState();
+      $qObj->internalDS = $sssp;
+
+      return $qObj;
+    }
+
+    protected function checkAnswerPath($qObj, $userAns){
+      $sssp = $qObj->internalDS;
+	  $startValue = $qObj->qParams["source"];
+	  $destValue = $qObj->qParams["value"];
+      $ans = $sssp->path($startValue, $destValue);
+	  
+      sort($userAns);
+      sort($ans);
+	  	  
+      $correctness = true;
+      if(count($ans) != count($userAns)) $correctness = false;
+      else{
+        for($i = 0; $i < count($ans); $i++){
+          if($ans[$i] != $userAns[$i]){
+            $correctness = false;
+            break;
+          }
+        }
+      }
+
+      return $correctness;
+    }
+	
+	protected function generateQuestionPathWeight(){
+      $sssp = $this->generateSSSP();
+	  $ssspContent = $sssp->getAllElements();
+      $startValue = $ssspContent[rand(0, count($ssspContent)-1)];
+	  $destValue = $ssspContent[rand(0, count($ssspContent)-1)];
+	  
+      $qObj = new QuestionObject();
+      $qObj->qTopic = QUESTION_TOPIC_SSSP;
+      $qObj->qType = QUESTION_TYPE_PATH_WEIGHT;
+      $qObj->qParams = array("source" => $startValue, "value" => $destValue);
+      $qObj->aType = ANSWER_TYPE_FILL_BLANKS;
+      $qObj->aAmt = ANSWER_AMT_SINGLE;
+      $qObj->ordered = false;
+      $qObj->allowNoAnswer = true;
+      $qObj->graphState = $sssp->toGraphState();
+      $qObj->internalDS = $sssp;
+
+      return $qObj;
+    }
+
+    protected function checkAnswerPathWeight($qObj, $userAns){
+      $sssp = $qObj->internalDS;
+	  $startValue = $qObj->qParams["source"];
+	  $destValue = $qObj->qParams["value"];
+      $ssspAns = $sssp->sssp($startValue);
+	  $ans = array();
+	  if($ssspAns[$destValue] != INFINITY) {
+		$ans = $ssspAns[$destValue];
+	  }
+	  	  
+      $correctness = true;
+      if(count($ans) != count($userAns)) $correctness = false;
+      else{
+        for($i = 0; $i < count($ans); $i++){
+          if($ans[$i] != $userAns[$i]){
+            $correctness = false;
+            break;
+          }
+        }
+      }
+	  //echo(implode($ssspAns).'<br/>');
       return $correctness;
     }
 }

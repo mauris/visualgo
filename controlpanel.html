@@ -27,11 +27,16 @@
 
 <body>
 
+<!--div id="top-bar">
+	<a id="home" href="index.html">we<span class="colour">need</span>a<span class="colour">name</span></a>
+    <span id="title">
+    	<a class="selected-viz" href="testmode.html">Admin Control Panel</a>&nbsp&nbsp
+    </span>
+</div-->
+
 <div id="login-screen">
-	<h1>Admin Control Panel</h1>
     <form>
-    	<input id="login-id" type="text" value="user id" autocomplete="off"/><br/>
-        <input id="login-pw" type="text" value="password"/><br/>
+        <input id="login-pw" type="text" value="password"/>
         <input id="login-go" class="button" type="submit" value="LOG IN" />
         <div id="login-err"></div>
     </form>
@@ -57,8 +62,13 @@
         </div><br/>
         
         <h2>No. of questions</h2>
-        <input id="set-nqns" type="text" value="10" autocomplete="off"/><!--
-        --><div id="load-test" class="button">Try test</div>
+        <input id="set-nqns" type="text" value="10" autocomplete="off"/>
+        <br/><br/>
+        
+        <div style="">
+            <div id="load-test" class="button">Try test</div><!--
+            --><div id="save" class="button">SAVE this test</div>
+        </div>
     </form>
     
     <h1 id="more-settings">More Settings<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
@@ -66,6 +76,9 @@
         <h2 style="display: inline-block; width: 120px;">Test is:</h2><h2 style="display: inline-block;">Answer key is:</h2>
         <div id="toggle-test" class="button" style="margin-right: 10px;">ON</div><!--
         --><div id="toggle-ans" class="button">ON</div><br/><br/>
+        
+        <h2>Time limit (min)</h2>
+        <input id="set-time" type="text" value="40" autocomplete="off"/><br/><br/>
         
         <h2>Reset student attempt</h2>
     	<input id="reset-attempt" style="margin-right: 10px;" type="text" value="student id" autocomplete="off"/><!--
@@ -105,6 +118,15 @@
     <div id="score"></div>
    <div id="goto-answer">Check your answers</div>
 </div>
+
+<!--div id="left-bar"></div>
+<div id="right-bar"></div-->
+<!-- Bottom bar and overlay popups -->
+<!--div id="bottom-bar">
+	<a id="trigger-about">About</a>
+    <a id="trigger-team">Team</a>
+    <a id="trigger-terms">Terms of use</a>
+</div-->
 
 <div id="dark-overlay"></div>
 <div id="about" class="overlays"></div>
