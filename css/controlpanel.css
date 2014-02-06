@@ -58,19 +58,16 @@
 			margin: 0px 5px;
 			width: 80px; 
 		}
-		#login-err { margin-top: 20px; color: #df3939; font-weight: bold; }
+		#login-err { margin-top: 20px; color: #df3939; font-size: 14px; }
 		
 #settings-screen {
 	display: none;
 	position: fixed;
-	top: 0px;
-	left: 0px;
 	height: 100%;
 	width: 220px;
-	padding: 40px;
+	padding: 20px 40px;
 	background: #eee;
 	border-right: 1px solid #ccc;
-	box-shadow: 0px 0px 5px #929292;
 }
 	#settings-screen h1 {
 		font-size: 24px;
@@ -134,7 +131,7 @@
 	#reset { width: 105px; }
 	
 /*test screen shift*/
-/*
+
 #qn-no {
 	top: 40px;
 	left: 340px;
@@ -165,4 +162,3 @@ svg {
 #result-screen {
 	margin-left: -100px;
 }
-*/

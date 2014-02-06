@@ -72,13 +72,34 @@ function displayConfig(data) { //data is a JSON object
 	for(var i=0; i<topics.length; i++) {
 		topicName = topics[i];
 		$('.topic[name='+topicName+']').addClass('topic-selected');
+		$('.topic[name='+topicName+']').css('background', surpriseColour).css('color','white');
 	}
 	nQns = data.questionAmount;
 	$('#set-nqns').val(nQns);
 	timeLimit = data.timeLimit;
-	$('#set-time').val(timeLimit);
-	if(data.testIsOpen) { testOn = true;} else { testOn = false; }
-	if(data.answerIsOpen) { ansOn = true;} else { ansOn = false; }
+	$('#set-time').val(Math.floor(timeLimit/60));
+	if(data.testIsOpen==1) {
+		testOn = true;
+		$('#toggle-test').html("ON");
+	} else if(data.testIsOpen==0) {
+		testOn = false;
+		$('#toggle-test').html("OFF");
+	}
+	if(data.answerIsOpen==1) {
+		ansOn = true;
+		$('#toggle-ans').html("ON");
+	} else if(data.answerIsOpen==0) {
+		ansOn = false;
+		$('#toggle-ans').html("OFF");
+	}
+}
+
+function saveConfig() {
+	$.ajax({
+		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.join()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
+	}).done(function(passed) {
+		//alert("done");
+	});
 }
 
 function toggleQnSettings() {
@@ -136,6 +157,7 @@ $(document).ready (function() {
 	
 	/*-------LOG IN AUTHENTIFICATION-------*/
 	$('#login-go').click(function() {
+		event.preventDefault();
 		adminpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
@@ -156,9 +178,10 @@ $(document).ready (function() {
 						startTraining();
 					}
 				});
+			} else {
+				$('#login-err').html("Incorrect password");
 			}
 		});
-		return false;
 	});
 	
 	/*-------SETTINGS MENUS-------*/
@@ -235,6 +258,11 @@ $(document).ready (function() {
 		}
 	});
 	
+	/*-------SAVE TEST DEMO-------*/
+	$('#save').click(function() {
+		saveConfig();
+	});
+	
 	/*-------TOGGLE TEST-------*/
 	$('#toggle-test').hover(function() {
 		if(testOn) {
@@ -256,6 +284,7 @@ $(document).ready (function() {
 		} else {
 			$(this).html("OFF");
 		}
+		saveConfig();
 	});
 	
 	/*-------TOGGLE ANS-------*/
@@ -279,6 +308,7 @@ $(document).ready (function() {
 		} else {
 			$(this).html("OFF");
 		}
+		saveConfig();
 	});
 	
 	/*-------RESET STUDENT ATTEMPT-------*/
