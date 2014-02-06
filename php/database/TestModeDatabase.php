@@ -45,6 +45,15 @@
       return $config;
     }
 
+    public function getRemainingTime($username){
+      $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = ".$username);
+      $temp = mysqli_fetch_assoc($startTime);
+      $startTime = strtotime($temp["startTime"]);
+      $now = time();
+
+      return $now - $startTime;
+    }
+
     public function begin($username, $password){
       if(!$this->validate($username, $password)) return false;
 
@@ -70,7 +79,6 @@
      * params (all fields compulsory):
      * - answer: student's answer
      * - grade: student's grade
-     * - timeTaken: time taken by student to complete the test
      */
 
     public function submit($username, $password, $params){
@@ -90,14 +98,18 @@
       if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
 
       // validate submission params
-      if(!array_key_exists("answer", $params) || !array_key_exists("grade", $params) || !array_key_exists("timeTaken", $params) ||
-        !array_key_exists("startTime", $params)){
+      if(!array_key_exists("answer", $params) || !array_key_exists("grade", $params)){
         return false;
-      }       
+      }
+
+      $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = ".$username);
+      $temp = mysqli_fetch_assoc($startTime);
+      $startTime = strtotime($temp["startTime"]);
+      $now = time();
 
       mysqli_query($this->db, "UPDATE `test` SET `answer` = '".serialize($params["answer"])."' WHERE `username` = ".$username);
       mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["grade"]."' WHERE `username` = ".$username);
-      mysqli_query($this->db, "UPDATE `test` SET `timeTaken` = '".$params["timeTaken"]."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `timeTaken` = '".$now-$startTime."' WHERE `username` = ".$username);
     }
   } 
 ?>

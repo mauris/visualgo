@@ -143,21 +143,105 @@
 
   else if($mode == MODE_LOGIN){
     // only verification
+    $username = $_GET["username"];
+    $password = $_GET["password"];
+    $testModeDb = new TestModeDatabase();
+
+    echo $testModeDb->validate($username, $password)? 1:0;
   }
 
   else if($mode == MODE_TEST_BEGIN){
     $username = $_GET["username"];
     $password = $_GET["password"];
-    $attemptCount = 0;
-    $startTime = date('Y-m-d H:i:s');
+    $testModeDb = new TestModeDatabase();
 
-    
+    if($testModeDb->validate($username, $password)){
+      echo json_encode($testModeDb->getTestParams());
+      $testModeDb->begin($username, $password);
+    }
+
+    else echo 0;
   }
 
   else if($mode == MODE_TEST_SUBMIT){
     $username = $_GET["username"];
     $password = $_GET["password"];
     $aArrCsv = $_GET["ans"];
+
+    $testModeDb = new TestModeDatabase();
+    $params = $testModeDb->getTestParams();
+
+
+    $qSeed = $params["seed"];
+    $qAmt = $params["questionAmount"];
+    $qTopics = $params["topics"];
+
+    for($i = 0; $i < count($aArrCsv); $i++){
+      $aArr[] = explode(",",$aArrCsv[$i]);
+    }
+    $score = 0;
+
+    // Question generator
+    srand((int)$qSeed);
+
+    // foreach($questionGenerator as $key => $value){
+    //   $value->seedRng(rand());
+    // }
+
+    $qArr = array();
+    $qAmtTopic = array();
+
+    // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
+
+    for($i = 0; $i < count($qTopics); $i++){
+      $qAmtTopic[] = 1;
+      $qAmt--;
+    }
+
+    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
+      $addition = rand(1, $qAmt);
+      $qAmt -= $addition;
+      $qAmtTopic[$i] += $addition;
+    }
+
+    for($i = 0; $i < count($qTopics); $i++){
+      if(array_key_exists($qTopics[$i], $questionGenerator))
+        $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
+    }
+    // End of question generator
+
+    for($i = 0; $i < count($qArr);$i++){
+      if($aArr[$i][0] == UNANSWERED){
+        $aCorrectness[$i] = false;
+        continue;
+      }
+      else if($aArr[$i][0] == NO_ANSWER){
+        $aArr[$i] = array();
+      }
+      // echo($i);
+      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
+      if($aCorrectness[$i]){
+        $score++;
+        // echo 1;
+      }
+      // else echo 0;
+      // else echo $i.",";
+    }
+
+    $submissionParams = array();
+    $submissionParams["answer"] = $aArr;
+    $submissionParams["grade"] = $score;
+    $testModeDb->submit($username, $password, $submissionParams);
+
+    echo $score;
+
+  }
+
+  else if($mode == MODE_TEST_CHECK_TIME){
+    $username = $_GET["username"];
+    $testModeDb = new TestModeDatabase();
+
+    echo $testModeDb->getRemainingTime($username);
   }
 
   else if($mode == MODE_TEST_GET_ANSWERS){
@@ -206,5 +290,9 @@
     $adminDb = new AdminDatabase();
 
     echo $adminDb->resetAttempt($username, $password)? 1:0;
+  }
+
+  else{
+    echo "Your request will be processed shortly...";
   }
 ?>
