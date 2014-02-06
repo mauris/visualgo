@@ -42,6 +42,7 @@
     public function getTestParams(){
       $result = mysqli_query($this->db, "SELECT * FROM `test_config` WHERE `index`='"."0"."'");
       $config = mysqli_fetch_assoc($result);
+      $config["topics"] = unserialize($config["topics"]);
 
       return $config;
     }
