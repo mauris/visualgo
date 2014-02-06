@@ -24,11 +24,14 @@
     }
 
     protected function init(){
+      $userList = mysqli_query($this->db, "SELECT `username` FROM `user`");
       
     }
 
     public function validate($username, $password){
-
+      $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = ".$username);
+      $user = mysqli_fetch_assoc($user);
+      return $password = $user["password"];
     }
 
     public function getTestParams(){
