@@ -98,9 +98,10 @@
   const MODE_GENERATE_SEED = 0;
   const MODE_GENERATE_QUESTIONS = 1;
   const MODE_CHECK_ANSWERS = 2;
-  const MODE_TEST_BEGIN = 3;
-  const MODE_TEST_SUBMIT = 4;
-  const MODE_TEST_GET_ANSWERS = 5;
+  const MODE_LOGIN = 3;
+  const MODE_TEST_BEGIN = 4;
+  const MODE_TEST_SUBMIT = 5;
+  const MODE_TEST_GET_ANSWERS = 6;
   const MODE_ADMIN = 10;
   const MODE_ADMIN_GET_CONFIG = 11;
   const MODE_ADMIN_EDIT_CONFIG = 12;
