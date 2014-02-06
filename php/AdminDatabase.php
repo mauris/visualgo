@@ -6,6 +6,7 @@
    * - seed
    * - topics (serialized array)
    * - questionAmount
+   * - maxAttemptCount
    * - timeLimit (in seconds, int)
    * - testIsOpen (boolean)
    * - answerIsOpen (boolean)
@@ -57,8 +58,9 @@
       if(array_key_exists("questionAmount", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `questionAmount` = ".
         $params["questionAmount"]." WHERE `index` = "."0");
 
+      // Max Attempt Count cannot be lower than 0
       if(array_key_exists("maxAttemptCount", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `maxAttemptCount` = ".
-        $params["maxAttemptCount"]." WHERE `index` = "."0");
+        ($params["maxAttemptCount"]>0? $params["maxAttemptCount"]:1)." WHERE `index` = "."0");
 
       if(array_key_exists("timeLimit", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `timeLimit` = ".
         $params["timeLimit"]." WHERE `index` = "."0");

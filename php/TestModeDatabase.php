@@ -7,7 +7,7 @@
    * - grade
    * - timeTaken
    * - startTime (datetime data structure)
-   * - attemptCount: boolean
+   * - attemptCount
    */
 
   class TestDatabase{
@@ -27,9 +27,8 @@
       
     }
 
-    public function login($username, $password){
-      // update attempt counter
-      // if test is not open don't update attempt counter
+    public function validate($username, $password){
+
     }
 
     public function getTestParams(){
@@ -39,19 +38,47 @@
       return $config;
     }
 
+    public function begin($username, $password){
+      if(!$this->validate($username, $password)) return false;
+
+      // update attempt counter
+      // if test is not open don't update attempt counter
+
+      if(!$this->getTestParams["testIsOpen"]) return false;
+
+      $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = ".$username);
+      $attemptCount = mysqli_fetch_assoc($attemptCount)["attemptCount"];
+      $attemptCount++;
+      $maxAttemptCount = $this->getTestParams["maxAttemptCount"];
+      if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
+
+      mysqli_query($this->db, "UPDATE `test` SET `attemptCount` = '".($attemptCount)."' WHERE `username` = ".$username);
+
+      $startTime = date('Y-m-d H:i:s');
+      mysqli_query($this->db, "UPDATE `test` SET `startTime` = '".$startTime."' WHERE `username` = ".$username);
+    }
+
     /*
      * params (all fields compulsory):
      * - answer: student's answer
      * - grade: student's grade
      * - timeTaken: time taken by student to complete the test
-     * - startTime: starting time of the test
      */
 
     public function submit($username, $password, $params){
       // validate username and password
+      if(!$this->validate($username, $password)) return false;
+
+      // validate test is open
+      if(!$this->getTestParams["testIsOpen"]) return false;
 
       // validate attempt count is > 0 and less than max allowed
-      
+      $maxAttemptCount = $this->getTestParams["maxAttemptCount"];
+
+      $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = ".$username);
+      $attemptCount = mysqli_fetch_assoc($attemptCount)["attemptCount"];
+
+      if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
 
       // validate submission params
       if(!array_key_exists("answer", $params) || !array_key_exists("grade", $params) || !array_key_exists("timeTaken", $params) ||
@@ -61,8 +88,7 @@
 
       mysqli_query($this->db, "UPDATE `test` SET `answer` = '".serialize($params["answer"])."' WHERE `username` = ".$username);
       mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["grade"]."' WHERE `username` = ".$username);
-      mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["timeTaken"]."' WHERE `username` = ".$username);
-      mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["startTime"]."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `timeTaken` = '".$params["timeTaken"]."' WHERE `username` = ".$username);
     }
     
 ?>

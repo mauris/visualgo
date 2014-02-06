@@ -10,15 +10,6 @@
    */
 
   /*
-   * Each test mode will have one table
-   * Schema:
-   * - username (foreign key to "user" table)
-   * - answer: serialized array of answers
-   * - grade
-   * - timeTaken
-   */
-
-  /*
    * Each user will have one training mode table
    * Schema:
    * - session (we need to decide how much session to store)
