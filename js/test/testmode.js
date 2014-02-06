@@ -17,7 +17,7 @@ function submitTest() {
 	//get score
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = sitePrefix+"?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	var queryStr = sitePrefix+"?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
 	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
@@ -168,20 +168,13 @@ $(document).ready (function() {
 		studentpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_ADMIN+"&password=test" //change later
+			url: sitePrefix+"?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
 				$('#login-err').html("");
 				$('#login-screen').fadeOut("fast");
-				$.ajax({
-					url: sitePrefix+"?mode="+MODE_ADMIN_GET_CONFIG+"&password=test" //change later
-				}).done(function(data) {
-					//show current configurations
-					data = JSON.parse(data);
-					useConfig(data);
-					$('#instructions-screen').fadeIn("fast");
-				});
+				$('#instructions-screen').fadeIn("fast");
 			} else {
 				$('#login-err').html("Incorrect username or password");
 			}
@@ -190,9 +183,26 @@ $(document).ready (function() {
 	
 	/*-------LOAD TEST-------*/
 	$('#start-test').click(function() {
-		$('#instructions-screen').fadeOut("fast");
-		$('#question-nav').html("");
-		startTest();
+		$.ajax({
+			url: sitePrefix+"?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw
+		}).done(function(data) {
+			if(data != 0) {
+				//show current configurations
+				data = JSON.parse(data);
+				if(data.testIsOpen==1) {
+					useConfig(data);
+					$('#instructions-screen').fadeOut("fast");
+					$('#question-nav').html("");
+					startTest();
+				} else {
+					$('#dark-overlay').fadeIn(function(){
+						$('#no-test').fadeIn(function() {
+							setTimeout(function(){ $('#no-test').fadeOut(function() { $('#dark-overlay').fadeOut();});}, 1000);
+						});
+					});
+				}
+			}
+		});
 	});
 
 	/*-------SUBMIT QUIZ-------*/

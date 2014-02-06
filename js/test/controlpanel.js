@@ -16,6 +16,16 @@ if(surpriseColour == '#fec515' || surpriseColour == '#a7d41e') { //discard yello
 	surpriseColour = '#52bc69';
 }
 
+function loadTraining() {
+	$('#result-screen').fadeOut("fast");
+	$('#question-nav').html("");
+	if(topics.length > 0) {
+		startTraining();
+	} else {
+		alert("Select some topics first!");
+	}
+}
+
 function startTraining() {
 	init();
 	getQnsAndStart(); //fill qnTextArr, qnGraphArr, and qnTypeArr
@@ -98,7 +108,7 @@ function displayConfig(data) { //data is a JSON object
 }
 
 function saveConfig() {
-	console.log(sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0));
+	loadTraining();
 	$.ajax({
 		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
 	}).done(function(passed) {
@@ -294,13 +304,7 @@ $(document).ready (function() {
 	
 	/*-------LOAD TEST DEMO-------*/
 	$('#load-test').click(function() {
-		$('#result-screen').fadeOut("fast");
-		$('#question-nav').html("");
-		if(topics.length > 0) {
-			startTraining();
-		} else {
-			alert("Select some topics first!");
-		}
+		loadTraining();
 	});
 	
 	/*-------SAVE TEST DEMO-------*/

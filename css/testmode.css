@@ -36,7 +36,7 @@
 			margin: 40px 5px 0px 5px;
 			width: 80px; 
 		}
-		#login-err { margin-top: 20px; color: #df3939; font-weight: bold; }
+		#login-err { margin-top: 20px; color: #df3939; font-size: 14px; }
 		
 #instructions-screen {	
 	display: none;
@@ -59,6 +59,14 @@
 	ul#instructions { margin: 45px 0px; text-align: left; }
 	#instructions li { font-size: 14px; padding: 4px 0px; list-style-type: none; }
 	#start-test { width: 100px; }
+	#no-test {
+		height: 80px;
+		width: 300px;
+		margin-left: -150px;
+		margin-top: -50px;
+		text-align: center;
+		padding-top: 20px;
+	}
 	
 #submit-check {
 	height: 100px;
