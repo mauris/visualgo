@@ -1,4 +1,7 @@
 <?php
+
+require_once 'QuestionGeneratorInterface.php';
+
 class MstQuestionGenerator{
   protected $answerFunctionList = array(
       QUESTION_TYPE_PRIM_SEQUENCE => "checkAnswerPrimSequence",

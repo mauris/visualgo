@@ -1,5 +1,5 @@
 <?php
-  require 'Everything.php';
+  require_once 'Everything.php';
 
   // while (@ob_end_flush()); // Debug mode
 

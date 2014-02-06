@@ -1,4 +1,7 @@
 <?php
+
+  require_once 'QuestionGeneratorInterface.php';
+
   class UfdsQuestionGenerator implements QuestionGeneratorInterface{
     public function __construct(){
 
