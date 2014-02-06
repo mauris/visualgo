@@ -7,8 +7,9 @@ var timeLimit = 2400; // in seconds
 var maxAttemptCount = 1;
 var testOn = true;
 var ansOn = true;
+var studentListFile;
 
-var qnSettingsOpen = true;
+var qnSettingsOpen = false;
 var moreSettingsOpen = false;
 
 if(surpriseColour == '#fec515' || surpriseColour == '#a7d41e') { //discard yellow or lime
@@ -82,17 +83,17 @@ function displayConfig(data) { //data is a JSON object
 	$('#set-time').val(Math.floor(timeLimit/60));
 	if(data.testIsOpen==1) {
 		testOn = true;
-		$('#toggle-test').html("ON");
+		$('#toggle-test').val("ON").css('border','1px solid '+surpriseColour);
 	} else if(data.testIsOpen==0) {
 		testOn = false;
-		$('#toggle-test').html("OFF");
+		$('#toggle-test').val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 	}
 	if(data.answerIsOpen==1) {
 		ansOn = true;
-		$('#toggle-ans').html("ON");
+		$('#toggle-ans').val("ON").css('border','1px solid '+surpriseColour);
 	} else if(data.answerIsOpen==0) {
 		ansOn = false;
-		$('#toggle-ans').html("OFF");
+		$('#toggle-ans').val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 	}
 }
 
@@ -127,6 +128,27 @@ function toggleMoreSettings() {
 	moreSettingsOpen = !moreSettingsOpen;
 }
 
+function uploadFile() {
+	event.stopPropagation();
+    event.preventDefault();
+	var data = new FormData();
+	$.each(studentListFile, function(key, value) {
+		data.append(key, value);
+	});
+	
+	 $.ajax({
+        url: sitePrefix+'?studentListFile',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: false, // Don't process the files
+        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+    }).done(function() {
+		alert("File uploaded!");
+	});
+}
+
 /*-------OVERRIDE TEST_COMMON.JS-------*/
 function checkComplete() {}
 
@@ -134,8 +156,8 @@ $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
 	
 	/*-------BUTTONS CSS-------*/
-	$('.button').css('background',surpriseColour);
-	$('.button').hover(function() {
+	$('input[type=button], input[type=submit]').css('background',surpriseColour);
+	$('input[type=button], input[type=submit]').hover(function() {
 		$(this).css('background','black');
 	}, function() {
 		$(this).css('background',surpriseColour);
@@ -283,29 +305,30 @@ $(document).ready (function() {
 	
 	/*-------SAVE TEST DEMO-------*/
 	$('#save').click(function() {
+		event.preventDefault();
 		saveConfig();
 	});
 	
 	/*-------TOGGLE TEST-------*/
 	$('#toggle-test').hover(function() {
 		if(testOn) {
-			$(this).html("Turn OFF");
+			$(this).val("Turn OFF").css('border','1px solid black');
 		} else {
-			$(this).html("Turn ON");
+			$(this).val("Turn ON").css('border','1px solid black').css('color','white');
 		}
 	}, function() {
 		if(testOn) {
-			$(this).html("ON");
+			$(this).val("ON").css('border','1px solid '+surpriseColour);
 		} else {
-			$(this).html("OFF");
+			$(this).val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 		}
 	});
 	$('#toggle-test').click(function() {
 		testOn = !testOn;
 		if(testOn) {
-			$(this).html("ON");
+			$(this).val("ON").css('background',surpriseColour).css('border','1px solid '+surpriseColour).css('color','white');
 		} else {
-			$(this).html("OFF");
+			$(this).val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 		}
 		saveConfig();
 	});
@@ -313,23 +336,23 @@ $(document).ready (function() {
 	/*-------TOGGLE ANS-------*/
 	$('#toggle-ans').hover(function() {
 		if(ansOn) {
-			$(this).html("Turn OFF");
+			$(this).val("Turn OFF").css('border','1px solid black');
 		} else {
-			$(this).html("Turn ON");
+			$(this).val("Turn ON").css('border','1px solid black').css('color','white');
 		}
 	}, function() {
 		if(ansOn) {
-			$(this).html("ON");
+			$(this).val("ON").css('border','1px solid '+surpriseColour);
 		} else {
-			$(this).html("OFF");
+			$(this).val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 		}
 	});
 	$('#toggle-ans').click(function() {
 		ansOn = !ansOn;
 		if(ansOn) {
-			$(this).html("ON");
+			$(this).val("ON").css('background',surpriseColour).css('border','1px solid '+surpriseColour).css('color','white');
 		} else {
-			$(this).html("OFF");
+			$(this).val("OFF").css('background','#eee').css('border','1px solid #aaa').css('color','#aaa');
 		}
 		saveConfig();
 	});
@@ -347,6 +370,15 @@ $(document).ready (function() {
 			$(this).css('color','#aaa');
 			$(this).val("student id");
 		}
+	});
+	
+	/*-------STUDENT LIST FILE UPLOAD-------*/
+	$('input[type=file]').on('change', function(event) {
+		studentListFile = event.target.files;
+	});
+	$('#upload-file').click(function() {
+		event.preventDefault();
+		uploadFile();
 	});
 
 	/*-------SUBMIT QUIZ-------*/

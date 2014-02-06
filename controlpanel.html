@@ -37,17 +37,21 @@
 <div id="login-screen">
     <form>
         <input id="login-pw" type="text" value="password"/>
-        <input id="login-go" class="button" type="submit" value="LOG IN" />
+        <input id="login-go" type="submit" value="LOG IN" />
         <div id="login-err"></div>
     </form>
 </div>
 
 <div id="settings-screen">
-	<h1 id="qn-settings">Test Details<img class="rotateLeft" src="img/arrow_black_right.png"/></h1>
-	<form class="qn-settings">
+	<h2 style="display: inline-block; width: 120px; margin-top: 10px;">Test is:</h2><h2 style="display: inline-block;">Answer key is:</h2>
+    <input id="toggle-test" style="margin-right: 10px;" type="button" value="ON" /><!--
+    --><input id="toggle-ans" type="button" value="ON" /><br/><br/>
+
+	<h1 id="qn-settings">Test Details<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
+	<form class="qn-settings" style="display: none;">
     	<h2>Seed</h2>
     	<input id="set-seed" type="text" value="" autocomplete="off"/><!--
-        --><input id="new-seed" class="button" type="submit" value="Get new seed" /><br/><br/>
+        --><input id="new-seed" type="button" value="Get new seed" /><br/><br/>
         
         <h2>Topics<img src=""/></h2>
         <div id="select-topics"> <!--sync names with test mode constants-->
@@ -66,23 +70,21 @@
         <br/><br/>
         
         <div style="">
-            <div id="load-test" class="button">Try test</div><!--
-            --><div id="save" class="button">SAVE this test</div>
+            <input id="load-test" type="button" value="Try test" /><!--
+            --><input id="save" type="submit" value="Save test" />
         </div><br/><br/>
     </form>
     
-    <h1 id="more-settings">More Settings<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
-    <form class="more-settings" style="display: none;">    
-        <h2 style="display: inline-block; width: 120px;">Test is:</h2><h2 style="display: inline-block;">Answer key is:</h2>
-        <div id="toggle-test" class="button" style="margin-right: 10px;">ON</div><!--
-        --><div id="toggle-ans" class="button">ON</div><br/><br/>
-        
+    <h1 id="more-settings">Student Settings<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
+    <form class="more-settings" style="display: none;">        
         <h2>Reset student attempt</h2>
     	<input id="reset-attempt" style="margin-right: 10px;" type="text" value="student id" autocomplete="off"/><!--
-        --><div id="reset" class="button">Reset</div><br/><br/>
+        --><input id="reset" type="button" value="Reset" /><br/><br/>
         
         <h2>Change student list</h2>
     	<!--file upload input here-->
+        <input type="file"><br/><br/>
+        <input id="upload-file" type="submit" style="width: 220px;" value="Upload"/>
     </form>
 </div>
 
