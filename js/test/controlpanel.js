@@ -1,8 +1,10 @@
 var MODE = "TRAINING";
+var sitePrefix = document.URL.replace("/controlpanel.html","")+"/php/Test.php";
+
 var seed = (Math.floor(Math.random()*1000000000));
 nQns = 10;
-var sitePrefix = document.URL.replace("/controlpanel.html","")+"/php/Test.php";
 var timeLimit = 2400; // in seconds
+var maxAttemptCount = 1;
 var testOn = true;
 var ansOn = true;
 
@@ -95,8 +97,9 @@ function displayConfig(data) { //data is a JSON object
 }
 
 function saveConfig() {
+	console.log(sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0));
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.join()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
+		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
 	}).done(function(passed) {
 		//alert("done");
 	});
@@ -212,15 +215,35 @@ $(document).ready (function() {
 	});
 	
 	$('#set-nqns').change(function() {
-		nQns = parseInt($('#set-nqns').val());
-		var reg = /^\d+$/;
-		if(!reg.test(nQns)) { //not numeric value
-			nQns = 10;
+		var temp = $('#set-nqns').val().replace(/[^\0-9]/ig, "");
+		$(this).val(temp);
+		if(temp != "") {
+			if(parseInt(temp) > 20) {
+				temp = 20;
+				$(this).val(20);
+			}
+			nQns = parseInt(temp);
+		} else {
+			timeLimit = 10;
 			$(this).val(10);
-		} 
-		if(nQns > 20) {
-			nQns = 20;
-			$('#set-nqns').val(20);
+		}
+	});
+	
+	/*-------SET TIME LIMIT-------*/
+	$('#set-time').focusin(function() {
+		$(this).css('box-shadow','0px 0px 3px '+surpriseColour+' inset');
+	}).focusout(function() {
+		$(this).css('box-shadow','0px 0px 3px #929292 inset');
+	});
+	
+	$('#set-time').change(function() {
+		var temp = $('#set-time').val().replace(/[^\0-9]/ig, "");
+		$(this).val(temp);
+		if(temp != "") {
+			timeLimit = parseInt(temp)*60;
+		} else {
+			timeLimit = 2400;
+			$(this).val(40);
 		}
 	});
 	

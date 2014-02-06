@@ -43,7 +43,7 @@
 </div>
 
 <div id="settings-screen">
-	<h1 id="qn-settings">Question Settings<img class="rotateLeft" src="img/arrow_black_right.png"/></h1>
+	<h1 id="qn-settings">Test Details<img class="rotateLeft" src="img/arrow_black_right.png"/></h1>
 	<form class="qn-settings">
     	<h2>Seed</h2>
     	<input id="set-seed" type="text" value="" autocomplete="off"/><!--
@@ -61,14 +61,14 @@
             <div class="topic" name="SSSP">Single-Source Shortest Path</div>
         </div><br/>
         
-        <h2>No. of questions</h2>
-        <input id="set-nqns" type="text" value="10" autocomplete="off"/>
+        <h2 style="display: inline-block; width: 120px;">No. of questions</h2><h2 style="display: inline-block;">Time limit (min)</h2>
+        <input id="set-nqns" type="text" value="10" autocomplete="off"/><input id="set-time" type="text" value="40" autocomplete="off"/>
         <br/><br/>
         
         <div style="">
             <div id="load-test" class="button">Try test</div><!--
             --><div id="save" class="button">SAVE this test</div>
-        </div>
+        </div><br/><br/>
     </form>
     
     <h1 id="more-settings">More Settings<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
@@ -76,9 +76,6 @@
         <h2 style="display: inline-block; width: 120px;">Test is:</h2><h2 style="display: inline-block;">Answer key is:</h2>
         <div id="toggle-test" class="button" style="margin-right: 10px;">ON</div><!--
         --><div id="toggle-ans" class="button">ON</div><br/><br/>
-        
-        <h2>Time limit (min)</h2>
-        <input id="set-time" type="text" value="40" autocomplete="off"/><br/><br/>
         
         <h2>Reset student attempt</h2>
     	<input id="reset-attempt" style="margin-right: 10px;" type="text" value="student id" autocomplete="off"/><!--

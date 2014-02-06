@@ -72,7 +72,7 @@
 	#settings-screen h1 {
 		font-size: 24px;
 		font-weight: normal;
-		margin-bottom: 20px;
+		margin: 10px 0px 20px;
 		cursor: pointer;
 	}
 		#settings-screen h1#qn-settings img {
@@ -81,7 +81,6 @@
 		}
 		#settings-screen h1#more-settings img {
 			display: inline-block;
-			margin-top: 40px;
 			margin-left: 15px;
 		}
 	#settings-screen h2 { font-weight: bold; margin-bottom: 10px; }
@@ -109,7 +108,8 @@
 			border-bottom-right-radius: 2px;
 			border-bottom: 1px solid #ccc;
 		}
-	#set-nqns { width: 85px; }
+	#set-nqns { width: 85px; margin-right: 10px; }
+	#set-time { width: 85px; }
 	#load-test {
 		width: 105px;
 		display: inline-block;
@@ -126,7 +126,6 @@
 		font-weight: bold;
 		color: white;
 	}
-	#set-time { width: 85px; }
 	#reset-attempt { width: 85px; color: #aaa; }
 	#reset { width: 105px; }
 	

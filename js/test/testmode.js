@@ -5,13 +5,8 @@ var studentpw = "";
 
 var infoRefresh; //setInterval function
 var clientsideTimeRefresh; //setInterval function
-const availableTime=2400; //in seconds - is a FINAL CONST so that students cannot give themselves more time!
-var timeLeft=availableTime;
-
-//change to get via AJAX:
-	var seed = (Math.floor(Math.random()*1000000000));
-	nQns = 10;
-	topics = ['BST','Heap','Bitmask','UFDS','GraphTraversal','MST','SSSP'];
+var availableTime = 0; //in seconds
+var timeLeft;
 
 function startTest() {
 	init();
@@ -45,6 +40,15 @@ function submitTest() {
 }
 
 /*-------START TEST FUNCTIONS-------*/
+//store config data for use later
+function useConfig(data) {
+	seed = data.seed;
+	topics = data.topics;
+	nQns = data.questionAmount;
+	availableTime = data.timeLimit;
+	timeLeft = availableTime;
+}
+
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
 	console.log(sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString());
@@ -159,16 +163,29 @@ $(document).ready (function() {
 	
 	/*-------LOG IN AUTHENTIFICATION-------*/
 	$('#login-go').click(function() {
+		event.preventDefault();
 		studentid = $('#login-id').val();
 		studentpw = $('#login-pw').val();
 		//authentificate
-		//for now: just enter, later: use AJAX to query database
-		if(true) {
-			$('#login-err').html("");
-			$('#login-screen').fadeOut("fast");
-			$('#instructions-screen').fadeIn("fast");
-			return false;
-		}
+		$.ajax({
+			url: sitePrefix+"?mode="+MODE_ADMIN+"&password=test" //change later
+		}).done(function(passed) {
+			passed = parseInt(passed);
+			if(passed == 1) {
+				$('#login-err').html("");
+				$('#login-screen').fadeOut("fast");
+				$.ajax({
+					url: sitePrefix+"?mode="+MODE_ADMIN_GET_CONFIG+"&password=test" //change later
+				}).done(function(data) {
+					//show current configurations
+					data = JSON.parse(data);
+					useConfig(data);
+					$('#instructions-screen').fadeIn("fast");
+				});
+			} else {
+				$('#login-err').html("Incorrect username or password");
+			}
+		});
 	});
 	
 	/*-------LOAD TEST-------*/

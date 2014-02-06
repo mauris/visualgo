@@ -8,9 +8,11 @@ var qnParamsArr = new Array(); //empty when no params, array of key-val options 
 var qnNoAnsArr = new Array(); //1 for allow no answer option, 0 otherwise
 var ansArr = new Array(); //answers to be sent to server
 
+var seed;
 var topics = new Array();
-var qnNo; //1-based
 var nQns; //total number of questions
+
+var qnNo; //1-based
 var nAnswered = 0;
 
 /*-------START TEST FUNCTIONS-------*/

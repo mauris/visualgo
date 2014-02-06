@@ -186,6 +186,7 @@
     if(isset($_GET["topics"])) $params["topics"] = explode(",", $_GET["topics"]);
     if(isset($_GET["questionAmount"])) $params["questionAmount"] = $_GET["questionAmount"];
     if(isset($_GET["timeLimit"])) $params["timeLimit"] = $_GET["timeLimit"];
+	if(isset($_GET["maxAttemptCount"])) $params["maxAttemptCount"] = $_GET["maxAttemptCount"];
     if(isset($_GET["testIsOpen"])) $params["testIsOpen"] = $_GET["testIsOpen"];
     if(isset($_GET["answerIsOpen"])) $params["answerIsOpen"] = $_GET["answerIsOpen"];
 
