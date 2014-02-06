@@ -33,9 +33,10 @@
     }
 
     public function validate($username, $password){
-      $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = ".$username);
+      $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = '".$username."'");
       $user = mysqli_fetch_assoc($user);
-      return $password = $user["password"];
+
+      return $password == $user["password"];
     }
 
     public function getTestParams(){
@@ -46,7 +47,7 @@
     }
 
     public function getTimeElapsed($username){
-      $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = ".$username);
+      $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = '".$username."'");
       $temp = mysqli_fetch_assoc($startTime);
       $startTime = strtotime($temp["startTime"]);
       $now = time();
@@ -62,17 +63,17 @@
 
       if(!$this->getTestParams["testIsOpen"]) return false;
 
-      $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = ".$username);
+      $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = '".$username."'");
       $temp = mysqli_fetch_assoc($attemptCount);
       $attemptCount = $temp["attemptCount"];
       $attemptCount++;
       $maxAttemptCount = $this->getTestParams["maxAttemptCount"];
       if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
 
-      mysqli_query($this->db, "UPDATE `test` SET `attemptCount` = '".($attemptCount)."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `attemptCount` = '".($attemptCount)."' WHERE `username` = '".$username."'");
 
       $startTime = date('Y-m-d H:i:s');
-      mysqli_query($this->db, "UPDATE `test` SET `startTime` = '".$startTime."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `startTime` = '".$startTime."' WHERE `username` = '".$username."'");
     }
 
     /*
