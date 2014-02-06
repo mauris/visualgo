@@ -241,7 +241,7 @@
     $username = $_GET["username"];
     $testModeDb = new TestModeDatabase();
 
-    echo $testModeDb->getRemainingTime($username);
+    echo $testModeDb->getTimeElapsed($username);
   }
 
   else if($mode == MODE_TEST_GET_ANSWERS){

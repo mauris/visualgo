@@ -45,7 +45,7 @@
       return $config;
     }
 
-    public function getRemainingTime($username){
+    public function getTimeElapsed($username){
       $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = ".$username);
       $temp = mysqli_fetch_assoc($startTime);
       $startTime = strtotime($temp["startTime"]);
