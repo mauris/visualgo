@@ -141,6 +141,10 @@
     echo $score;
   }
 
+  else if($mode == MODE_LOGIN){
+    // only verification
+  }
+
   else if($mode == MODE_TEST_BEGIN){
     $username = $_GET["username"];
     $password = $_GET["password"];
@@ -151,7 +155,9 @@
   }
 
   else if($mode == MODE_TEST_SUBMIT){
-
+    $username = $_GET["username"];
+    $password = $_GET["password"];
+    $aArrCsv = $_GET["ans"];
   }
 
   else if($mode == MODE_TEST_GET_ANSWERS){
