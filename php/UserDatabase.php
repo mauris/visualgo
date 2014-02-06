@@ -5,8 +5,7 @@
    * - name
    * - username (primary key)
    * - password
-   * - trainingModeTableName
-   * - isLoggedIn
+   * - trainingModeTableNamen (currently not used)
    */
 
   /*
@@ -29,31 +28,22 @@
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
       }
 
-      $this->initBasicTemplates();
+      $this->init();
     }
 
-    public function logIn(username, password){
-
+    protected function init(){
+      mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
+        VALUES ('"."Ivan"."','"."ivan"."','"."test1"."')");
+      mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
+        VALUES ('"."Rose"."','"."rose"."','"."test2"."')");
+      mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
+        VALUES ('"."Steven"."','"."steven"."','"."test3"."')");
     }
 
-    public function isLoggedIn(username){
-
-    }
-
-    public function logOut(username){
-
-    }
-
-    public function setGrade(tableName){
-      
-    }
-
-    public function storeAnswers(){
-
-    }
-
-    public function retrieveAnswers(){
-
+    // TODO: secure this against SQL injection
+    public function register($username, $password, $name){
+      mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
+        VALUES ('".$name."','".$username."','".$password."')");
     }
   }
 ?>

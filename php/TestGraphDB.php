@@ -8,7 +8,9 @@
   // echo "|";
   // echo $graphDb->getRandomTemplate(array("numVertex" => 3, "directed"=>false, "connected"=>true));
 
+  $userDb = new UserDatabase();
   $adminDb = new AdminDatabase();
+  $testModeDb = new TestModeDatabase();
   echo $adminDb->validate("test")? 1:0;
   echo "|";
   echo json_encode($adminDb->getConfig("test"));
