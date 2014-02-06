@@ -1,4 +1,7 @@
 <?php
+
+require_once 'QuestionGeneratorInterface.php';
+
 class SsspQuestionGenerator{
   protected $answerFunctionList = array(
       QUESTION_TYPE_GREATER_LESS => "checkAnswerGreaterLess",

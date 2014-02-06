@@ -1,5 +1,5 @@
 <?php
-  require 'Everything.php';
+  require_once 'Everything.php';
 
   // while (@ob_end_flush()); // Debug mode
 
@@ -141,7 +141,7 @@
     echo $score;
   }
 
-  else if($mode == TEST_BEGIN){
+  else if($mode == MODE_TEST_BEGIN){
     $username = $_GET["username"];
     $password = $_GET["password"];
     $attemptCount = 0;
@@ -150,11 +150,11 @@
     
   }
 
-  else if($mode == TEST_SUBMIT){
+  else if($mode == MODE_TEST_SUBMIT){
 
   }
 
-  else if($mode == TEST_GET_ANSWERS){
+  else if($mode == MODE_TEST_GET_ANSWERS){
 
   }
 

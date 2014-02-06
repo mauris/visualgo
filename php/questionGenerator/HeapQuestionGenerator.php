@@ -1,4 +1,7 @@
 <?php
+
+  require_once 'QuestionGeneratorInterface.php';
+
   class HeapQuestionGenerator implements QuestionGeneratorInterface{
 
     public function __construct(){

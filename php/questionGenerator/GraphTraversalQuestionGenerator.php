@@ -1,5 +1,9 @@
 <?php
+
+  require_once 'QuestionGeneratorInterface.php';
+
 class GraphTraversalQuestionGenerator{
+
 	protected $answerFunctionList = array(
       QUESTION_TYPE_TRAVERSAL => "checkAnswerTraversal",
 	  QUESTION_TYPE_DISCONNECT => "checkAnswerDisconnect",

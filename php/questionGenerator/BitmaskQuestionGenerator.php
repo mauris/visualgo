@@ -1,4 +1,7 @@
 <?php
+
+	require_once 'QuestionGeneratorInterface.php';
+
 	class BitmaskQuestionGenerator implements QuestionGeneratorInterface{
 		
 		// public function seedRng($seed){

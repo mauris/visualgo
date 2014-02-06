@@ -10,7 +10,7 @@
    * - attemptCount
    */
 
-  class TestDatabase{
+  class TestModeDatabase{
     protected $db;
 
     public function __construct() {
@@ -24,11 +24,18 @@
     }
 
     protected function init(){
-      
+      $userList = mysqli_query($this->db, "SELECT `username` FROM `user`");
+      while($user = mysqli_fetch_assoc($userList)){
+        mysqli_query($this->db, "INSERT IGNORE INTO `test` (`username`, `answer`, `grade`, `timeTaken`, `startTime`, `attemptCount`)
+          VALUES ('".$user["username"]."','".""."','"."0"."','"."0"."','".date('Y-m-d H:i:s')."','"."0"."')");
+      }
+
     }
 
     public function validate($username, $password){
-
+      $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = ".$username);
+      $user = mysqli_fetch_assoc($user);
+      return $password = $user["password"];
     }
 
     public function getTestParams(){
@@ -47,7 +54,8 @@
       if(!$this->getTestParams["testIsOpen"]) return false;
 
       $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = ".$username);
-      $attemptCount = mysqli_fetch_assoc($attemptCount)["attemptCount"];
+      $temp = mysqli_fetch_assoc($attemptCount);
+      $attemptCount = $temp["attemptCount"];
       $attemptCount++;
       $maxAttemptCount = $this->getTestParams["maxAttemptCount"];
       if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
@@ -76,7 +84,8 @@
       $maxAttemptCount = $this->getTestParams["maxAttemptCount"];
 
       $attemptCount = mysqli_query($this->db, "SELECT `attemptCount` FROM `test` WHERE `username` = ".$username);
-      $attemptCount = mysqli_fetch_assoc($attemptCount)["attemptCount"];
+      $temp = mysqli_fetch_assoc($attemptCount);
+      $attemptCount = $temp["attemptCount"];
 
       if($attemptCount <= 0 || $attemptCount > $maxAttemptCount) return false;
 
@@ -90,5 +99,5 @@
       mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["grade"]."' WHERE `username` = ".$username);
       mysqli_query($this->db, "UPDATE `test` SET `timeTaken` = '".$params["timeTaken"]."' WHERE `username` = ".$username);
     }
-    
+  } 
 ?>
