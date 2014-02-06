@@ -102,6 +102,7 @@
   const MODE_TEST_BEGIN = 4;
   const MODE_TEST_SUBMIT = 5;
   const MODE_TEST_GET_ANSWERS = 6;
+  const MODE_TEST_CHECK_TIME = 7;
   const MODE_ADMIN = 10;
   const MODE_ADMIN_GET_CONFIG = 11;
   const MODE_ADMIN_EDIT_CONFIG = 12;
