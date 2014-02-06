@@ -25,9 +25,9 @@
     }
 
     protected function init(){
-      mysqli_query($this->db, "INSERT IGNORE INTO `test_config` (`index`, `seed`, `topics`, `questionAmount`, `timeLimit`,
-        `testIsOpen`, `answerIsOpen`) VALUES ('"."0"."','"."0"."','".serialize(array("BST"))."','"."10"."','"."60"."','"."0".
-        "','"."0"."')");
+      mysqli_query($this->db, "INSERT IGNORE INTO `test_config` (`index`, `seed`, `topics`, `questionAmount`, `maxAttemptCount`,
+        `timeLimit`, `testIsOpen`, `answerIsOpen`) VALUES ('"."0"."','"."0"."','".serialize(array("BST"))."','"."10"."','"."1".
+        "','"."60"."','"."0"."','"."0"."')");
     }
 
     public function validate($password){
@@ -39,6 +39,7 @@
      * - seed
      * - topics
      * - questionAmount
+     * - maxAttemptCount
      * - timeLimit (in seconds, int)
      * - testIsOpen (boolean)
      * - answerIsOpen (boolean)
@@ -50,13 +51,14 @@
       if(array_key_exists("seed", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `seed` = ".$params["seed"].
         " WHERE `index` = "."0");
 
-      // echo mysqli_error($this->db);
-
       if(array_key_exists("topics", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `topics` = '".
         serialize($params["topics"])."' WHERE `index` = "."0");
 
       if(array_key_exists("questionAmount", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `questionAmount` = ".
         $params["questionAmount"]." WHERE `index` = "."0");
+
+      if(array_key_exists("maxAttemptCount", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `maxAttemptCount` = ".
+        $params["maxAttemptCount"]." WHERE `index` = "."0");
 
       if(array_key_exists("timeLimit", $params)) mysqli_query($this->db, "UPDATE `test_config` SET `timeLimit` = ".
         $params["timeLimit"]." WHERE `index` = "."0");

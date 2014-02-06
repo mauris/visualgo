@@ -2,6 +2,12 @@
   /*
    * Table name: test
    * Schema:
+   * - username: primary key, foreign key to user table
+   * - answer (serialized array)
+   * - grade
+   * - timeTaken
+   * - startTime (datetime data structure)
+   * - attemptCount: boolean
    */
 
   class TestDatabase{
@@ -26,33 +32,37 @@
       // if test is not open don't update attempt counter
     }
 
-    public function checkTestIsOpen(){
-
-    }
-
-    public function checkAnswerIsOpen(){
-
-    }
-
-    public function getSeed(){
-      $result = mysqli_query($this->db, "SELECT `seed` FROM `test_config` WHERE `index`='"."0"."'");
+    public function getTestParams(){
+      $result = mysqli_query($this->db, "SELECT * FROM `test_config` WHERE `index`='"."0"."'");
       $config = mysqli_fetch_assoc($result);
 
-      return $config["seed"];
+      return $config;
     }
 
-    public function getTopics(){
-      $result = mysqli_query($this->db, "SELECT `seed` FROM `test_config` WHERE `index`='"."0"."'");
-      $config = mysqli_fetch_assoc($result);
+    /*
+     * params (all fields compulsory):
+     * - answer: student's answer
+     * - grade: student's grade
+     * - timeTaken: time taken by student to complete the test
+     * - startTime: starting time of the test
+     */
 
-      return $config["seed"];
-    }
+    public function submit($username, $password, $params){
+      // validate username and password
 
-    public function getTimeLimit(){
-      $result = mysqli_query($this->db, "SELECT `seed` FROM `test_config` WHERE `index`='"."0"."'");
-      $config = mysqli_fetch_assoc($result);
+      // validate attempt count is > 0 and less than max allowed
+      
 
-      return $config["seed"];
+      // validate submission params
+      if(!array_key_exists("answer", $params) || !array_key_exists("grade", $params) || !array_key_exists("timeTaken", $params) ||
+        !array_key_exists("startTime", $params)){
+        return false;
+      }       
+
+      mysqli_query($this->db, "UPDATE `test` SET `answer` = '".serialize($params["answer"])."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["grade"]."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["timeTaken"]."' WHERE `username` = ".$username);
+      mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["startTime"]."' WHERE `username` = ".$username);
     }
     
 ?>

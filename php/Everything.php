@@ -22,4 +22,5 @@
   require 'AdminDatabase.php';
   require 'Privilege.php';
   require 'TableName.php';
+  require 'Properties.php';
 ?>
