@@ -58,7 +58,7 @@
 	}
 	ul#instructions { margin: 45px 0px; text-align: left; }
 	#instructions li { font-size: 14px; padding: 4px 0px; list-style-type: none; }
-	#start-test { width: 100px; }
+	#start-test { width: 120px; }
 	#no-test {
 		height: 80px;
 		width: 300px;
@@ -77,18 +77,8 @@
 	text-align: center;
 }
 	#submit-check p { margin: 0px 0px 30px; padding: 0px; text-align: left; }
-	#submit-check .button {
-		display: inline-block;
-		padding: 7px 10px;
-		color: white;
-		font-weight: bold;
-		cursor: pointer;
-	}
-		#submit-check .button:hover { background: black; }
-		#submit-yes1 { background: #227faf; margin-right: 5px; width: 50px; }
-		#submit-no1 { background: #df3939; width: 50px; }
-		#submit-yes2 { background: #227faf; width: 114px; }
-		#submit-no2 { background: #df3939; margin-right: 5px; width: 114px; }
+		#submit-yes { margin-right: 10px; width: 80px; }
+		#submit-no { width: 80px; }
 	
 /*overwrite test_common.css*/
 #result-screen {

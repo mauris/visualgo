@@ -29,7 +29,7 @@ function submitTest() {
 			$('#score').html(score+" out of "+nQns);
 			$('#test-screen').fadeOut("fast");
 			$('#result-screen').fadeIn("fast");
-		} else if(score == -1) {
+		} else if(score == -1) { //unused for now
 			clearInterval(infoRefresh);
 			clearInterval(clientsideTimeRefresh);
 			$('#result-screen').html('<div id="result-name"></div><br/>You have already attempted this quiz.<br/>This score will not be recorded.');
@@ -83,15 +83,15 @@ function getQnsAndStart() {
 
 /*-------INFO/TIME UPDATE FUNCTIONS-------*/
 function updateInfo() {
-	/* later use AJAX
 	$.ajax({//update timer
-		url: sitePrefix+"?uid="+studentid+"&pwd="+studentpw+"&mode=6"
+		url: sitePrefix+"?mode="+MODE_TEST_CHECK_TIME+"&username="+studentid
 	}).done(function(timeElapsed) {
 		timeLeft = availableTime-timeElapsed;
 		if(timeLeft <=0) {
 			submitTest();
 		}
 	});
+	/* later use AJAX
 	$.ajax({//update name
 		url: sitePrefix+"?uid="+studentid+"&pwd="+studentpw+"&mode=7"
 	}).done(function(name) {
@@ -122,14 +122,6 @@ function clientsideTimeUpdate() {
 
 $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
-	
-	/*-------BUTTONS CSS-------*/
-	$('.button').css('background',surpriseColour);
-	$('.button').hover(function() {
-		$(this).css('background','black');
-	}, function() {
-		$(this).css('background',surpriseColour);
-	});
 	
 	/*-------LOG IN CSS-------*/
 	$('#login-id').focusin(function() {
@@ -207,16 +199,21 @@ $(document).ready (function() {
 
 	/*-------SUBMIT QUIZ-------*/
 	$('#submit-test').click(function() {
+		$('#dark-overlay').fadeIn("fast", function() {
+			$('#submit-check').fadeIn("fast");
+			$('#submit-check p').html('You only have 1 attempt on this quiz. Are you sure you want to submit it?');
+		});
+	});
+	$('#submit-yes').click(function() {
+		$('#submit-check').fadeOut("fast", function() {
+			$('#dark-overlay').fadeOut("fast");
+		});
 		submitTest();
 	});
+	$('#submit-no').click(function() {
+		$('#submit-check').fadeOut("fast", function() {
+			$('#dark-overlay').fadeOut("fast");
+		});
+	});
+	
 });
-
-
-
-
-
-
-
-
-
-

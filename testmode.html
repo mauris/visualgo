@@ -39,7 +39,7 @@
     <form>
     	<input id="login-id" type="text" value="user id" autocomplete="off"/><br/>
         <input id="login-pw" type="text" value="password"/><br/>
-        <input id="login-go" class="button" type="submit" value="LOG IN" />
+        <input id="login-go" type="submit" value="LOG IN" />
         <div id="login-err"></div>
     </form>
 </div>
@@ -54,7 +54,7 @@
 		<li>You are not allowed to discuss the questions or answers until 5pm today, even with your fellow lab group mates.</li>
 		<li>In the case of any disputes, the decision of the lecturer is final.</li>
 	</ul>
-    <div id="start-test" class="button">Start the test</div>
+    <input id="start-test" type="submit" value="Start the test"/>
 </div>
 
 <div id="test-screen">
@@ -80,10 +80,8 @@
     
     <div id="submit-check" class="overlays">
     	<p></p>
-        <div id="submit-yes1" class="button">Yes</div><!--
-        --><div id="submit-no1" class="button">No</div><!--
-        --><div id="submit-no2" class="button">Fine, I'll check again</div><!--
-        --><div id="submit-yes2" class="button">I said yes!</div>
+        <input id="submit-yes" type="button" value="Yes"><!--
+        --><input id="submit-no" type="button" value="No">
     </div>
     
 	<div id="question-nav"></div>

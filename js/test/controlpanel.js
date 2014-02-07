@@ -165,14 +165,6 @@ function checkComplete() {}
 $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
 	
-	/*-------BUTTONS CSS-------*/
-	$('input[type=button], input[type=submit]').css('background',surpriseColour);
-	$('input[type=button], input[type=submit]').hover(function() {
-		$(this).css('background','black');
-	}, function() {
-		$(this).css('background',surpriseColour);
-	});
-	
 	/*-------LOG IN CSS-------*/
 	$('#login-pw').focusin(function() {
 		$(this).css('box-shadow','0px 0px 3px '+surpriseColour+' inset');

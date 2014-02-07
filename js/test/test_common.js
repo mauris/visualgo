@@ -102,6 +102,13 @@ function checkComplete() {
 }
 
 $(document).ready (function() {
+	/*-------BUTTONS CSS-------*/
+	$('input[type=button], input[type=submit]').css('background',surpriseColour);
+	$('input[type=button], input[type=submit]').hover(function() {
+		$(this).css('background','black');
+	}, function() {
+		$(this).css('background',surpriseColour);
+	});
 	
 	/*-------UNDO OR CLEAR INPUT-------*/
 	$('#undo-ans').click(function() {

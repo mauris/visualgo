@@ -95,18 +95,18 @@
   const ANSWER_AMT_ONE = 1;
   const ANSWER_AMT_MULTIPLE = 2;
 
-  const MODE_GENERATE_SEED = 0;
-  const MODE_GENERATE_QUESTIONS = 1;
-  const MODE_CHECK_ANSWERS = 2;
-  const MODE_LOGIN = 3;
-  const MODE_TEST_BEGIN = 4;
-  const MODE_TEST_SUBMIT = 5;
-  const MODE_TEST_GET_ANSWERS = 6;
-  const MODE_TEST_CHECK_TIME = 7;
-  const MODE_ADMIN = 10;
-  const MODE_ADMIN_GET_CONFIG = 11;
-  const MODE_ADMIN_EDIT_CONFIG = 12;
-  const MODE_ADMIN_RESET_ATTEMPT = 13;
+  const MODE_GENERATE_SEED = 0;			//unused
+  const MODE_GENERATE_QUESTIONS = 1;	//generate questions from seed, topics and no. of questions
+  const MODE_CHECK_ANSWERS = 2;			//training mode check answers - answers and scores not recorded
+  const MODE_LOGIN = 3;					//student login for test mode
+  const MODE_TEST_BEGIN = 4;			//test mode - start student timer and retrieve test config
+  const MODE_TEST_SUBMIT = 5;			//test mode check answers - answers and scores recorded in database
+  const MODE_TEST_GET_ANSWERS = 6;		//
+  const MODE_TEST_CHECK_TIME = 7;		//test mode - return elapsed time for a student
+  const MODE_ADMIN = 10;				//admin login for control panel
+  const MODE_ADMIN_GET_CONFIG = 11;		//retrieve test config for control panel
+  const MODE_ADMIN_EDIT_CONFIG = 12;	//edit test config from control panel
+  const MODE_ADMIN_RESET_ATTEMPT = 13;	//reset student test attempt from control panel
 
   const UNANSWERED = "unanswered";
   const NO_ANSWER = "noAnswer";
