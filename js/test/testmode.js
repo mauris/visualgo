@@ -187,11 +187,7 @@ $(document).ready (function() {
 					$('#question-nav').html("");
 					startTest();
 				} else {
-					$('#dark-overlay').fadeIn(function(){
-						$('#no-test').fadeIn(function() {
-							setTimeout(function(){ $('#no-test').fadeOut(function() { $('#dark-overlay').fadeOut();});}, 1000);
-						});
-					});
+					customAlert("There is no ongoing test session.");
 				}
 			}
 		});

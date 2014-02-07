@@ -15,6 +15,15 @@ var nQns; //total number of questions
 var qnNo; //1-based
 var nAnswered = 0;
 
+function customAlert(msg) {
+	$('#custom-alert p').html(msg);
+	$('#dark-overlay').fadeIn(function(){
+		$('#custom-alert').fadeIn(function() {
+			setTimeout(function(){ $('#custom-alert').fadeOut(function() { $('#dark-overlay').fadeOut();});}, 1000);
+		});
+	});
+}
+
 /*-------START TEST FUNCTIONS-------*/
 function getNumberOfQns() {
 	//how many questions?

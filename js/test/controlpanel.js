@@ -112,7 +112,7 @@ function saveConfig() {
 	$.ajax({
 		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
 	}).done(function(passed) {
-		//alert("done");
+		customAlert("New test configurations have been saved.");
 	});
 }
 
@@ -366,6 +366,18 @@ $(document).ready (function() {
 			$(this).css('color','#aaa');
 			$(this).val("student id");
 		}
+	});
+	$('#reset').click(function() {
+		var stName = $('#reset-attempt').val();
+		$.ajax({
+			url: sitePrefix+"?mode="+MODE_ADMIN_RESET_ATTEMPT+"&password="+adminpw+"&username="+stName
+		}).done(function(success) {
+			if(success==1) {
+				customAlert("Attempt for "+stName+" has been reset.");
+			} else {
+				customAlert("No such student in database.");
+			}
+		});
 	});
 	
 	/*-------STUDENT LIST FILE UPLOAD-------*/

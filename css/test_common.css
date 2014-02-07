@@ -174,3 +174,12 @@ input[type=button], input[type=submit] {
 		color: white;
 		cursor: pointer;
 	}
+	
+#custom-alert {
+	height: 80px;
+	width: 300px;
+	margin-left: -150px;
+	margin-top: -50px;
+	text-align: center;
+	padding-top: 20px;
+}
