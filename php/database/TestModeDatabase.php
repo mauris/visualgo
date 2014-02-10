@@ -116,5 +116,12 @@
       mysqli_query($this->db, "UPDATE `test` SET `grade` = '".$params["grade"]."' WHERE `username` = '".$username."'");
       mysqli_query($this->db, "UPDATE `test` SET `timeTaken` = '".($now-$startTime)."' WHERE `username` = '".$username."'");
     }
+
+    public function getUserAnswer($username, $password){
+      if(!$this->validate($username, $password)) return false;
+
+      $answer = mysqli_query($this->db, "SELECT `answer` FROM `test` WHERE `username` = '".$username."'");
+      return unserialize($answer);
+    }
   } 
 ?>

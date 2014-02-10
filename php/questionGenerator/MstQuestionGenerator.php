@@ -1,13 +1,19 @@
 <?php
 
-require_once 'QuestionGeneratorInterface.php';
+  require_once 'QuestionGeneratorInterface.php';
 
-class MstQuestionGenerator{
-  protected $answerFunctionList = array(
-      QUESTION_TYPE_PRIM_SEQUENCE => "checkAnswerPrimSequence",
-      QUESTION_TYPE_KRUSKAL_SEQUENCE => "checkAnswerKruskalSequence",
-      QUESTION_TYPE_MINIMAX_EDGE => "checkAnswerMinimaxEdge",
-      );
+  class MstQuestionGenerator{
+    protected $checkAnswerFunctionList = array(
+        QUESTION_TYPE_PRIM_SEQUENCE => "checkAnswerPrimSequence",
+        QUESTION_TYPE_KRUSKAL_SEQUENCE => "checkAnswerKruskalSequence",
+        QUESTION_TYPE_MINIMAX_EDGE => "checkAnswerMinimaxEdge",
+        );
+
+    protected $getAnswerFunctionList = array(
+        QUESTION_TYPE_PRIM_SEQUENCE => "getAnswerPrimSequence",
+        QUESTION_TYPE_KRUSKAL_SEQUENCE => "getAnswerKruskalSequence",
+        QUESTION_TYPE_MINIMAX_EDGE => "getAnswerMinimaxEdge",
+        );
 
     public function __construct(){
     }
@@ -42,15 +48,19 @@ class MstQuestionGenerator{
     }
 
     public function checkAnswer($qObj, $userAns){
-      if(array_key_exists($qObj->qType, $this->answerFunctionList)){
-        $verifierFunc = $this->answerFunctionList[$qObj->qType];
+      if(array_key_exists($qObj->qType, $this->checkAnswerFunctionList)){
+        $verifierFunc = $this->checkAnswerFunctionList[$qObj->qType];
         return $this->$verifierFunc($qObj, $userAns);
       }
       else return false;
     }
 
     public function getAnswer($qObj){
-      
+      if(array_key_exists($qObj->qType, $this->getAnswerFunctionList)){
+        $answerFunc = $this->getAnswerFunctionList[$qObj->qType];
+        return $this->$answerFunc($qObj);
+      }
+      else return false;
     }
 
     protected function generateMinST(){
@@ -83,12 +93,18 @@ class MstQuestionGenerator{
       return $qObj;
     }
 
-    protected function checkAnswerPrimSequence($qObj, $userAns){
+    protected function getAnswerPrimSequence($qObj){
       $mst = $qObj->internalDS;
       $startValue = $qObj->qParams["value"];
       $amtEdge = $qObj->qParams["amt"];
       $ans = $mst->prim($startValue);
       $ans = array_slice($ans, 0, $amtEdge);
+
+      return $ans;
+    }
+
+    protected function checkAnswerPrimSequence($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       $correctness = true;
       if(2*count($ans) != count($userAns)) $correctness = false;
@@ -125,11 +141,17 @@ class MstQuestionGenerator{
       return $qObj;
     }
 
-    protected function checkAnswerKruskalSequence($qObj, $userAns){
+    protected function getAnswerKruskalSequence($qObj){
       $mst = $qObj->internalDS;
       $ans = $mst->kruskal();
       $amtEdge = $qObj->qParams["amt"];
       $ans = array_slice($ans, 0, $amtEdge);
+
+      return $ans;
+    }
+
+    protected function checkAnswerKruskalSequence($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       $correctness = true;
       if(2*count($ans) != count($userAns)) $correctness = false;
@@ -170,11 +192,17 @@ class MstQuestionGenerator{
       return $qObj;
     }
 
-    protected function checkAnswerMinimaxEdge($qObj, $userAns){
+    protected function getAnswerMinimaxEdge($qObj){
       $mst = $qObj->internalDS;
       $vertexA = $qObj->qParams["vertexA"];
       $vertexB = $qObj->qParams["vertexB"];
       $ans = $mst->minimax($vertexA, $vertexB);
+
+      return $ans;
+    }
+
+    protected function checkAnswerMinimaxEdge($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       $correctness = true;
       $currEdge = array($ans->from(), $ans->to());
@@ -185,6 +213,6 @@ class MstQuestionGenerator{
 
       return $correctness;
     }
-}
+  }
 
 ?>

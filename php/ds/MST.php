@@ -20,7 +20,7 @@
 
 	class Triple {
 		protected $from;
-		protected $tp;
+		protected $to;
 		protected $w; 
 	
 		public function __construct($f, $t, $w) {
