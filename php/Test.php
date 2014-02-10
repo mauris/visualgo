@@ -301,7 +301,12 @@
   }
 
   else if($mode == MODE_TEST_GET_STUDENT_ANSWERS){
-    
+    $username = $_GET["username"];
+    $password = $_GET["password"];
+
+    $testModeDb = new TestModeDatabase();
+
+    echo json_encode($testModeDb->getUserAnswer($username, $password));
   }
 
   else if($mode == MODE_ADMIN){

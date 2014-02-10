@@ -121,7 +121,8 @@
       if(!$this->validate($username, $password)) return false;
 
       $answer = mysqli_query($this->db, "SELECT `answer` FROM `test` WHERE `username` = '".$username."'");
-      return unserialize($answer);
+      $answer = mysqli_fetch_assoc($answer);
+      return unserialize($answer["answer"]);
     }
   } 
 ?>
