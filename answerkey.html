@@ -2,14 +2,14 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Test Mode</title>
+<title>Test Answer Key</title>
 
 <!--css-->
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/viz.css">
 <link rel="stylesheet" href="css/test_common.css">
-<link rel="stylesheet" href="css/testmode.css">
+<link rel="stylesheet" href="css/answerkey.css">
 
 <!--js-->
 <script src="js/external/jquery-1.10.2.js"></script>
@@ -30,31 +30,18 @@
 <div id="top-bar">
 	<a id="home" href="index.html">we<span class="colour">need</span>a<span class="colour">name</span></a>
     <span id="title">
-    	<a class="selected-viz" href="testmode.html">Test Mode</a>&nbsp&nbsp
+    	<a class="selected-viz" href="testmode.html">Test Answer Key</a>&nbsp&nbsp
     </span>
 </div>
 
 <div id="login-screen">
-	<h1>All the best!</h1>
+	<h1>All is revealed!</h1>
     <form>
     	<input id="login-id" type="text" value="user id" autocomplete="off"/><br/>
         <input id="login-pw" type="text" value="password"/><br/>
         <input id="login-go" type="submit" value="LOG IN" />
         <div id="login-err"></div>
     </form>
-</div>
-
-<div id="instructions-screen">
-	<h2>Instructions</h2>
-    <ul id="instructions">
-		<li><strong>You have 1 (one) attempt only.</strong></li><!--might need to change this if multiple attempts allowed-->
-		<li>You have 40 minutes to do this test. When the time is up, the test will be submitted automatically.</li><!--might need to change time stated-->
-		<li>Do not refresh your browser, go back, open another window, or close the window while taking the test.</li>
-		<li>Your score is only valid if you are physically present in the lab.</li>
-		<li>You are not allowed to discuss the questions or answers until 5pm today, even with your fellow lab group mates.</li>
-		<li>In the case of any disputes, the decision of the lecturer is final.</li>
-	</ul>
-    <input id="start-test" type="submit" value="Start the test"/>
 </div>
 
 <div id="test-screen">
@@ -69,28 +56,15 @@
     	<div id='undo-ans' style="margin-right: 8px;">Undo</div>
         <div id='clear-ans'>Clear</div>
         <div id="current-selection"></div>
+        <div id="ans-key">TESTING</div>
     </div>
     <div id="viz"></div>
 
 	<div id="info">
-        <div id="student-name">JOHN DOE</div>
-        <div id="time-left"></div>
-        <div id="submit-test">Submit Quiz</div>
-    </div>
-    
-    <div id="submit-check" class="overlays">
-    	<p></p>
-        <input id="submit-yes" type="button" value="Yes"><!--
-        --><input id="submit-no" type="button" value="No">
+        <div id="student-name"></div>
     </div>
     
 	<div id="question-nav"></div>
-</div>
-
-<div id="result-screen">
-	<div id="result-name"></div>
-    You scored 
-    <div id="score"></div>
 </div>
 
 <div id="left-bar"></div>
@@ -120,7 +94,7 @@
 <script src="js/graph_library/GraphEdgeWidget.js"></script>
 
 <script src="js/test/test_common.js"></script>
-<script src="js/test/testmode.js"></script>
+<script src="js/test/answerkey.js"></script>
 <script src="js/test/answer_interface.js"></script>
 <script src="js/test/question_processing.js"></script>
 

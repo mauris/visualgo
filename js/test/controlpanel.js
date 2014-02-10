@@ -416,13 +416,3 @@ $(document).ready (function() {
 		showQn(qnNo);
 	});	
 });
-
-
-
-
-
-
-
-
-
-

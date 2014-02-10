@@ -51,7 +51,6 @@ function useConfig(data) {
 
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
-	console.log(sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString());
 	$.ajax({
 		url: sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
@@ -76,7 +75,6 @@ function getQnsAndStart() {
 		//time, attempt no, and date update
 		updateInfo();
 		infoRefresh = setInterval(function(){updateInfo()}, 10000); //10 sec
-		clientsideTimeUpdate();
 		clientsideTimeRefresh = setInterval(function() {clientsideTimeUpdate();},1000); //1 sec
 	});
 }
@@ -84,23 +82,17 @@ function getQnsAndStart() {
 /*-------INFO/TIME UPDATE FUNCTIONS-------*/
 function updateInfo() {
 	$.ajax({//update timer
-		url: sitePrefix+"?mode="+MODE_TEST_CHECK_TIME+"&username="+studentid
-	}).done(function(timeElapsed) {
+		url: sitePrefix+"?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
+	}).done(function(data) {
+		data = JSON.parse(data);
+		var timeElapsed = data.timeElapsed;
 		timeLeft = availableTime-timeElapsed;
 		if(timeLeft <=0) {
 			submitTest();
 		}
+		var studentname = data.name;
+		$('#student-name').html(studentname);
 	});
-	/* later use AJAX
-	$.ajax({//update name
-		url: sitePrefix+"?uid="+studentid+"&pwd="+studentpw+"&mode=7"
-	}).done(function(name) {
-		$('#student-name').html(name);
-		studentname = name;
-	});
-	*/
-	//for now:
-	$('#student-name').html("John Doe");
 }
 
 function clientsideTimeUpdate() {
