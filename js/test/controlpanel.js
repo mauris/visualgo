@@ -1,5 +1,4 @@
 var MODE = "TRAINING";
-var sitePrefix = document.URL.replace("/controlpanel.html","")+"/php/Test.php";
 
 var seed = (Math.floor(Math.random()*1000000000));
 nQns = 10;
@@ -35,7 +34,7 @@ function submitTraining() {
 	//get score
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = sitePrefix+"?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
 	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
@@ -50,9 +49,8 @@ function submitTraining() {
 /*-------START TEST FUNCTIONS-------*/
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
-	console.log(sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString());
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
 		MODE = "TRAINING";
 		
@@ -110,7 +108,7 @@ function displayConfig(data) { //data is a JSON object
 function saveConfig() {
 	loadTraining();
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
+		url: "php/Test.php?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
 	}).done(function(passed) {
 		customAlert("New test configurations have been saved.");
 	});
@@ -147,7 +145,7 @@ function uploadFile() {
 	});
 	
 	 $.ajax({
-        url: sitePrefix+'?studentListFile',
+        url: 'php/Test.php?studentListFile',
         type: 'POST',
         data: data,
         cache: false,
@@ -188,14 +186,14 @@ $(document).ready (function() {
 		adminpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_ADMIN+"&password="+adminpw
+			url: "php/Test.php?mode="+MODE_ADMIN+"&password="+adminpw
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
 				$('#login-err').html("");
 				$('#login-screen').fadeOut("fast");
 				$.ajax({
-					url: sitePrefix+"?mode="+MODE_ADMIN_GET_CONFIG+"&password="+adminpw
+					url: "php/Test.php?mode="+MODE_ADMIN_GET_CONFIG+"&password="+adminpw
 				}).done(function(data) {
 					//show current configurations
 					data = JSON.parse(data);
@@ -370,7 +368,7 @@ $(document).ready (function() {
 	$('#reset').click(function() {
 		var stName = $('#reset-attempt').val();
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_ADMIN_RESET_ATTEMPT+"&password="+adminpw+"&username="+stName
+			url: "php/Test.php?mode="+MODE_ADMIN_RESET_ATTEMPT+"&password="+adminpw+"&username="+stName
 		}).done(function(success) {
 			if(success==1) {
 				customAlert("Attempt for "+stName+" has been reset.");

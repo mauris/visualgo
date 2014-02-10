@@ -1,5 +1,4 @@
 var MODE = "TRAINING";
-var sitePrefix = document.URL.replace("/testmode.html","")+"/php/Test.php";
 var studentid = "";
 var studentpw = "";
 
@@ -17,7 +16,7 @@ function submitTest() {
 	//get score
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = sitePrefix+"?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
+	var queryStr = "php/Test.php?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
 	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
@@ -52,10 +51,8 @@ function useConfig(data) {
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
-		MODE = "TRAINING";
-		
 		data = JSON.parse(data);
 		for(var i=1; i<=nQns; i++) {
 			extractInfo(i, data[i-1]);
@@ -82,7 +79,7 @@ function getQnsAndStart() {
 /*-------INFO/TIME UPDATE FUNCTIONS-------*/
 function updateInfo() {
 	$.ajax({//update timer
-		url: sitePrefix+"?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
+		url: "php/Test.php?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
 	}).done(function(data) {
 		data = JSON.parse(data);
 		var timeElapsed = data.timeElapsed;
@@ -152,7 +149,7 @@ $(document).ready (function() {
 		studentpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
@@ -168,7 +165,7 @@ $(document).ready (function() {
 	/*-------LOAD TEST-------*/
 	$('#start-test').click(function() {
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw
 		}).done(function(data) {
 			if(data != 0) {
 				//show current configurations

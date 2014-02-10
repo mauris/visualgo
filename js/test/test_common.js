@@ -74,7 +74,7 @@ function showQn(q) { //q is qn no
 	$('#qn-no').html(q+".");
 	$('#qn-text p').html(qnTextArr[q]);
 	gw.jumpToIteration(q,1);
-	showAnswerInterface(q, MODE);
+	showAnswerInterface(q);
 	if(hasBeenAnswered(q)) {
 		showRecordedAns(q);
 	}

@@ -1,5 +1,5 @@
 var MODE = "TRAINING";
-var sitePrefix = document.URL.replace("/trainingmode.html","")+"/php/Test.php";
+var anskeyArr = new Array();
 
 seed = (Math.floor(Math.random()*1000000000));
 
@@ -13,7 +13,7 @@ function submitTraining() {
 	//get score
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = sitePrefix+"?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
 	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
@@ -28,9 +28,8 @@ function submitTraining() {
 /*-------START TEST FUNCTIONS-------*/
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
-	console.log(sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString());
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
 		//console.log(data);
 		data = JSON.parse(data);

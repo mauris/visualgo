@@ -10,7 +10,7 @@ const INTERFACE_BLANK = 8;
 const ALLOW_NO_ANS = 1;
 const DISALLOW_NO_ANS = 0;
 
-function showAnswerInterface(q, mode) {
+function showAnswerInterface(q) {
 	//reset all unclickable
 	$('#vertexText text, #vertex circle, #edge path').unbind('click').css('cursor','auto');
 	$('#mcq').html("").hide(); $('.mcq-option .box').unbind('click').css('cursor','auto');
@@ -18,7 +18,7 @@ function showAnswerInterface(q, mode) {
 	$('.number-input').hide().unbind('change');
 	$('#undo-ans').hide(); $('#clear-ans').hide(); $('#current-selection').html("").hide();
 	
-	if(mode == "TRAINING") {
+	if(MODE == "TRAINING") {
 		switch(qnTypeArr[q]) {
 			case INTERFACE_SINGLE_V:
 				$('#vertexText text, #vertex circle').css('cursor','pointer');
@@ -238,7 +238,7 @@ function showAnswerInterface(q, mode) {
 			});
 		}
 		
-	} else if(mode=="ANSWER") {
+	} else if(MODE=="ANSWER") {
 		gw.jumpToIteration(q,1);
 		switch(qnTypeArr[q]) {
 			case INTERFACE_MCQ:
@@ -382,26 +382,97 @@ function showRecordedAns(q) {
 			
 		default: //nothing
 	}
+	if(MODE == "ANSWER") {
+		printCurrentSelection(q);
+	}
 }
 
 function printCurrentSelection(q) {
+	$('#current-selection').html("").hide().css('color','black');
 	var thisList = ansArr[q];
-	if(thisList == UNANSWERED || thisList == NO_ANSWER) { //no answer
-		$('#current-selection').html("").hide();
-	} else {
-		switch(qnTypeArr[q]) {
-			case INTERFACE_MULT_V:
-			case INTERFACE_SUBSET_MULT:
-				$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList.join(" , ")+"</strong>").show();
-				break;
-			case INTERFACE_MULT_E:
-				var temp ="";
-				for(var i=0; i<thisList.length; i++) {
-					temp += "( "+thisList[i][0]+" , "+thisList[i][1]+" ) , ";
-				}
-				$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
-				break;
-			default: //nothing
+	
+	if(MODE == "TRAINING") {
+		if(thisList == UNANSWERED || thisList == NO_ANSWER) { //no answer
+			$('#current-selection').html("").hide();
+		} else {
+			switch(qnTypeArr[q]) {
+				case INTERFACE_MULT_V:
+				case INTERFACE_SUBSET_MULT:
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList.join(" , ")+"</strong>").show();
+					break;
+				case INTERFACE_MULT_E:
+					var temp ="";
+					for(var i=0; i<thisList.length; i++) {
+						temp += "( "+thisList[i][0]+" , "+thisList[i][1]+" ) , ";
+					}
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
+					break;
+				default: //nothing
+			}
+		}
+	} else if(MODE == "ANSWER") {
+		//#current-selection
+		if(thisList == UNANSWERED || thisList.length == 0) { //unanswered - former for training, latter for test
+			$('#current-selection').html("<strong>You did not answer this question.</strong>").css('color','#df3939').show();
+		} else {
+			switch(qnTypeArr[q]) {
+				case INTERFACE_SINGLE_V:
+				case INTERFACE_SUBSET_SINGLE:
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList+"</strong>").show();
+					break;
+				case INTERFACE_MULT_V:
+				case INTERFACE_SUBSET_MULT:
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList.join(" , ")+"</strong>").show();
+					break;
+				case INTERFACE_SINGLE_E:
+					var temp = "( "+thisList[0]+" , "+thisList[1]+" )";
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp+"</strong>").show();
+					break;
+				case INTERFACE_MULT_E:
+					var temp ="";
+					for(var i=0; i<thisList.length; i++) {
+						temp += "( "+thisList[i][0]+" , "+thisList[i][1]+" ) , ";
+					}
+					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
+					break;
+				default: //nothing
+			}
+		}
+		//#ans-key
+		$('#ans-key').html("").hide();
+		var anskeyList = anskeyArr[q];
+		var isCorrect = checkCorrectness(ansArr[q], anskeyArr[q]);
+		if(isCorrect) {
+			$('#ans-key').html("You answered this question correctly! :)").show();
+		} else {
+			switch(qnTypeArr[q]) {
+				case INTERFACE_SINGLE_V:
+				case INTERFACE_SUBSET_SINGLE:
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList+"</strong>").show();
+					break;
+				case INTERFACE_MULT_V:
+				case INTERFACE_SUBSET_MULT:
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList.join(" , ")+"</strong>").show();
+					break;
+				case INTERFACE_SINGLE_E:
+					var temp = "( "+anskeyList[0]+" , "+anskeyList[1]+" )";
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+temp+"</strong>").show();
+					break;
+				case INTERFACE_MULT_E:
+					var temp ="";
+					for(var i=0; i<anskeyList.length; i++) {
+						temp += "( "+anskeyList[i][0]+" , "+anskeyList[i][1]+" ) , ";
+					}
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
+					break;
+				case INTERFACE_MCQ:
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList+"</strong>").show(); //must edit
+					break;
+				case INTERFACE_BLANK:
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList+"</strong>").show();
+					break;
+				default: //nothing
+			}
 		}
 	}
 }
@@ -459,4 +530,8 @@ function containsEdge(el, e) { //checks if e is inside el
 		if(currEdge[0]==e[0]&&currEdge[1]==e[1]) return true;
 	}
 	return false;
+}
+
+function checkCorrectness(stans, actualans) {
+	return true; //chacnge later
 }

@@ -1,7 +1,7 @@
-var MODE = "TRAINING";
-var sitePrefix = document.URL.replace("/answerkey.html","")+"/php/Test.php";
+var MODE = "ANSWER";
 var studentid = "";
 var studentpw = "";
+var anskeyArr = new Array();
 
 function startAns() {
 	init();
@@ -19,10 +19,31 @@ function useConfig(data) {
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
 	$.ajax({
-		url: sitePrefix+"?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw
+	}).done(function(ansData) {
+		//store into anskeyArr array
+		console.log("answerkey: " + ansData);
+	});
+	$.ajax({
+		url: "php/Test.php?mode="+MODE_TEST_GET_STUDENT_ANSWERS+"&username="+studentid+"&password="+studentpw
+	}).done(function(stAnsData) {
+		stAnsData = JSON.parse(stAnsData);
+		//store into anskeyArr array
+		for(var i=0; i<stAnsData.length; i++) {
+			var raw = stAnsData[i];
+			var proc = new Array();
+			for(var j=0; j<raw.length; j++) {
+				if(!isNaN(parseInt(raw[j]))) { //double negative, i.e. is a number
+					raw[j] = parseInt(raw[j]);
+				}
+				proc.push(raw[j]);
+			}
+			ansArr[i+1] = proc;
+		}
+	});
+	$.ajax({
+		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
-		MODE = "TRAINING";
-		
 		data = JSON.parse(data);
 		for(var i=1; i<=nQns; i++) {
 			extractInfo(i, data[i-1]);
@@ -39,7 +60,7 @@ function getQnsAndStart() {
 		showQn(qnNo);
 	});
 	$.ajax({//get name to display
-		url: sitePrefix+"?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
+		url: "php/Test.php?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
 	}).done(function(data) {
 		data = JSON.parse(data);
 		var studentname = data.name;
@@ -87,12 +108,12 @@ $(document).ready (function() {
 		studentpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: sitePrefix+"?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
 				$.ajax({
-					url: sitePrefix+"?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw //change later to get answers
+					url: "php/Test.php?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw //change later to get answers
 				}).done(function(data) {
 					if(data != 0) {
 						//show current configurations
