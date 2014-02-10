@@ -55,6 +55,10 @@
 			else if ($qObj->qType == QUESTION_TYPE_LSONE) return $this->checkAnswerLSOne($qObj, $userAns);
 			else return false;
 		}
+
+		public function getAnswer($qObj){
+      
+    }
 		
 		//each question type generator and checker
 		//AND/OR/XOR

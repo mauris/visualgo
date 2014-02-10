@@ -35,7 +35,7 @@ class GraphTraversalQuestionGenerator{
       $potentialQuestions = array();
 
       $potentialQuestions[] = "generateQuestionTraversal";
-	  $potentialQuestions[] = "generateQuestionDisconnect";
+      $potentialQuestions[] = "generateQuestionDisconnect";
 
       return $potentialQuestions;
     }
@@ -46,6 +46,10 @@ class GraphTraversalQuestionGenerator{
         return $this->$verifierFunc($qObj, $userAns);
       }
       else return false;
+    }
+
+    public function getAnswer($qObj){
+      
     }
 
     protected function generateGraphTraversal($d, $c){

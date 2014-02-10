@@ -49,6 +49,10 @@ class MstQuestionGenerator{
       else return false;
     }
 
+    public function getAnswer($qObj){
+      
+    }
+
     protected function generateMinST(){
       $mst = new MST(true);
       return $mst;

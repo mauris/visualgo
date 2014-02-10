@@ -35,8 +35,8 @@ class SsspQuestionGenerator{
       $potentialQuestions = array();
 
       $potentialQuestions[] = "generateQuestionGreaterLess";
-	  $potentialQuestions[] = "generateQuestionPath";
-	  $potentialQuestions[] = "generateQuestionPathWeight";
+      $potentialQuestions[] = "generateQuestionPath";
+      $potentialQuestions[] = "generateQuestionPathWeight";
 
       return $potentialQuestions;
     }
@@ -47,6 +47,10 @@ class SsspQuestionGenerator{
         return $this->$verifierFunc($qObj, $userAns);
       }
       else return false;
+    }
+
+    public function getAnswer($qObj){
+      
     }
 
     protected function generateSSSP(){

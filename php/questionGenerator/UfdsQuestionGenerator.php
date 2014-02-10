@@ -47,6 +47,10 @@
       else return false;
     }
 
+    public function getAnswer($qObj){
+      
+    }
+
     protected function generateUfds(){
 
     }
