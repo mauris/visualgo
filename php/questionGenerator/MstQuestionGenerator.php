@@ -153,6 +153,7 @@ class MstQuestionGenerator{
       $vertexAIndex = rand(0, count($mstContent)-1);
       $vertexA = $mstContent[$vertexAIndex];
       unset($mstContent[$vertexAIndex]);
+      $mstContent = array_values($mstContent);
       $vertexB = $mstContent[rand(0, count($mstContent)-1)];
 
       $qObj = new QuestionObject();
