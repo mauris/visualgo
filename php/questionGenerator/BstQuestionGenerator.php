@@ -455,13 +455,19 @@
 
       return $qObj;
     }
+	
+	protected function getAnswerRoot($qObj){
+      $bst = $qObj->internalDS;
+      $ans = $bst->getRoot();
+
+      return $ans;
+    }
 
     protected function checkAnswerRoot($qObj, $userAns){
-      $bst = $qObj->internalDS;
-      $root = $bst->getRoot();
+      $ans = $this->getAnswerRoot($qObj);
 
       $correctness = true;
-      if($userAns[0] != $root) $correctness = false;
+      if($userAns[0] != $ans) $correctness = false;
 
       return $correctness;
     }
