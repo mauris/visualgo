@@ -17,8 +17,8 @@
       QUESTION_TYPE_ROOT => "checkAnswerRoot",
       QUESTION_TYPE_LEAVES => "checkAnswerLeaves",
       QUESTION_TYPE_INTERNAL => "checkAnswerInternal",
-      QUESTION_TYPE_AVL_ROTATION_INSERT => "checkAnswerAvlRotationInsert",
-      QUESTION_TYPE_AVL_ROTATION_DELETE => "checkAnswerAvlRotationDelete"
+      // QUESTION_TYPE_AVL_ROTATION_INSERT => "checkAnswerAvlRotationInsert",
+      // QUESTION_TYPE_AVL_ROTATION_DELETE => "checkAnswerAvlRotationDelete"
       );
 
     public function __construct(){
@@ -60,8 +60,8 @@
       $potentialQuestions[] = "generateQuestionMaxValue";
       $potentialQuestions[] = "generateQuestionSwapQuestion";
       $potentialQuestions[] = "generateQuestionIsAvl";
-      $potentialQuestions[] = "generateQuestionAvlRotationInsert";
-      $potentialQuestions[] = "generateQuestionAvlRotationDelete";
+      // $potentialQuestions[] = "generateQuestionAvlRotationInsert";
+      // $potentialQuestions[] = "generateQuestionAvlRotationDelete";
       $potentialQuestions[] = "generateQuestionHeight";
       $potentialQuestions[] = "generateQuestionKthSmallestValue";
       $potentialQuestions[] = "generateQuestionRoot";
@@ -117,10 +117,16 @@
       return $qObj;
     }
 
-    protected function checkAnswerSearchSequence($qObj, $userAns){
+    protected function getAnswerSearchSequence($qObj){
       $bst = $qObj->internalDS;
       $varToBeSearched = $qObj->qParams["value"];
       $ans = $bst->search($varToBeSearched);
+
+      return $ans;
+    }
+
+    protected function checkAnswerSearchSequence($qObj, $userAns){
+      $ans = $this->getAnswerSearchSequence($qObj);
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -170,12 +176,18 @@
       return $qObj;
     }
 
-    protected function checkAnswerTraversalSequence($qObj, $userAns){
+    protected function getAnswerTraversalSequence($qObj){
       $bst = $qObj->internalDS;
       $ans;
       if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_INORDER_TRAVERSAL) $ans = $bst->inorderTraversal();
       else if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_PREORDER_TRAVERSAL) $ans = $bst->preorderTraversal();
       else if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_POSTORDER_TRAVERSAL) $ans = $bst->postorderTraversal();
+
+      return $ans;
+    }
+
+    protected function checkAnswerTraversalSequence($qObj, $userAns){
+      $ans = $this->getAnswerTraversalSequence($qObj);
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -213,10 +225,16 @@
       return $qObj;
     }
 
-    protected function checkAnswerSuccessorSequence($qObj, $userAns){
+    protected function getAnswerSuccessorSequence($qObj){
       $bst = $qObj->internalDS;
       $varWhoseSuccessorIsToBeSearched = $qObj->qParams["value"];
       $ans = $bst->successor($varWhoseSuccessorIsToBeSearched);
+
+      return $ans;
+    }
+
+    protected function checkAnswerSuccessorSequence($qObj, $userAns){
+      $ans = $this->getAnswerSuccessorSequence($qObj);
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -252,6 +270,14 @@
       $qObj->internalDS = $bst;
 
       return $qObj;
+    }
+
+    protected function getAnswerPredecessorSequence(){
+      $bst = $qObj->internalDS;
+      $varWhosePredecessorIsToBeSearched = $qObj->qParams["value"];
+      $ans = $bst->predecessor($varWhosePredecessorIsToBeSearched);
+
+      return $ans;
     }
 
     protected function checkAnswerPredecessorSequence($qObj, $userAns){
@@ -295,9 +321,15 @@
       return $qObj;
     }
 
-    protected function checkAnswerMinValue($qObj, $userAns){
+    protected function getAnswerMinValue($qObj){
       $bst = $qObj->internalDS;
       $minVal = $bst->getMinValue();
+
+      return $minVal;
+    }
+
+    protected function checkAnswerMinValue($qObj, $userAns){
+      $minVal = $this->getAnswerMinValue($qObj);
 
       $correctness = true;
       if(count($userAns) > 1) $correctness = false;
@@ -328,9 +360,15 @@
       return $qObj;
     }
 
-    protected function checkAnswerMaxValue($qObj, $userAns){
+    protected function getAnswerMaxValue($qObj){
       $bst = $qObj->internalDS;
       $maxVal = $bst->getMaxValue();
+
+      return $maxVal;
+    }
+
+    protected function checkAnswerMaxValue($qObj, $userAns){
+      $maxVal = $this->getAnswerMaxValue($qObj);
 
       $correctness = true;
       if(count($userAns) > 1) $correctness = false;
@@ -359,9 +397,15 @@
       return $qObj;
     }
 
-    protected function checkAnswerKthSmallestValue($qObj, $userAns){
+    protected function getAnswerKthSmallestValue($qObj){
       $bst = $qObj->internalDS;
       $kthSmallestVal = $bst->getKthSmallestValue($qObj->qParams["value"]);
+      
+      return $kthSmallestVal; 
+    }
+
+    protected function checkAnswerKthSmallestValue($qObj, $userAns){
+      $kthSmallestVal = $this->getAnswerKthSmallestValue($qObj);
 
       $correctness = true;
       if(count($userAns) > 1) $correctness = false;
@@ -416,9 +460,15 @@
       return $qObj;
     }
 
-    protected function checkAnswerLeaves($qObj, $userAns){
+    protected function getAnswerLeaves($qObj){
       $bst = $qObj->internalDS;
       $ans = $bst->getAllLeaves();
+
+      return $ans;
+    }
+
+    protected function checkAnswerLeaves($qObj, $userAns){
+      $ans = $this->getAnswerLeaves($qObj);
 
       sort($userAns);
       sort($ans);
@@ -455,9 +505,15 @@
       return $qObj;
     }
 
-    protected function checkAnswerInternal($qObj, $userAns){
+    protected function getAnswerInternal($qObj){
       $bst = $qObj->internalDS;
       $ans = $bst->getAllInternal();
+
+      return $ans;
+    }
+
+    protected function checkAnswerInternal($qObj, $userAns){
+      $ans = $this->getAnswerInternal($qObj);
 
       sort($userAns);
       sort($ans);
@@ -494,10 +550,16 @@
       return $qObj;
     }
 
-    protected function checkAnswerDeletionQuestion($qObj, $userAns){
+    protected function getAnswerDeletionQuestion($qObj){
       $bst = $qObj->internalDS;
       $originalHeight = $bst->getHeight();
       $maxAmt = $qObj->qParams["maxAmt"];
+
+      return $maxAmt;
+    }
+
+    protected function checkAnswerDeletionQuestion($qObj, $userAns){
+      $maxAmt = $this->getAnswerDeletionQuestion($qObj);
 
       $correctness = true;
       if(count($userAns) > $maxAmt) $correctness = false;
@@ -529,10 +591,14 @@
       return $qObj;
     }
 
-    protected function checkAnswerHeight($qObj, $userAns){
+    protected function getAnswerHeight($qObj){
       $bst = $qObj->internalDS;
 
-      return $bst->getHeight() == $userAns[0];
+      return $bst->getHeight();
+    }
+
+    protected function checkAnswerHeight($qObj, $userAns){
+      return $this->getAnswerHeight($qObj) == $userAns[0];
     }
 
     protected function generateQuestionSwapQuestion($bstSize){
@@ -561,12 +627,18 @@
       return $qObj;
     }
 
-    protected function checkAnswerSwapQuestion($qObj, $userAns){
+    protected function getAnswerSwapQuestion($qObj){
       $bst = $qObj->internalDS;
 
+      return $bst->isValid();
+    }
+
+    protected function checkAnswerSwapQuestion($qObj, $userAns){
+      $ans = $this->getAnswerSwapQuestion($qObj);
+
       $correctness = false;
-      if($bst->isValid() && $userAns[0] == BST_SWAP_ANS_VALID) $correctness = true;
-      else if(!($bst->isValid()) && $userAns[0] == BST_SWAP_ANS_INVALID) $correctness = true;
+      if($ans && $userAns[0] == BST_SWAP_ANS_VALID) $correctness = true;
+      else if(!($ans) && $userAns[0] == BST_SWAP_ANS_INVALID) $correctness = true;
 
       return $correctness;
     }
@@ -592,12 +664,18 @@
       return $qObj;
     }
 
-    protected function checkAnswerIsAvl($qObj, $userAns){
+    protected function getAnswerIsAvl($qObj){
       $bst = $qObj->internalDS;
 
+      return $bst->isAvl();
+    }
+
+    protected function checkAnswerIsAvl($qObj, $userAns){
+      $ans = $this->getAnswerIsAvl($qObj);
+
       $correctness = false;
-      if($bst->isAvl() && $userAns[0] == BST_IS_AVL_ANS_VALID) $correctness = true;
-      else if(!($bst->isAvl()) && $userAns[0] == BST_IS_AVL_ANS_INVALID) $correctness = true;
+      if($ans && $userAns[0] == BST_IS_AVL_ANS_VALID) $correctness = true;
+      else if(!($ans) && $userAns[0] == BST_IS_AVL_ANS_INVALID) $correctness = true;
 
       return $correctness;
     }
