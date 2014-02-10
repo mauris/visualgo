@@ -111,6 +111,7 @@
 
   const UNANSWERED = "unanswered";
   const NO_ANSWER = "noAnswer";
+  const CORRECT = "correct";
 
   // Sync with graph_library/constant.js file
 

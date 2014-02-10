@@ -22,7 +22,10 @@ function getQnsAndStart() {
 		url: "php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw
 	}).done(function(ansData) {
 		//store into anskeyArr array
-		console.log("answerkey: " + ansData);
+		ansData = JSON.parse(ansData);
+		for(var i=0; i<ansData.length; i++) {
+			anskeyArr[i+1] = ansData[i];
+		}
 	});
 	$.ajax({
 		url: "php/Test.php?mode="+MODE_TEST_GET_STUDENT_ANSWERS+"&username="+studentid+"&password="+studentpw

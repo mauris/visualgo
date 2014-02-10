@@ -115,3 +115,4 @@ const MODE_ADMIN_RESET_ATTEMPT = 13;
 
 const UNANSWERED = "unanswered";
 const NO_ANSWER = "noAnswer";
+const CORRECT = "correct";

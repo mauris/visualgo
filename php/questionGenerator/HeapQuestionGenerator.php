@@ -407,7 +407,7 @@
     }
 
     protected function checkAnswerInternal($qObj, $userAns){
-      $heap = $this->getAnswer($qObj);
+      $ans = $this->getAnswer($qObj);
       sort($ans);
       sort($userAns);
 

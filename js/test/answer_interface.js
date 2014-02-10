@@ -441,7 +441,7 @@ function printCurrentSelection(q) {
 		//#ans-key
 		$('#ans-key').html("").hide();
 		var anskeyList = anskeyArr[q];
-		var isCorrect = checkCorrectness(ansArr[q], anskeyArr[q]);
+		var isCorrect = checkCorrectness(anskeyArr[q]);
 		if(isCorrect) {
 			$('#ans-key').html("You answered this question correctly! :)").show();
 		} else {
@@ -532,6 +532,6 @@ function containsEdge(el, e) { //checks if e is inside el
 	return false;
 }
 
-function checkCorrectness(stans, actualans) {
-	return true; //chacnge later
+function checkCorrectness(actualans) {
+	return (actualans == CORRECT);
 }

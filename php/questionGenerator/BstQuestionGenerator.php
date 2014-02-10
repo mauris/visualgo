@@ -413,7 +413,7 @@
       $qObj->qParams = array("value" => $kthSmallestElementToBeSearched,"subtype" => QUESTION_SUB_TYPE_NONE);
       $qObj->aType = ANSWER_TYPE_VERTEX;
       $qObj->aAmt = ANSWER_AMT_ONE;
-      $qObj->ordered = true;
+      $qObj->ordered = false;
       $qObj->allowNoAnswer = false;
       $qObj->graphState = $bst->toGraphState();
       $qObj->internalDS = $bst;
@@ -448,7 +448,7 @@
       $qObj->qParams = array("subtype" => QUESTION_SUB_TYPE_NONE);
       $qObj->aType = ANSWER_TYPE_VERTEX;
       $qObj->aAmt = ANSWER_AMT_ONE;
-      $qObj->ordered = true;
+      $qObj->ordered = false;
       $qObj->allowNoAnswer = false;
       $qObj->graphState = $bst->toGraphState();
       $qObj->internalDS = $bst;
@@ -482,7 +482,7 @@
       $qObj->qParams = array("subtype" => QUESTION_SUB_TYPE_NONE);
       $qObj->aType = ANSWER_TYPE_VERTEX;
       $qObj->aAmt = ANSWER_AMT_MULTIPLE;
-      $qObj->ordered = true;
+      $qObj->ordered = false;
       $qObj->allowNoAnswer = false;
       $qObj->graphState = $bst->toGraphState();
       $qObj->internalDS = $bst;
@@ -527,7 +527,7 @@
       $qObj->qParams = array("subtype" => QUESTION_SUB_TYPE_NONE);
       $qObj->aType = ANSWER_TYPE_VERTEX;
       $qObj->aAmt = ANSWER_AMT_MULTIPLE;
-      $qObj->ordered = true;
+      $qObj->ordered = false;
       $qObj->allowNoAnswer = true;
       $qObj->graphState = $bst->toGraphState();
       $qObj->internalDS = $bst;

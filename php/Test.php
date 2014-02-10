@@ -272,6 +272,10 @@
 
       $qArr = array();
       $qAmtTopic = array();
+	  $retrievedA = $testModeDb->getUserAnswer($username, $password);
+	  for($n=0; $n<count($retrievedA);$n++) {
+		$aArr[$n] = $retrievedA[$n];
+	  }
 
       // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
 
@@ -291,9 +295,21 @@
           $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
       }
       // End of question generator
-
+	  
       for($i = 0; $i < count($qArr);$i++){
-        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+		if($aArr[$i][0] == UNANSWERED){
+			$aCorrectness[$i] = false;
+			$aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+			continue;
+		} else if($aArr[$i][0] == NO_ANSWER){
+			$aArr[$i] = array();
+		}
+		$aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
+		if($aCorrectness[$i]){
+			$aList[] = CORRECT;
+		} else {
+	        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+		}
       }
     }
 
