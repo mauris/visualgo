@@ -101,8 +101,9 @@
   const MODE_LOGIN = 3;					//student login for test mode
   const MODE_TEST_BEGIN = 4;			//test mode - start student timer and retrieve test config
   const MODE_TEST_SUBMIT = 5;			//test mode check answers - answers and scores recorded in database
-  const MODE_TEST_GET_ANSWERS = 6;		//
-  const MODE_TEST_GET_INFO = 7;		//test mode - return elapsed time for a student
+  const MODE_TEST_GET_INFO = 6;   //test mode - return elapsed time for a student
+  const MODE_TEST_GET_ANSWERS = 7;
+  const MODE_TEST_GET_STUDENT_ANSWERS = 8;
   const MODE_ADMIN = 10;				//admin login for control panel
   const MODE_ADMIN_GET_CONFIG = 11;		//retrieve test config for control panel
   const MODE_ADMIN_EDIT_CONFIG = 12;	//edit test config from control panel

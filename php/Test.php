@@ -300,6 +300,10 @@
     echo json_encode($aList);
   }
 
+  else if($mode == MODE_TEST_GET_STUDENT_ANSWERS){
+    
+  }
+
   else if($mode == MODE_ADMIN){
     $password = $_GET["password"];
 
