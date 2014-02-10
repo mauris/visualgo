@@ -251,7 +251,53 @@
   }
 
   else if($mode == MODE_TEST_GET_ANSWERS){
+    $username = $_GET["username"];
+    $password = $_GET["password"];
 
+    $testModeDb = new TestModeDatabase();
+    $params = $testModeDb->getTestParams();
+    $aList = array();
+
+    if($params["answerIsOpen"] != 0){
+      $qSeed = $params["seed"];
+      $qAmt = $params["questionAmount"];
+      $qTopics = $params["topics"];
+
+      // Question generator
+      srand((int)$qSeed);
+
+      // foreach($questionGenerator as $key => $value){
+      //   $value->seedRng(rand());
+      // }
+
+      $qArr = array();
+      $qAmtTopic = array();
+
+      // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
+
+      for($i = 0; $i < count($qTopics); $i++){
+        $qAmtTopic[] = 1;
+        $qAmt--;
+      }
+
+      for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
+        $addition = rand(1, $qAmt);
+        $qAmt -= $addition;
+        $qAmtTopic[$i] += $addition;
+      }
+
+      for($i = 0; $i < count($qTopics); $i++){
+        if(array_key_exists($qTopics[$i], $questionGenerator))
+          $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
+      }
+      // End of question generator
+
+      for($i = 0; $i < count($qArr);$i++){
+        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+      }
+    }
+
+    echo json_encode($aList);
   }
 
   else if($mode == MODE_ADMIN){

@@ -3,7 +3,7 @@
   require_once 'QuestionGeneratorInterface.php';
 
   class BstQuestionGenerator implements QuestionGeneratorInterface{
-    protected $answerFunctionList = array(
+    protected $checkAnswerFunctionList = array(
       QUESTION_TYPE_SEARCH => "checkAnswerSearchSequence",
       QUESTION_TYPE_TRAVERSAL => "checkAnswerTraversalSequence",
       QUESTION_TYPE_SUCCESSOR => "checkAnswerSuccessorSequence",
@@ -19,6 +19,24 @@
       QUESTION_TYPE_INTERNAL => "checkAnswerInternal",
       // QUESTION_TYPE_AVL_ROTATION_INSERT => "checkAnswerAvlRotationInsert",
       // QUESTION_TYPE_AVL_ROTATION_DELETE => "checkAnswerAvlRotationDelete"
+      );
+
+    protected $getAnswerFunctionList = array(
+      QUESTION_TYPE_SEARCH => "getAnswerSearchSequence",
+      QUESTION_TYPE_TRAVERSAL => "getAnswerTraversalSequence",
+      QUESTION_TYPE_SUCCESSOR => "getAnswerSuccessorSequence",
+      QUESTION_TYPE_PREDECESSOR => "getAnswerPredecessorSequence",
+      QUESTION_TYPE_MIN_VALUE => "getAnswerMinValue",
+      QUESTION_TYPE_MAX_VALUE => "getAnswerMaxValue",
+      QUESTION_TYPE_K_SMALLEST_VALUE => "getAnswerKthSmallestValue",
+      QUESTION_TYPE_SWAP => "getAnswerSwapQuestion",
+      QUESTION_TYPE_IS_AVL => "getAnswerIsAvl",
+      QUESTION_TYPE_HEIGHT => "getAnswerHeight",
+      QUESTION_TYPE_ROOT => "getAnswerRoot",
+      QUESTION_TYPE_LEAVES => "getAnswerLeaves",
+      QUESTION_TYPE_INTERNAL => "getAnswerInternal",
+      // QUESTION_TYPE_AVL_ROTATION_INSERT => "getAnswerAvlRotationInsert",
+      // QUESTION_TYPE_AVL_ROTATION_DELETE => "getAnswerAvlRotationDelete"
       );
 
     public function __construct(){
@@ -71,9 +89,17 @@
       return $potentialQuestions;
     }
 
+    public function getAnswer($qObj){
+      if(array_key_exists($qObj->qType, $this->getAnswerFunctionList)){
+        $answerFunc = $this->getAnswerFunctionList[$qObj->qType];
+        return $this->$answerFunc($qObj);
+      }
+      else return false;
+    }
+
     public function checkAnswer($qObj, $userAns){
-      if(array_key_exists($qObj->qType, $this->answerFunctionList)){
-        $verifierFunc = $this->answerFunctionList[$qObj->qType];
+      if(array_key_exists($qObj->qType, $this->checkAnswerFunctionList)){
+        $verifierFunc = $this->checkAnswerFunctionList[$qObj->qType];
         return $this->$verifierFunc($qObj, $userAns);
       }
       else return false;
@@ -272,7 +298,7 @@
       return $qObj;
     }
 
-    protected function getAnswerPredecessorSequence(){
+    protected function getAnswerPredecessorSequence($qObj){
       $bst = $qObj->internalDS;
       $varWhosePredecessorIsToBeSearched = $qObj->qParams["value"];
       $ans = $bst->predecessor($varWhosePredecessorIsToBeSearched);
@@ -281,9 +307,7 @@
     }
 
     protected function checkAnswerPredecessorSequence($qObj, $userAns){
-      $bst = $qObj->internalDS;
-      $varWhosePredecessorIsToBeSearched = $qObj->qParams["value"];
-      $ans = $bst->predecessor($varWhosePredecessorIsToBeSearched);
+      $ans = $this->getAnswerPredecessorSequence($qObj);
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -630,17 +654,19 @@
     protected function getAnswerSwapQuestion($qObj){
       $bst = $qObj->internalDS;
 
-      return $bst->isValid();
+      return $bst->isValid()? BST_SWAP_ANS_VALID:BST_SWAP_ANS_INVALID;
     }
 
     protected function checkAnswerSwapQuestion($qObj, $userAns){
       $ans = $this->getAnswerSwapQuestion($qObj);
 
-      $correctness = false;
-      if($ans && $userAns[0] == BST_SWAP_ANS_VALID) $correctness = true;
-      else if(!($ans) && $userAns[0] == BST_SWAP_ANS_INVALID) $correctness = true;
+      // $correctness = false;
+      // if($ans && $userAns[0] == BST_SWAP_ANS_VALID) $correctness = true;
+      // else if(!($ans) && $userAns[0] == BST_SWAP_ANS_INVALID) $correctness = true;
 
-      return $correctness;
+      // return $correctness;
+
+      return $userAns[0] == $ans;
     }
 
     protected function generateQuestionIsAvl($bstSize){
@@ -667,17 +693,18 @@
     protected function getAnswerIsAvl($qObj){
       $bst = $qObj->internalDS;
 
-      return $bst->isAvl();
+      return $bst->isAvl()? BST_IS_AVL_ANS_VALID:BST_IS_AVL_ANS_INVALID;
     }
 
     protected function checkAnswerIsAvl($qObj, $userAns){
       $ans = $this->getAnswerIsAvl($qObj);
 
-      $correctness = false;
-      if($ans && $userAns[0] == BST_IS_AVL_ANS_VALID) $correctness = true;
-      else if(!($ans) && $userAns[0] == BST_IS_AVL_ANS_INVALID) $correctness = true;
+      // $correctness = false;
+      // if($ans && $userAns[0] == BST_IS_AVL_ANS_VALID) $correctness = true;
+      // else if(!($ans) && $userAns[0] == BST_IS_AVL_ANS_INVALID) $correctness = true;
 
-      return $correctness;
+      // return $correctness;
+      return $userAns[0] == $ans;
     }
 
     protected function generateQuestionAvlRotationInsert($avlSize){
