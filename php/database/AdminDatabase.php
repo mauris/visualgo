@@ -88,8 +88,8 @@
     public function resetAttempt($username, $password){
       if(!$this->validate($password)) return false;
 
-      $checkUsername = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username`='".$username."'");
-      if(mysql_num_rows($result) == 0){
+      $checkUsername = mysqli_query($this->db, "SELECT `username` FROM `test` WHERE `username`='".$username."'");
+      if(mysqli_num_rows($checkUsername) == 0){
         return false;
       }
 
