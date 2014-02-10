@@ -88,7 +88,12 @@
     public function resetAttempt($username, $password){
       if(!$this->validate($password)) return false;
 
-      mysqli_query($this->db, "UPDATE `test` SET `attemptCount` = "."0"." WHERE `username` = ".$username);
+      $checkUsername = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username`='".$username."'");
+      if(mysql_num_rows($result) == 0){
+        return false;
+      }
+
+      mysqli_query($this->db, "UPDATE `test` SET `attemptCount` = "."0"." WHERE `username` = '".$username."'");
 
       return true;
     }

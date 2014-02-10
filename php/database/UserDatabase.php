@@ -40,10 +40,35 @@
         VALUES ('"."Steven"."','"."steven"."','"."test3"."')");
     }
 
+    public function validate($username, $password){
+      $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = '".$username."'");
+      $user = mysqli_fetch_assoc($user);
+
+      return $password == $user["password"];
+    }
+
+    public function exists($username){
+      $checkUsername = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username`='".$username."'");
+      if(mysql_num_rows($result) == 0){
+        return false;
+      }
+
+      return true;
+    }
+
     // TODO: secure this against SQL injection
     public function register($username, $password, $name){
       mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
         VALUES ('".$name."','".$username."','".$password."')");
+    }
+
+    public function getName($username, $password){
+      if(!$this->validate($username, $password)) return false;
+
+      $name = mysqli_query($this->db, "SELECT `name` FROM `user` WHERE `username`='".$username."'");
+      $name = mysqli_fetch_assoc($name);
+
+      return $name["name"];
     }
   }
 ?>

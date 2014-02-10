@@ -47,7 +47,9 @@
       return $config;
     }
 
-    public function getTimeElapsed($username){
+    public function getTimeElapsed($username, $password){
+      if(!$this->validate($username, $password)) return false;
+      
       $startTime = mysqli_query($this->db, "SELECT `startTime` FROM `test` WHERE `username` = '".$username."'");
       $temp = mysqli_fetch_assoc($startTime);
       $startTime = strtotime($temp["startTime"]);

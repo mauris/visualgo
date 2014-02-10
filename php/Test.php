@@ -237,11 +237,17 @@
 
   }
 
-  else if($mode == MODE_TEST_CHECK_TIME){
+  else if($mode == MODE_TEST_GET_INFO){
     $username = $_GET["username"];
+    $password = $_GET["password"];
     $testModeDb = new TestModeDatabase();
+    $userDb = new UserDatabase();
 
-    echo $testModeDb->getTimeElapsed($username);
+    $info = array();
+    $info["timeElapsed"] = $testModeDb->getTimeElapsed($username, $password);
+    $info["name"] = $userDb->getName($username, $password);
+
+    echo json_encode($info);
   }
 
   else if($mode == MODE_TEST_GET_ANSWERS){
