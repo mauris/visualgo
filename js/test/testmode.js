@@ -8,7 +8,6 @@ var availableTime = 0; //in seconds
 var timeLeft;
 
 function startTest() {
-	init();
 	getQnsAndStart(); //fill qnTextArr, qnGraphArr, and qnTypeArr
 }
 
@@ -48,10 +47,11 @@ function getQnsAndStart() {
 		if(data != 0) {
 			data = JSON.parse(data);
 			nQns = data.length;
+			init();
 			for(var i=1; i<=nQns; i++) {
 				extractInfo(i, data[i-1]);
 			}
-			
+
 			//switch screens
 			$('#question-nav').html("");
 			prepareQnNav(nQns);
@@ -81,6 +81,7 @@ function updateInfo() {
 		url: "php/Test.php?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
 	}).done(function(data) {
 		data = JSON.parse(data);
+		availableTime = data.timeLimit;
 		var timeElapsed = data.timeElapsed;
 		timeLeft = availableTime-timeElapsed;
 		if(timeLeft <=0) {
@@ -164,27 +165,6 @@ $(document).ready (function() {
 	/*-------LOAD TEST-------*/
 	$('#start-test').click(function() {
 		startTest();
-		$.ajax({
-			url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
-		}).done(function(data) {
-			/*
-			if(data != 0) {
-				//show current configurations
-				data = JSON.parse(data);
-				if(data.testIsOpen==1) {
-					$('#instructions-screen').fadeOut("fast");
-					$('#question-nav').html("");
-					startTest();
-				} else {
-					customAlert("There is no ongoing test session.");
-				}
-			}*/
-			if(data != 0) {
-				getQnsAndStart();
-			} else {
-				customAlert("There is no ongoing test session.");
-			}
-		});
 	});
 
 	/*-------SUBMIT QUIZ-------*/
