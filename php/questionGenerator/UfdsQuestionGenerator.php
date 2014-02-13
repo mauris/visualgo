@@ -139,8 +139,10 @@
       $ufdsContent = $ufds->getAllElements();
       $ans = array();
 
-      for($i = 0; $i < count($ufdsContent); $i++){
-        if(count($ufds->findSetNoPathCompression($ufdsContent[$i])) <= 2) $ans[] = $i;
+      foreach($ufdsContent as $key=>$value){
+        if(count($ufds->findSetNoPathCompression($key)) <= 2){
+          $ans[] = $key;
+        }
       }
 
       return $ans;

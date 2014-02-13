@@ -182,7 +182,8 @@
       do{
         $findSetSequence[] = $root;
         $val = $root;
-        $root = $this->elements[$val]["parent"];
+        $root = $this->elements[intval($val)];
+        $root = $root["parent"];
       } while($val != $root);
 
       $this->compressPath($originalVal, $root);
@@ -247,6 +248,8 @@
       do{
         $findSetSequence[] = $root;
         $val = $root;
+        $root = $this->elements[intval($val)];
+        $root = $root["parent"];
       } while($val != $root);
     
       return $findSetSequence;
