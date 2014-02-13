@@ -3,6 +3,18 @@
   require_once 'QuestionGeneratorInterface.php';
 
   class UfdsQuestionGenerator implements QuestionGeneratorInterface{
+    protected $checkAnswerFunctionList = array(
+      QUESTION_TYPE_FIND_SET_SEQUENCE => "checkAnswerFindSetSequence",
+      QUESTION_TYPE_FIND_SET_COMPRESSION => "checkAnswerFindSetCompression",
+      QUESTION_TYPE_IS_SAME_SET => "checkAnswerIsSameSet"
+      );
+
+    protected $getAnswerFunctionList = array(
+      QUESTION_TYPE_FIND_SET_SEQUENCE => "getAnswerFindSetSequence",
+      QUESTION_TYPE_FIND_SET_COMPRESSION => "getAnswerFindSetCompression",
+      QUESTION_TYPE_IS_SAME_SET => "getAnswerIsSameSet"
+      );
+
     public function __construct(){
 
     }
@@ -40,15 +52,20 @@
       return $potentialQuestions;
     }
 
-    public function checkAnswer($qObj, $userAns){
-      if($qObj->qType == QUESTION_TYPE_FIND_SET_SEQUENCE) return $this->checkAnswerFindSetSequence($qObj, $userAns);
-      else if ($qObj->qType == QUESTION_TYPE_FIND_SET_COMPRESSION) return $this->checkAnswerFindSetCompression($qObj, $userAns);
-      else if ($qObj->qType == QUESTION_TYPE_IS_SAME_SET) return $this->checkAnswerIsSameSet($qObj, $userAns);
+    public function getAnswer($qObj){
+      if(array_key_exists($qObj->qType, $this->getAnswerFunctionList)){
+        $answerFunc = $this->getAnswerFunctionList[$qObj->qType];
+        return $this->$answerFunc($qObj);
+      }
       else return false;
     }
 
-    public function getAnswer($qObj){
-      
+    public function checkAnswer($qObj, $userAns){
+      if(array_key_exists($qObj->qType, $this->checkAnswerFunctionList)){
+        $verifierFunc = $this->checkAnswerFunctionList[$qObj->qType];
+        return $this->$verifierFunc($qObj, $userAns);
+      }
+      else return false;
     }
 
     protected function generateUfds(){
@@ -74,10 +91,16 @@
       return $qObj;
     }
 
-    protected function checkAnswerFindSetSequence($qObj, $userAns){
+    protected function getAnswerFindSetSequence($qObj){
       $ufds = $qObj->internalDS;
       $varWhichSetIsToBeFound = $qObj->qParams["value"];
       $ans = $ufds->findSet($varWhichSetIsToBeFound);
+
+      return $ans;
+    }
+
+    protected function checkAnswerFindSetSequence($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -111,14 +134,20 @@
       return $qObj;
     }
 
-    protected function checkAnswerFindSetCompression($qObj, $userAns){
+    protected function getAnswerFindSetCompression($qObj){
       $ufds = $qObj->internalDS;
       $ufdsContent = $ufds->getAllElements();
       $ans = array();
 
       for($i = 0; $i < count($ufdsContent); $i++){
-        if(count($ufds->findSetNoPathCompression()) <= 2) $ans[] = $i;
+        if(count($ufds->findSetNoPathCompression($ufdsContent[$i])) <= 2) $ans[] = $i;
       }
+
+      return $ans;
+    }
+
+    protected function checkAnswerFindSetCompression($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       sort($ans);
       sort($userAns);
@@ -156,7 +185,7 @@
       return $qObj;
     }
 
-    protected function checkAnswerIsSameSet($qObj, $userAns){
+    protected function getAnswerIsSameSet($qObj){
       $ufds = $qObj->internalDS;
       $ufdsContent = $ufds->getAllElements();
       $varToTestSameSet = $qObj->qParams["value"];
@@ -165,6 +194,12 @@
       for($i = 0; $i < count($ufdsContent); $i++){
         if($ufds->isSameSet($i, $varToTestSameSet)) $ans[] = $i;
       }
+
+      return $ans;
+    }
+
+    protected function checkAnswerIsSameSet($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 
       sort($ans);
       sort($userAns);
