@@ -2,12 +2,17 @@
 
   require_once 'QuestionGeneratorInterface.php';
 
-class GraphTraversalQuestionGenerator{
+  class GraphTraversalQuestionGenerator{
 
-	protected $answerFunctionList = array(
+  	protected $checkAnswerFunctionList = array(
       QUESTION_TYPE_TRAVERSAL => "checkAnswerTraversal",
-	  QUESTION_TYPE_DISCONNECT => "checkAnswerDisconnect",
-    );
+      QUESTION_TYPE_DISCONNECT => "checkAnswerDisconnect",
+      );
+
+    protected $getAnswerFunctionList = array(
+      QUESTION_TYPE_TRAVERSAL => "getAnswerTraversal",
+      QUESTION_TYPE_DISCONNECT => "getAnswerDisconnect",
+      );
 
     public function __construct(){
     }
@@ -40,16 +45,20 @@ class GraphTraversalQuestionGenerator{
       return $potentialQuestions;
     }
 
-    public function checkAnswer($qObj, $userAns){
-      if(array_key_exists($qObj->qType, $this->answerFunctionList)){
-        $verifierFunc = $this->answerFunctionList[$qObj->qType];
-        return $this->$verifierFunc($qObj, $userAns);
+    public function getAnswer($qObj){
+      if(array_key_exists($qObj->qType, $this->getAnswerFunctionList)){
+        $answerFunc = $this->getAnswerFunctionList[$qObj->qType];
+        return $this->$answerFunc($qObj);
       }
       else return false;
     }
 
-    public function getAnswer($qObj){
-      
+    public function checkAnswer($qObj, $userAns){
+      if(array_key_exists($qObj->qType, $this->checkAnswerFunctionList)){
+        $verifierFunc = $this->checkAnswerFunctionList[$qObj->qType];
+        return $this->$verifierFunc($qObj, $userAns);
+      }
+      else return false;
     }
 
     protected function generateGraphTraversal($d, $c){
@@ -58,15 +67,15 @@ class GraphTraversalQuestionGenerator{
     }
 
     protected function generateQuestionTraversal(){
-	  $directedAngle = rand(1,360);
-	  $d = ($directedAngle <= 90); //25% directed, 75% undirected
-	  $connectedAngle = rand(1,360);
-	  $c = ($connectedAngle <= 180); //50% connected, 50% disconnected
+      $directedAngle = rand(1,360);
+      $d = ($directedAngle <= 90); //25% directed, 75% undirected
+      $connectedAngle = rand(1,360);
+      $c = ($connectedAngle <= 180); //50% connected, 50% disconnected
 		
       $graphTraversal = $this->generateGraphTraversal($d, $c);
-	  $subtypeArr = array(QUESTION_SUB_TYPE_BFS, QUESTION_SUB_TYPE_DFS);
-	  $subtypeIndex = rand(0,1);
-	  $graphContent = $graphTraversal->getAllElements();
+      $subtypeArr = array(QUESTION_SUB_TYPE_BFS, QUESTION_SUB_TYPE_DFS);
+      $subtypeIndex = rand(0,1);
+      $graphContent = $graphTraversal->getAllElements();
       $startValue = $graphContent[rand(0, count($graphContent)-1)];
 	  
       $qObj = new QuestionObject();
@@ -83,19 +92,23 @@ class GraphTraversalQuestionGenerator{
       return $qObj;
     }
 
-    protected function checkAnswerTraversal($qObj, $userAns){
+    protected function getAnswerTraversal($qObj){
       $graphTraversal = $qObj->internalDS;
-	  $subtype = $qObj->qParams["subtype"];
-	  $startValue = $qObj->qParams["value"];
-	  
-	  $ans;
+      $subtype = $qObj->qParams["subtype"];
+      $startValue = $qObj->qParams["value"];
+    
+      $ans;
       if($subtype == QUESTION_SUB_TYPE_BFS) {
-		$ans = $graphTraversal->BFS($startValue);
-	  } else if ($subtype = QUESTION_SUB_TYPE_DFS){
-		$ans = $graphTraversal->DFS($startValue);
-	  }
-	  
-	  //echo(implode($ans)."<br/>");
+        $ans = $graphTraversal->BFS($startValue);
+      } else if ($subtype = QUESTION_SUB_TYPE_DFS){
+        $ans = $graphTraversal->DFS($startValue);
+      }
+
+      return $ans;
+    }
+
+    protected function checkAnswerTraversal($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
 	  
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -111,7 +124,7 @@ class GraphTraversalQuestionGenerator{
       return $correctness;
     }
 	
-	protected function generateQuestionDisconnect(){
+  	protected function generateQuestionDisconnect(){
       $graphTraversal = $this->generateGraphTraversal(false, true); //undirected, connected
 	  
       $qObj = new QuestionObject();
@@ -127,13 +140,19 @@ class GraphTraversalQuestionGenerator{
 
       return $qObj;
     }
+
+    protected function getAnswerDisconnect($qObj){
+      $graphTraversal = $qObj->internalDS;    
+      $ans = $graphTraversal->disconnect();
+
+      return $ans;
+    }
 	
-	protected function checkAnswerDisconnect($qObj, $userAns){
-      $graphTraversal = $qObj->internalDS;	  
-	  $ans = $graphTraversal->disconnect();
-	  
-	  sort($ans);
-	  sort($userAns);
+  	protected function checkAnswerDisconnect($qObj, $userAns){
+      $ans = $this->getAnswer($qObj);
+
+      sort($ans);
+      sort($userAns);
 	  //echo(implode($ans)."<br/>");
 	  
       $correctness = true;
@@ -149,6 +168,6 @@ class GraphTraversalQuestionGenerator{
 
       return $correctness;
     }
-}
+  }
 
 ?>
