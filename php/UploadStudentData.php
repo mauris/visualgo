@@ -7,7 +7,7 @@
     echo "Type: " . $_FILES["file"]["type"] . "<br>";
     echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
     echo "Stored in: " . $_FILES["file"]["tmp_name"];
-    file_get_contents($_FILES['uploadedfile']['tmp_name']); 
+    echo file_get_contents($_FILES['uploadedfile']['tmp_name']);
   }
 
 ?>
