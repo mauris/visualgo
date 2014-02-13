@@ -21,8 +21,13 @@
     QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 
-  function generateQuestions($qAmt, $qSeed, $qTopics){
+  function generateQuestions($qAmt, $qTopics){
     global $questionGenerator;
+    global $qSeed;
+    global $qArr;
+    global $aArr;
+    global $aCorrectness;
+    global $score ;
 
     srand((int)$qSeed);
 
@@ -47,14 +52,17 @@
         $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
     }
     // End of question generator
-
-    return $qArr;
   }
 
-  function checkAnswers($qAmt, $qSeed, $qTopics, $aArr){
+  function checkAnswers($qAmt, $qTopics){
     global $questionGenerator;
+    global $qSeed;
+    global $qArr;
+    global $aArr;
+    global $aCorrectness;
+    global $score ;
 
-    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
+    generateQuestions($qAmt, $qTopics);
 
     for($i = 0; $i < count($qArr);$i++){
       if($aArr[$i][0] == UNANSWERED){
@@ -70,14 +78,17 @@
         $score++;
       }
     }
-
-    return $score;
   }
 
-  function getAnswers($qAmt, $qSeed, $qTopics){
+  function getAnswers($qAmt, $qTopics){
       global $questionGenerator;
+      global $qSeed;
+      global $qArr;
+      global $aArr;
+      global $aCorrectness;
+      global $score ;
 
-      $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
+      generateQuestions($qAmt, $qTopics);
 
       for($i = 0; $i < count($qArr);$i++){
       if($aArr[$i][0] == UNANSWERED){
@@ -113,7 +124,7 @@
     $qSeed = $_GET["seed"];
     $qTopics = $_GET["topics"];
     
-    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
+    generateQuestions($qAmt, $qTopics);
     // End of question generator
 
     $qArrJson = array();
@@ -136,27 +147,9 @@
     }
     $score = 0;
 
-    // Question generator
-    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
-    // End of question generator
+    checkAnswers($qAmt, $qTopics);
 
-    for($i = 0; $i < count($qArr);$i++){
-      if($aArr[$i][0] == UNANSWERED){
-        $aCorrectness[$i] = false;
-        continue;
-      }
-      else if($aArr[$i][0] == NO_ANSWER){
-        $aArr[$i] = array();
-      }
-      // echo($i);
-      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
-      if($aCorrectness[$i]){
-        $score++;
-        // echo 1;
-      }
-      // else echo 0;
-      // else echo $i.",";
-    }
+    
 
     echo $score;
   }
