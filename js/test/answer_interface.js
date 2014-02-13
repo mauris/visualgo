@@ -417,27 +417,29 @@ function printCurrentSelection(q) {
 		if(thisList == UNANSWERED || thisList.length == 0) { //unanswered - former for training, latter for test
 			$('#current-selection').html("<strong>You did not answer this question.</strong>").css('color','#df3939').show();
 		} else {
-			switch(qnTypeArr[q]) {
-				case INTERFACE_SINGLE_V:
-				case INTERFACE_SUBSET_SINGLE:
-					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList+"</strong>").show();
-					break;
-				case INTERFACE_MULT_V:
-				case INTERFACE_SUBSET_MULT:
-					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList.join(" , ")+"</strong>").show();
-					break;
-				case INTERFACE_SINGLE_E:
-					var temp = "( "+thisList[0]+" , "+thisList[1]+" )";
-					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp+"</strong>").show();
-					break;
-				case INTERFACE_MULT_E:
-					var temp ="";
-					for(var i=0; i<thisList.length; i++) {
-						temp += "( "+thisList[i][0]+" , "+thisList[i][1]+" ) , ";
-					}
-					$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
-					break;
-				default: //nothing
+			if(thisList != NO_ANSWER) {
+				switch(qnTypeArr[q]) {
+					case INTERFACE_SINGLE_V:
+					case INTERFACE_SUBSET_SINGLE:
+						$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList+"</strong>").show();
+						break;
+					case INTERFACE_MULT_V:
+					case INTERFACE_SUBSET_MULT:
+						$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+thisList.join(" , ")+"</strong>").show();
+						break;
+					case INTERFACE_SINGLE_E:
+						var temp = "( "+thisList[0]+" , "+thisList[1]+" )";
+						$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp+"</strong>").show();
+						break;
+					case INTERFACE_MULT_E:
+						var temp ="";
+						for(var i=0; i<thisList.length; i++) {
+							temp += "( "+thisList[i][0]+" , "+thisList[i][1]+" ) , ";
+						}
+						$('#current-selection').html("Your answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
+						break;
+					default: //nothing
+				}
 			}
 		}
 		//#ans-key
@@ -447,6 +449,10 @@ function printCurrentSelection(q) {
 		if(isCorrect) {
 			$('#ans-key').html("You answered this question correctly! :)").show();
 		} else {
+			if((anskeyList instanceof Array) && anskeyList.length == 0) {
+				$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>No answer</strong>").show();
+				return;
+			}
 			switch(qnTypeArr[q]) {
 				case INTERFACE_SINGLE_V:
 				case INTERFACE_SUBSET_SINGLE:
@@ -468,7 +474,7 @@ function printCurrentSelection(q) {
 					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
 					break;
 				case INTERFACE_MCQ:
-					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList+"</strong>").show(); //must edit
+					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+qnParamsArr[q][anskeyList][0]+"</strong>").show(); //must edit
 					break;
 				case INTERFACE_BLANK:
 					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+anskeyList+"</strong>").show();

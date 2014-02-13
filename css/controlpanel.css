@@ -131,10 +131,7 @@
 	width: 600px;
 }
 svg { 
-	top: 50%;
-	left: 50%;
 	margin-left: -300px;
-	margin-top: -150px;
 }
 #question-nav {
 	width: 100%;

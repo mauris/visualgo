@@ -1,4 +1,5 @@
 var gw = new GraphWidget();
+$('svg').css('height','350px');
 
 //The following arrays use 1-based indexing. Index 0 is a dummy value.
 var qnTextArr = new Array(); //of question text for each qn

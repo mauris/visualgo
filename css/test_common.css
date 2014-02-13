@@ -74,11 +74,10 @@ input[type=button], input[type=submit] {
 	#viz { }
 		svg { 
 			position: fixed;
-			height: 400px;
-			top: 50%;
+			height: 350px;
+			bottom: 82px;
 			left: 50%;
 			margin-left: -450px;
-			margin-top: -150px;
 			z-index: -15;
 		}
 	
