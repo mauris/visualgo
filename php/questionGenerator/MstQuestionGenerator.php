@@ -97,9 +97,13 @@
       $mst = $qObj->internalDS;
       $startValue = $qObj->qParams["value"];
       $amtEdge = $qObj->qParams["amt"];
-      $ans = $mst->prim($startValue);
-      $ans = array_slice($ans, 0, $amtEdge);
-
+      $rawAns = $mst->prim($startValue);
+      $rawAns = array_slice($rawAns, 0, $amtEdge);
+  	  $ans= array();
+  	  for($i=0; $i<count($rawAns); $i++) {
+  		  $ans[] = $rawAns[$i]->from();
+        $ans[] = $rawAns[$i]->to();
+  	  }
       return $ans;
     }
 
@@ -107,12 +111,12 @@
       $ans = $this->getAnswer($qObj);
 
       $correctness = true;
-      if(2*count($ans) != count($userAns)) $correctness = false;
+      if(count($ans) != count($userAns)) $correctness = false;
       else{
-        for($i = 0; $i < count($ans); $i++){
-          $currEdge = array($ans[$i]->from(), $ans[$i]->to());
-          if(!($qObj->qParams["directed"])) sort($currEdge);
-          if($currEdge[0] != $userAns[$i*2] || $currEdge[1] != $userAns[$i*2 + 1]){
+        for($i = 0; $i < count($ans); $i+=2){
+          $vA = $ans[$i]; $vB = $ans[$i+1]; //ans key
+          $uA = $userAns[$i]; $uB = $userAns[$i+1]; //user ans
+          if(!(($vA==$uA && $vB==$uB)||($vA==$uB && $vB==$uA))){
             $correctness = false;
             break;
           }
@@ -143,9 +147,15 @@
 
     protected function getAnswerKruskalSequence($qObj){
       $mst = $qObj->internalDS;
-      $ans = $mst->kruskal();
+      $rawAns = $mst->kruskal();
       $amtEdge = $qObj->qParams["amt"];
-      $ans = array_slice($ans, 0, $amtEdge);
+      $rawAns = array_slice($rawAns, 0, $amtEdge);
+
+      $ans= array();
+      for($i=0; $i<count($rawAns); $i++) {
+        $ans[] = $rawAns[$i]->from();
+        $ans[] = $rawAns[$i]->to();
+      }
 
       return $ans;
     }
@@ -154,12 +164,12 @@
       $ans = $this->getAnswer($qObj);
 
       $correctness = true;
-      if(2*count($ans) != count($userAns)) $correctness = false;
+      if(count($ans) != count($userAns)) $correctness = false;
       else{
-        for($i = 0; $i < count($ans); $i++){
-          $currEdge = array($ans[$i]->from(), $ans[$i]->to());
-          if(!($qObj->qParams["directed"])) sort($currEdge);
-          if($currEdge[0] != $userAns[$i*2] || $currEdge[1] != $userAns[$i*2 + 1]){
+        for($i = 0; $i < count($ans); $i+=2){
+          $vA = $ans[$i]; $vB = $ans[$i+1]; //ans key
+          $uA = $userAns[$i]; $uB = $userAns[$i+1]; //user ans
+          if(!(($vA==$uA && $vB==$uB)||($vA==$uB && $vB==$uA))){
             $correctness = false;
             break;
           }
@@ -196,7 +206,9 @@
       $mst = $qObj->internalDS;
       $vertexA = $qObj->qParams["vertexA"];
       $vertexB = $qObj->qParams["vertexB"];
-      $ans = $mst->minimax($vertexA, $vertexB);
+      $rawAns = $mst->minimax($vertexA, $vertexB);
+      $ans = array();
+      $ans[] = $rawAns[0]; $ans[] = $rawAns[1];
 
       return $ans;
     }
@@ -205,9 +217,9 @@
       $ans = $this->getAnswer($qObj);
 
       $correctness = true;
-      $currEdge = array($ans->from(), $ans->to());
-      if(!($qObj->qParams["directed"])) sort($currEdge);
-      if($currEdge[0] != $userAns[0] || $currEdge[1] != $userAns[1]){
+      $vA = $ans[$i]; $vB = $ans[$i+1]; //ans key
+      $uA = $userAns[$i]; $uB = $userAns[$i+1]; //user ans
+      if(!(($vA==$uA && $vB==$uB)||($vA==$uB && $vB==$uA))){
         $correctness = false;
       }
 
