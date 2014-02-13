@@ -220,19 +220,7 @@ require_once 'QuestionGeneratorInterface.php';
 
     protected function checkAnswerPathWeight($qObj, $userAns){
       $ans = $this->getAnswer($qObj);
-	  	  
-      $correctness = true;
-      if(count($ans) != count($userAns)) $correctness = false;
-      else{
-        for($i = 0; $i < count($ans); $i++){
-          if($ans[$i] != $userAns[$i]){
-            $correctness = false;
-            break;
-          }
-        }
-      }
-	  //echo(implode($ssspAns).'<br/>');
-      return $correctness;
+      return ($ans == $userAns[0]);
     }
   }
 
