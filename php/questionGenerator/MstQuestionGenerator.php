@@ -104,11 +104,13 @@
   		  $ans[] = $rawAns[$i]->from();
         $ans[] = $rawAns[$i]->to();
   	  }
+      echo implode(", ", $ans)."<br/>";
       return $ans;
     }
 
     protected function checkAnswerPrimSequence($qObj, $userAns){
       $ans = $this->getAnswer($qObj);
+      echo implode(", ", $userAns)."<br/>";
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
@@ -208,7 +210,7 @@
       $vertexB = $qObj->qParams["vertexB"];
       $rawAns = $mst->minimax($vertexA, $vertexB);
       $ans = array();
-      $ans[] = $rawAns[0]; $ans[] = $rawAns[1];
+      $ans[] = $rawAns->from(); $ans[] = $rawAns->to();
 
       return $ans;
     }
@@ -217,8 +219,8 @@
       $ans = $this->getAnswer($qObj);
 
       $correctness = true;
-      $vA = $ans[$i]; $vB = $ans[$i+1]; //ans key
-      $uA = $userAns[$i]; $uB = $userAns[$i+1]; //user ans
+      $vA = $ans[0]; $vB = $ans[1]; //ans key
+      $uA = $userAns[0]; $uB = $userAns[1]; //user ans
       if(!(($vA==$uA && $vB==$uB)||($vA==$uB && $vB==$uA))){
         $correctness = false;
       }
