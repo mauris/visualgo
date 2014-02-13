@@ -3,17 +3,20 @@
 	require_once 'QuestionGeneratorInterface.php';
 
 	class BitmaskQuestionGenerator implements QuestionGeneratorInterface{
-		
-		// public function seedRng($seed){
-		// 	$this->rngSeed = $seed;
-		// 	srand($rngSeed);
-		// }
-	
-		// public function removeSeed(){
-		// 	$this->rngSeed = NULL;
-		// 	srand();
-		// }
-		
+		protected $checkAnswerFunctionList = array(
+			QUESTION_TYPE_OPERATION => "checkAnswerBitOperations",
+			QUESTION_TYPE_CONVERT => "checkAnswerConversion",
+			QUESTION_TYPE_NUMBER_ON => "checkAnswerNumberOn",
+			QUESTION_TYPE_LSONE => "checkAnswerLSOne"
+			);
+
+		protected $getAnswerFunctionList = array(
+			QUESTION_TYPE_OPERATION => "getAnswerBitOperations",
+			QUESTION_TYPE_CONVERT => "getAnswerConversion",
+			QUESTION_TYPE_NUMBER_ON => "getAnswerNumberOn",
+			QUESTION_TYPE_LSONE => "getAnswerLSOne"
+			);
+
 		//constructor
 		public function __construct(){
 		}
@@ -48,21 +51,25 @@
 			return $potentialQuestions;
 		}
 		
-		public function checkAnswer($qObj, $userAns){
-			if($qObj->qType == QUESTION_TYPE_OPERATION) return $this->checkAnswerBitOperations($qObj, $userAns);
-			else if ($qObj->qType == QUESTION_TYPE_CONVERT) return $this->checkAnswerConversion($qObj, $userAns);
-			else if ($qObj->qType == QUESTION_TYPE_NUMBER_ON) return $this->checkAnswerNumberOn($qObj, $userAns);
-			else if ($qObj->qType == QUESTION_TYPE_LSONE) return $this->checkAnswerLSOne($qObj, $userAns);
-			else return false;
-		}
-
 		public function getAnswer($qObj){
-      
+      if(array_key_exists($qObj->qType, $this->getAnswerFunctionList)){
+        $answerFunc = $this->getAnswerFunctionList[$qObj->qType];
+        return $this->$answerFunc($qObj);
+      }
+      else return false;
+    }
+
+    public function checkAnswer($qObj, $userAns){
+      if(array_key_exists($qObj->qType, $this->checkAnswerFunctionList)){
+        $verifierFunc = $this->checkAnswerFunctionList[$qObj->qType];
+        return $this->$verifierFunc($qObj, $userAns);
+      }
+      else return false;
     }
 		
 		//each question type generator and checker
 		//AND/OR/XOR
-		public function generateQuestionBitOperations() {
+		protected function generateQuestionBitOperations() {
 			$intval = rand(0,63);
 			$j = rand(0,5);
 			$subtype = rand(0,2);
@@ -80,19 +87,26 @@
 		
 			return $qObj;
 		}
-		
-		public function checkAnswerBitOperations($qObj, $userAns) {
+
+		protected function getAnswerBitOperations($qObj){
 			$intval = $qObj->qParams["value"];
 			$j = $qObj->qParams["shiftAmt"];
 			$ans;
 			if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_AND) $ans = $intval & (1 << $j);
 			else if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_OR) $ans = $intval | (1 << $j);
 			else if($qObj->qParams["subtype"] == QUESTION_SUB_TYPE_XOR) $ans = $intval ^ (1 << $j);
+
+			return $ans;
+		}
+		
+		protected function checkAnswerBitOperations($qObj, $userAns) {
+			$ans = $this->getAnswer($qObj);
+
 			return ($userAns[0] == $ans);
 		}
 		
 		//binary <--> decimal conversion
-		public function generateQuestionConversion() {
+		protected function generateQuestionConversion() {
 			$val = rand(0,63);
 			$whichway = rand(0,1);
 			$subtypeArr = array(QUESTION_SUB_TYPE_BINARY, QUESTION_SUB_TYPE_DECIMAL);
@@ -112,18 +126,25 @@
 		
 			return $qObj;
 		}
-		
-		public function checkAnswerConversion($qObj, $userAns) {
+
+		protected function getAnswerConversion($qObj){
 			$val = $qObj->qParams["value"];
 			$toBase = $qObj->qParams["toBase"];
 			$ans;
 			if($qObj->qParams["toBase"] == QUESTION_SUB_TYPE_BINARY) $ans = intval(base_convert((string)$val, 10, 2));
 			else if($qObj->qParams["toBase"] == QUESTION_SUB_TYPE_DECIMAL) $ans = intval(base_convert((string)$val, 2, 10));
+
+			return $ans;
+		}
+		
+		protected function checkAnswerConversion($qObj, $userAns) {
+			$ans = $this->getAnswer($qObj);
+
 			return ($userAns[0] == $ans);
 		}
 		
 		//popcount
-		public function generateQuestionNumberOn() {
+		protected function generateQuestionNumberOn() {
 			$val = rand(0,63);
 			
 			$qObj = new QuestionObject();
@@ -138,8 +159,8 @@
 		
 			return $qObj;
 		}
-		
-		public function checkAnswerNumberOn($qObj, $userAns) {
+
+		protected function getAnswerNumberOn($qObj){
 			$val = $qObj->qParams["value"];
 			$ans = 0;
 			$pow = 5;
@@ -151,11 +172,18 @@
 				}
 				$pow--;
 			}
+
+			return $ans;
+		}
+		
+		protected function checkAnswerNumberOn($qObj, $userAns) {
+			$ans = $this->getAnswer($qObj);
+
 			return ($userAns[0] == $ans);
 		}
 		
 		//LS One
-		public function generateQuestionLSOne() {
+		protected function generateQuestionLSOne() {
 			$val = rand(0,63);
 			
 			$qObj = new QuestionObject();
@@ -170,12 +198,19 @@
 		
 			return $qObj;
 		}
-		
-		public function checkAnswerLSOne($qObj, $userAns) {
+
+		protected function getAnswerLSOne($qObj){
 			$val = $qObj->qParams["value"];
 			$j = (~ $val) + 1;
 			
 			$ans = intval(log($val & $j, 2));
+
+			return $ans;
+		}
+		
+		protected function checkAnswerLSOne($qObj, $userAns) {
+			$ans = $this->getAnswer($qObj);
+
 			return ($userAns[0] == $ans);
 		}
 	}
