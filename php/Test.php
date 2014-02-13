@@ -158,6 +158,15 @@
     $qAmt = $_GET["qAmt"];
     $qTopics = $_GET["topics"];
     $qTopics = explode(",", $qTopics);
+    $sAnsArrCsv = $_GET["ans"];
+
+    for($i = 0; $i < count($sAnsArrCsv); $i++){
+      $sAnsArr[] = explode(",",$sAnsArrCsv[$i]);
+    }
+
+    getAnswers($qAmt, $qTopics);
+
+    echo json_encode($ansList);
   }
 
   else if($mode == MODE_GET_STUDENT_ANSWERS){
