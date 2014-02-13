@@ -278,88 +278,70 @@ function showRecordedAns(q) {
 			$('#no-answer .box'). css('background', '#ddd');
 		}
 	}
-	switch(qnTypeArr[q]) {
-		case INTERFACE_SINGLE_V: //single vertex
-			gw.jumpToIteration(qnNo,1);
-			var verticesToHighlight = getVClass(qnGraphArr[q], ans.split(","));
-			setTimeout(function(){
-				for(var i=0; i<verticesToHighlight.length; i++) {
-					colourCircle(verticesToHighlight[i]);
-				}
-			}, 50);
-			break;
-			
-		case INTERFACE_SINGLE_E: //single edge
-			gw.jumpToIteration(qnNo,1);
-			var edgesToHighlight = getEID(qnGraphArr[q], ans.split(","));
-			setTimeout(function(){
-				for(var i=0; i<edgesToHighlight.length; i++) {
-					colourEdge(edgesToHighlight[i]);
-				}
-			}, 50);
-			break;
-			
-		case INTERFACE_MULT_V: //multiple vertices
-			var verticesToHighlight = getVClass(qnGraphArr[q], ans.split(","));
-			setTimeout(function(){
-				for(var i=0; i<verticesToHighlight.length; i++) {
-					colourCircle(verticesToHighlight[i]);
-				}
-			}, 50);
-			printCurrentSelection(q);
-			break;
-			
-		case INTERFACE_MULT_E: //multiple edges
-			var edgesToHighlight = getEID(qnGraphArr[q], ans.split(","));
-			setTimeout(function(){
-				for(var i=0; i<edgesToHighlight.length; i++) {
-					colourEdge(edgesToHighlight[i]);
-				}
-			}, 50);
-			printCurrentSelection(q);
-			break;
-			
-		case INTERFACE_MCQ: //MCQ
-			var optionVal = parseInt(ans);
-			var optionText = "";
-			for(var i=0; i<qnParamsArr[q].length; i++) {
-				if(qnParamsArr[q][i][1] == optionVal) {
-					optionText = qnParamsArr[q][i][0];
-				}
-			}
-			$('.mcq-option .option').each(function() {
-				if($(this).html()== optionText) {
-					$(this).prev().css('background', surpriseColour);
-				}
-			});
-			break;
-			
-		case INTERFACE_SUBSET_SINGLE:
-			$('#subset .faux-v').css('background', '#eee').css('color', 'black').css('border', '3px solid black');
-			var optionVal = parseInt(ans);
-			var optionText = "";
-			for(var i=0; i<qnParamsArr[q].length; i++) {
-				if(qnParamsArr[q][i][1] == optionVal) {
-					optionText = qnParamsArr[q][i][0];
-					break;
-				}
-			}
-			$('#subset .faux-v').each(function() {
-				if($(this).html()== optionText) {
-					$(this).css('background', surpriseColour).css('color', 'white').css('border', '3px solid '+surpriseColour);
-				}
-			});
-			break;
-			
-		case INTERFACE_SUBSET_MULT:
-			$('#subset .faux-v').css('background', '#eee').css('color', 'black').css('border', '3px solid black');
-			var fauxVToHighlight = ans.split(",");
-			for(var i=0; i<fauxVToHighlight.length; i++) {
-				var optionVal = fauxVToHighlight[i];
+	if(ans != UNANSWERED) {
+		switch(qnTypeArr[q]) {
+			case INTERFACE_SINGLE_V: //single vertex
+				gw.jumpToIteration(qnNo,1);
+				var verticesToHighlight = getVClass(qnGraphArr[q], ans.split(","));
+				setTimeout(function(){
+					for(var i=0; i<verticesToHighlight.length; i++) {
+						colourCircle(verticesToHighlight[i]);
+					}
+				}, 50);
+				break;
+				
+			case INTERFACE_SINGLE_E: //single edge
+				gw.jumpToIteration(qnNo,1);
+				var edgesToHighlight = getEID(qnGraphArr[q], ans.split(","));
+				setTimeout(function(){
+					for(var i=0; i<edgesToHighlight.length; i++) {
+						colourEdge(edgesToHighlight[i]);
+					}
+				}, 50);
+				break;
+				
+			case INTERFACE_MULT_V: //multiple vertices
+				var verticesToHighlight = getVClass(qnGraphArr[q], ans.split(","));
+				setTimeout(function(){
+					for(var i=0; i<verticesToHighlight.length; i++) {
+						colourCircle(verticesToHighlight[i]);
+					}
+				}, 50);
+				printCurrentSelection(q);
+				break;
+				
+			case INTERFACE_MULT_E: //multiple edges
+				var edgesToHighlight = getEID(qnGraphArr[q], ans.split(","));
+				setTimeout(function(){
+					for(var i=0; i<edgesToHighlight.length; i++) {
+						colourEdge(edgesToHighlight[i]);
+					}
+				}, 50);
+				printCurrentSelection(q);
+				break;
+				
+			case INTERFACE_MCQ: //MCQ
+				var optionVal = parseInt(ans);
 				var optionText = "";
-				for(var j=0; j<qnParamsArr[q].length; j++) {
-					if(qnParamsArr[q][j][1] == optionVal) {
-						optionText = qnParamsArr[q][j][0];
+				for(var i=0; i<qnParamsArr[q].length; i++) {
+					if(qnParamsArr[q][i][1] == optionVal) {
+						optionText = qnParamsArr[q][i][0];
+					}
+				}
+				$('.mcq-option .option').each(function() {
+					if($(this).html()== optionText) {
+						$(this).prev().css('background', surpriseColour);
+					}
+				});
+				break;
+				
+			case INTERFACE_SUBSET_SINGLE:
+				$('#subset .faux-v').css('background', '#eee').css('color', 'black').css('border', '3px solid black');
+				var optionVal = parseInt(ans);
+				var optionText = "";
+				for(var i=0; i<qnParamsArr[q].length; i++) {
+					if(qnParamsArr[q][i][1] == optionVal) {
+						optionText = qnParamsArr[q][i][0];
 						break;
 					}
 				}
@@ -368,19 +350,39 @@ function showRecordedAns(q) {
 						$(this).css('background', surpriseColour).css('color', 'white').css('border', '3px solid '+surpriseColour);
 					}
 				});
-			}
-			printCurrentSelection(q);
-			break;
-			
-		case INTERFACE_BLANK:
-			if(ans == UNANSWERED) {
-				$('.number-input').val(ans);
-			} else {
-				$('.number-input').val(parseInt(ans));
-			}
-			break;
-			
-		default: //nothing
+				break;
+				
+			case INTERFACE_SUBSET_MULT:
+				$('#subset .faux-v').css('background', '#eee').css('color', 'black').css('border', '3px solid black');
+				var fauxVToHighlight = ans.split(",");
+				for(var i=0; i<fauxVToHighlight.length; i++) {
+					var optionVal = fauxVToHighlight[i];
+					var optionText = "";
+					for(var j=0; j<qnParamsArr[q].length; j++) {
+						if(qnParamsArr[q][j][1] == optionVal) {
+							optionText = qnParamsArr[q][j][0];
+							break;
+						}
+					}
+					$('#subset .faux-v').each(function() {
+						if($(this).html()== optionText) {
+							$(this).css('background', surpriseColour).css('color', 'white').css('border', '3px solid '+surpriseColour);
+						}
+					});
+				}
+				printCurrentSelection(q);
+				break;
+				
+			case INTERFACE_BLANK:
+				if(ans == UNANSWERED) {
+					$('.number-input').val(ans);
+				} else {
+					$('.number-input').val(parseInt(ans));
+				}
+				break;
+				
+			default: //nothing
+		}
 	}
 	if(MODE == "ANSWER") {
 		printCurrentSelection(q);
@@ -460,8 +462,8 @@ function printCurrentSelection(q) {
 					break;
 				case INTERFACE_MULT_E:
 					var temp ="";
-					for(var i=0; i<anskeyList.length; i++) {
-						temp += "( "+anskeyList[i][0]+" , "+anskeyList[i][1]+" ) , ";
+					for(var i=0; i<anskeyList.length; i+=2) {
+						temp += "( "+anskeyList[i]+" , "+anskeyList[i+1]+" ) , ";
 					}
 					$('#ans-key').html("The correct answer is: &nbsp;&nbsp;<strong>"+temp.slice(0, -3)+"</strong>").show();
 					break;

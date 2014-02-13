@@ -13,6 +13,7 @@ function submitTraining() {
 	//get score
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
+	ansArr.unshift(false);
 	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
 	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr); //to remove later
 	$.ajax({
@@ -25,15 +26,42 @@ function submitTraining() {
 	});
 }
 
+function startAns() {
+	ansArr.shift();
+	var ansStr = ansArr.join('&ans[]=');
+	ansArr.unshift(false);
+	var queryStr = "php/Test.php?mode="+MODE_GET_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr); //to remove later
+	$.ajax({
+		url: queryStr
+	}).done(function(ansData) {
+		//store into anskeyArr array
+		ansData = JSON.parse(ansData);
+		for(var i=0; i<ansData.length; i++) {
+			anskeyArr[i+1] = ansData[i];
+		}
+		$('#result-screen').fadeOut('fast');
+		$('#test-screen').fadeIn('fast');
+		$('#ans-key').show();
+		$('#undo-ans').hide();
+		$('#clear-ans').hide();
+		$('#info').hide();
+				
+		$('#question-nav .qnno').removeClass('selected');
+		$('#question-nav .qnno').eq(0).addClass('selected');
+		qnNo = 1; //start with qn 1
+		showQn(qnNo);
+	});
+}
+
 /*-------START TEST FUNCTIONS-------*/
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
-	var req = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+req);
+	var queryStr = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
+	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr);
 	$.ajax({
-		url: req
+		url: queryStr
 	}).done(function(data) {
-		console.log(data);
 		data = JSON.parse(data);
 		for(var i=1; i<=nQns; i++) {
 			extractInfo(i, data[i-1]);
@@ -106,18 +134,6 @@ $(document).ready (function() {
 	});
 	$('#goto-answer').click(function() {
 		MODE = "ANSWER";
-		$('#result-screen').fadeOut('fast');
-		$('#test-screen').fadeIn('fast');
-		$('#ans-key').show();
-		$('#undo-ans').hide();
-		$('#clear-ans').hide();
-		$('#info').hide();
-		
-		ansArr.unshift(false);
-		
-		$('#question-nav .qnno').removeClass('selected');
-		$('#question-nav .qnno').eq(0).addClass('selected');
-		qnNo = 1; //start with qn 1
-		showQn(qnNo);
+		startAns();
 	});	
 });

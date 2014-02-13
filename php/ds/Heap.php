@@ -237,10 +237,10 @@
 		  $rightVal = $this->heapArr[$this->right($i)];
 		}
 		if($parentVal < $leftVal || $parentVal < $rightVal) {
-			return HEAP_SWAP_ANS_INVALID;
+			return false;
 		}
 	  }
-	  return HEAP_SWAP_ANS_VALID;
+	  return true;
 	}
 	
 	public function getElementAtIndex($i) {

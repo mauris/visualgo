@@ -165,7 +165,7 @@ $(document).ready (function() {
 	/*-------LOAD TEST-------*/
 	$('#start-test').click(function() {
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_TEST_BEGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
 		}).done(function(data) {
 			if(data != 0) {
 				//show current configurations

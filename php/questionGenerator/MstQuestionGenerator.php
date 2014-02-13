@@ -104,13 +104,11 @@
   		  $ans[] = $rawAns[$i]->from();
         $ans[] = $rawAns[$i]->to();
   	  }
-      echo implode(", ", $ans)."<br/>";
       return $ans;
     }
 
     protected function checkAnswerPrimSequence($qObj, $userAns){
       $ans = $this->getAnswer($qObj);
-      echo implode(", ", $userAns)."<br/>";
 
       $correctness = true;
       if(count($ans) != count($userAns)) $correctness = false;
