@@ -244,57 +244,12 @@
       $qSeed = $params["seed"];
       $qAmt = $params["questionAmount"];
       $qTopics = $params["topics"];
+      $retrievedA = $testModeDb->getUserAnswer($username, $password);
+      for($n=0; $n<count($retrievedA);$n++) {
+        $sAnsArr[$n] = $retrievedA[$n];
+      }
 
       getAnswers($qAmt, $qTopics);
-
-      // Question generator
-  //     srand((int)$qSeed);
-
-  //     // foreach($questionGenerator as $key => $value){
-  //     //   $value->seedRng(rand());
-  //     // }
-
-  //     $qArr = array();
-  //     $qAmtTopic = array();
-	 //  $retrievedA = $testModeDb->getUserAnswer($username, $password);
-	 //  for($n=0; $n<count($retrievedA);$n++) {
-		// $sAnsArr[$n] = $retrievedA[$n];
-	 //  }
-
-  //     // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
-
-  //     for($i = 0; $i < count($qTopics); $i++){
-  //       $qAmtTopic[] = 1;
-  //       $qAmt--;
-  //     }
-
-  //     for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-  //       $addition = rand(1, $qAmt);
-  //       $qAmt -= $addition;
-  //       $qAmtTopic[$i] += $addition;
-  //     }
-
-  //     for($i = 0; $i < count($qTopics); $i++){
-  //       if(array_key_exists($qTopics[$i], $questionGenerator))
-  //         $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
-  //     }
-  //     // End of question generator
-	  
-  //     for($i = 0; $i < count($qArr);$i++){
-		// if($sAnsArr[$i][0] == UNANSWERED){
-		// 	$sAnsCorrectness[$i] = false;
-		// 	$ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
-		// 	continue;
-		// } else if($sAnsArr[$i][0] == NO_ANSWER){
-		// 	$sAnsArr[$i] = array();
-		// }
-		// $sAnsCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$sAnsArr[$i]);
-		// if($sAnsCorrectness[$i]){
-		// 	$ansList[] = CORRECT;
-		// } else {
-	 //        $ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
-		// }
-  //     }
     }
 
     echo json_encode($ansList);
