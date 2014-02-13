@@ -21,18 +21,6 @@
     QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 
-  $qSeed = 0;
-  $qArr = array();
-  $aArr = array();
-  $aCorrectness = array();
-  $score = 0;
-
-  $mode = $_GET["mode"];
-
-  if($mode == MODE_GENERATE_SEED){
-    echo(rand());
-  }
-
   function generateQuestions($qAmt, $qSeed, $qTopics){
     srand((int)$qSeed);
 
@@ -62,11 +50,56 @@
   }
 
   function checkAnswers($qAmt, $qSeed, $qTopics, $aArr){
+    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
 
+    for($i = 0; $i < count($qArr);$i++){
+      if($aArr[$i][0] == UNANSWERED){
+        $aCorrectness[$i] = false;
+        continue;
+      }
+      else if($aArr[$i][0] == NO_ANSWER){
+        $aArr[$i] = array();
+      }
+
+      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
+      if($aCorrectness[$i]){
+        $score++;
+      }
+    }
+
+    return $score;
   }
 
   function getAnswers($qAmt, $qSeed, $qTopics){
+      $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
 
+      for($i = 0; $i < count($qArr);$i++){
+      if($aArr[$i][0] == UNANSWERED){
+        $aCorrectness[$i] = false;
+        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+        continue;
+      } else if($aArr[$i][0] == NO_ANSWER){
+        $aArr[$i] = array();
+      }
+      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
+      if($aCorrectness[$i]){
+        $aList[] = CORRECT;
+      } else {
+        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+      }
+    }
+  }
+
+  $qSeed = 0;
+  $qArr = array();
+  $aArr = array();
+  $aCorrectness = array();
+  $score = 0;
+
+  $mode = $_GET["mode"];
+
+  if($mode == MODE_GENERATE_SEED){
+    echo(rand());
   }
 
   if($mode == MODE_GENERATE_QUESTIONS){
@@ -74,7 +107,29 @@
     $qSeed = $_GET["seed"];
     $qTopics = $_GET["topics"];
     
-    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
+    srand((int)$qSeed);
+
+    $qTopics = explode(",", $qTopics);
+
+    $qArr = array();
+    $qAmtTopic = array();
+
+    for($i = 0; $i < count($qTopics); $i++){
+      $qAmtTopic[] = 1;
+      $qAmt--;
+    }
+
+    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
+      $addition = rand(1, $qAmt);
+      $qAmt -= $addition;
+      $qAmtTopic[$i] += $addition;
+    }
+
+    for($i = 0; $i < count($qTopics); $i++){
+      if(array_key_exists($qTopics[$i], $questionGenerator))
+        $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
+    }
+    // End of question generator
 
     $qArrJson = array();
 
