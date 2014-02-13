@@ -21,6 +21,10 @@
     //   srand($seed);
     // }
 
+    public function isMin(){
+      return $this->min;
+    }
+
     public function buildRandomHeap($amt){
       $values = array();
 

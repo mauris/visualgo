@@ -281,8 +281,8 @@
       $heap = $qObj->internalDS;
       $heapContent = $heap->getAllElements();
       array_shift($heapContent);
-      $heap->clearAll();
-      $ans = $heap->heapify($heapContent);
+      $newHeap = new Heap($heap->isMin());
+      $ans = $newHeap->heapify($heapContent);
 
       return $ans;
     }
