@@ -182,8 +182,18 @@
     $password = $_GET["password"];
     $testModeDb = new TestModeDatabase();
 
+    $testParams = $testModeDb->getTestParams();
+    $qSeed = $testParams["seed"];
+
     if($testModeDb->validate($username, $password)){
-      echo json_encode($testModeDb->getTestParams());
+      generateQuestions(intval($testParams["questionAmount"]), $testParams["topics"]);
+
+      $qArrJson = array();
+      for($i = 0; $i < count($qArr);$i++){
+        $qArrJson[] = $qArr[$i]->toJsonObject();
+      }
+      echo arrayOfJsonStringEncoder($qArrJson);
+      
       $testModeDb->begin($username, $password);
     }
 
@@ -226,9 +236,12 @@
     $testModeDb = new TestModeDatabase();
     $userDb = new UserDatabase();
 
+    $testParams = $testModeDb->getTestParams();
+
     $info = array();
     $info["timeElapsed"] = $testModeDb->getTimeElapsed($username, $password);
     $info["name"] = $userDb->getName($username, $password);
+    $info["timeLimit"] = $testParams["timeLimit"];
 
     echo json_encode($info);
   }
