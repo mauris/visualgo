@@ -196,6 +196,14 @@
     echo $score;
   }
 
+  else if($mode == MODE_GET_ANSWERS){
+
+  }
+
+  else if($mode == MODE_GET_STUDENT_ANSWERS){
+    echo "Currently unavailable";
+  }
+
   else if($mode == MODE_LOGIN){
     // only verification
     $username = $_GET["username"];
