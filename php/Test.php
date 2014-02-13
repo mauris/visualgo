@@ -137,27 +137,7 @@
     $score = 0;
 
     // Question generator
-
-    $qTopics = explode(",", $qTopics);
-
-    $qArr = array();
-    $qAmtTopic = array();
-
-    for($i = 0; $i < count($qTopics); $i++){
-      $qAmtTopic[] = 1;
-      $qAmt--;
-    }
-
-    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-      $addition = rand(1, $qAmt);
-      $qAmt -= $addition;
-      $qAmtTopic[$i] += $addition;
-    }
-
-    for($i = 0; $i < count($qTopics); $i++){
-      if(array_key_exists($qTopics[$i], $questionGenerator))
-        $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
-    }
+    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
     // End of question generator
 
     for($i = 0; $i < count($qArr);$i++){
