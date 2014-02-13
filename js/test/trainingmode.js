@@ -5,8 +5,30 @@ seed = (Math.floor(Math.random()*1000000000));
 
 function startTraining() {
 	nQns = getNumberOfQns();
-	init();
-	getQnsAndStart(); //fill qnTextArr, qnGraphArr, and qnTypeArr
+	var queryStr = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
+	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr);
+	$.ajax({
+		url: queryStr
+	}).done(function(data) {
+		data = JSON.parse(data);
+		init();
+		for(var i=1; i<=nQns; i++) {
+			extractInfo(i, data[i-1]);
+		}
+		
+		//switch screens
+		prepareQnNav(nQns);
+		$('#topics-screen').fadeOut("fast");
+		$('#test-screen').fadeIn("fast");
+		$('#ans-key').hide();
+		$('#submit-test').hide();
+		
+		//show first question
+		gw.startAnimation(qnGraphArr); //start graph widget
+		gw.pause();
+		qnNo = 1; //start with qn 1
+		showQn(qnNo);
+	});
 }
 
 function submitTraining() {
@@ -52,37 +74,6 @@ function startAns() {
 		qnNo = 1; //start with qn 1
 		showQn(qnNo);
 	});
-}
-
-/*-------START TEST FUNCTIONS-------*/
-//this function gets all the qn data, and displays the ui for qn 1
-function getQnsAndStart() {
-	var queryStr = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr);
-	$.ajax({
-		url: queryStr
-	}).done(function(data) {
-		data = JSON.parse(data);
-		for(var i=1; i<=nQns; i++) {
-			extractInfo(i, data[i-1]);
-		}
-		
-		//switch screens
-		prepareQnNav(nQns);
-		$('#topics-screen').fadeOut("fast");
-		$('#test-screen').fadeIn("fast");
-		$('#ans-key').hide();
-		$('#submit-test').hide();
-		
-		//show first question
-		gw.startAnimation(qnGraphArr); //start graph widget
-		gw.pause();
-		qnNo = 1; //start with qn 1
-		showQn(qnNo);
-	});
-	
-	//start timer
-	//later use AJAX
 }
 
 $(document).ready (function() {

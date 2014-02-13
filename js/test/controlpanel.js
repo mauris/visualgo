@@ -28,28 +28,6 @@ function loadTraining() {
 
 function startTraining() {
 	init();
-	getQnsAndStart(); //fill qnTextArr, qnGraphArr, and qnTypeArr
-}
-
-function submitTraining() {
-	//get score
-	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
-	console.log(queryStr); //to remove later
-	$.ajax({
-		url: queryStr
-	}).done(function(score) {
-		score = parseInt(score);
-		$('#score').html(score+" out of "+nQns);
-		$('#test-screen').fadeOut("fast");
-		$('#result-screen').fadeIn("fast");
-	});
-}
-
-/*-------START TEST FUNCTIONS-------*/
-//this function gets all the qn data, and displays the ui for qn 1
-function getQnsAndStart() {
 	$.ajax({
 		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
@@ -73,6 +51,22 @@ function getQnsAndStart() {
 		gw.pause();
 		qnNo = 1; //start with qn 1
 		showQn(qnNo);
+	});
+}
+
+function submitTraining() {
+	//get score
+	ansArr.shift();
+	var ansStr = ansArr.join('&ans[]=');
+	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	console.log(queryStr); //to remove later
+	$.ajax({
+		url: queryStr
+	}).done(function(score) {
+		score = parseInt(score);
+		$('#score').html(score+" out of "+nQns);
+		$('#test-screen').fadeOut("fast");
+		$('#result-screen').fadeIn("fast");
 	});
 }
 

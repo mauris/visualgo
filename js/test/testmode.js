@@ -8,39 +8,6 @@ var availableTime = 0; //in seconds
 var timeLeft;
 
 function startTest() {
-	getQnsAndStart(); //fill qnTextArr, qnGraphArr, and qnTypeArr
-}
-
-function submitTest() {
-	//get score
-	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = "php/Test.php?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
-	console.log(queryStr); //to remove later
-	$.ajax({
-		url: queryStr
-	}).done(function(score) {
-		score = parseInt(score);
-		if(score >= 0) {
-			clearInterval(infoRefresh);
-			clearInterval(clientsideTimeRefresh);
-			$('#score').html(score+" out of "+nQns);
-			$('#test-screen').fadeOut("fast");
-			$('#result-screen').fadeIn("fast");
-		} else if(score == -1) { //unused for now
-			clearInterval(infoRefresh);
-			clearInterval(clientsideTimeRefresh);
-			$('#result-screen').html('<div id="result-name"></div><br/>You have already attempted this quiz.<br/>This score will not be recorded.');
-			$('#test-screen').fadeOut("fast");
-			$('#result-screen').fadeIn("fast");
-		}
-	});
-}
-
-/*-------START TEST FUNCTIONS-------*/
-
-//this function gets all the qn data, and displays the ui for qn 1
-function getQnsAndStart() {
 	$.ajax({
 		url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
 	}).done(function(data) {
@@ -71,6 +38,32 @@ function getQnsAndStart() {
 			clientsideTimeRefresh = setInterval(function() {clientsideTimeUpdate();},1000); //1 sec
 		} else {
 			customAlert("There is no ongoing test session.");
+		}
+	});
+}
+
+function submitTest() {
+	//get score
+	ansArr.shift();
+	var ansStr = ansArr.join('&ans[]=');
+	var queryStr = "php/Test.php?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
+	console.log(queryStr); //to remove later
+	$.ajax({
+		url: queryStr
+	}).done(function(score) {
+		score = parseInt(score);
+		if(score >= 0) {
+			clearInterval(infoRefresh);
+			clearInterval(clientsideTimeRefresh);
+			$('#score').html(score+" out of "+nQns);
+			$('#test-screen').fadeOut("fast");
+			$('#result-screen').fadeIn("fast");
+		} else if(score == -1) { //unused for now
+			clearInterval(infoRefresh);
+			clearInterval(clientsideTimeRefresh);
+			$('#result-screen').html('<div id="result-name"></div><br/>You have already attempted this quiz.<br/>This score will not be recorded.');
+			$('#test-screen').fadeOut("fast");
+			$('#result-screen').fadeIn("fast");
 		}
 	});
 }
