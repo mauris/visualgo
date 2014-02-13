@@ -192,7 +192,7 @@
     $qSeed = $testParams["seed"];
 
     if($type == TEST_GENERATE_QUESTIONS_TYPE_TEST){
-      if($testModeDb->validate($username, $password)){
+      if($testModeDb->validate($username, $password) && $testParams["testIsOpen"]){
         $testModeDb->begin($username, $password);
       }
 
@@ -202,7 +202,7 @@
       }
     }
 
-    else if($type != TEST_GENERATE_QUESTIONS_TYPE_ANSWER) return;
+    else if($type != TEST_GENERATE_QUESTIONS_TYPE_ANSWER && !$testParams["answerIsOpen"]) return;
 
     generateQuestions(intval($testParams["questionAmount"]), $testParams["topics"]);
 
