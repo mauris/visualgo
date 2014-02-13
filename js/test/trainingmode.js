@@ -33,7 +33,7 @@ function getQnsAndStart() {
 	$.ajax({
 		url: req
 	}).done(function(data) {
-		//console.log(data);
+		console.log(data);
 		data = JSON.parse(data);
 		for(var i=1; i<=nQns; i++) {
 			extractInfo(i, data[i-1]);

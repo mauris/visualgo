@@ -22,6 +22,8 @@
   );
 
   function generateQuestions($qAmt, $qSeed, $qTopics){
+    global $questionGenerator;
+
     srand((int)$qSeed);
 
     $qTopics = explode(",", $qTopics);
@@ -50,6 +52,8 @@
   }
 
   function checkAnswers($qAmt, $qSeed, $qTopics, $aArr){
+    global $questionGenerator;
+
     $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
 
     for($i = 0; $i < count($qArr);$i++){
@@ -71,6 +75,8 @@
   }
 
   function getAnswers($qAmt, $qSeed, $qTopics){
+      global $questionGenerator;
+
       $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
 
       for($i = 0; $i < count($qArr);$i++){
@@ -107,28 +113,7 @@
     $qSeed = $_GET["seed"];
     $qTopics = $_GET["topics"];
     
-    srand((int)$qSeed);
-
-    $qTopics = explode(",", $qTopics);
-
-    $qArr = array();
-    $qAmtTopic = array();
-
-    for($i = 0; $i < count($qTopics); $i++){
-      $qAmtTopic[] = 1;
-      $qAmt--;
-    }
-
-    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-      $addition = rand(1, $qAmt);
-      $qAmt -= $addition;
-      $qAmtTopic[$i] += $addition;
-    }
-
-    for($i = 0; $i < count($qTopics); $i++){
-      if(array_key_exists($qTopics[$i], $questionGenerator))
-        $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
-    }
+    $qArr = generateQuestions($qAmt, $qSeed, $qTopics);
     // End of question generator
 
     $qArrJson = array();
