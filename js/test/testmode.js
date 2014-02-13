@@ -39,40 +39,39 @@ function submitTest() {
 }
 
 /*-------START TEST FUNCTIONS-------*/
-//store config data for use later
-function useConfig(data) {
-	seed = data.seed;
-	topics = data.topics;
-	nQns = data.questionAmount;
-	availableTime = data.timeLimit;
-	timeLeft = availableTime;
-}
 
 //this function gets all the qn data, and displays the ui for qn 1
 function getQnsAndStart() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
 	}).done(function(data) {
-		data = JSON.parse(data);
-		for(var i=1; i<=nQns; i++) {
-			extractInfo(i, data[i-1]);
+		if(data != 0) {
+			data = JSON.parse(data);
+			nQns = data.length;
+			for(var i=1; i<=nQns; i++) {
+				extractInfo(i, data[i-1]);
+			}
+			
+			//switch screens
+			$('#question-nav').html("");
+			prepareQnNav(nQns);
+			$('#instructions-screen').fadeOut("fast");
+			$('#test-screen').fadeIn("fast");
+			$('#submit-test').hide();
+			
+			//show first question
+			gw.startAnimation(qnGraphArr); //start graph widget
+			gw.pause();
+			qnNo = 1; //start with qn 1
+			showQn(qnNo);
+			
+			//time, attempt no, and date update
+			updateInfo();
+			infoRefresh = setInterval(function(){updateInfo()}, 10000); //10 sec
+			clientsideTimeRefresh = setInterval(function() {clientsideTimeUpdate();},1000); //1 sec
+		} else {
+			customAlert("There is no ongoing test session.");
 		}
-		
-		//switch screens
-		prepareQnNav(nQns);
-		$('#test-screen').fadeIn("fast");
-		$('#submit-test').hide();
-		
-		//show first question
-		gw.startAnimation(qnGraphArr); //start graph widget
-		gw.pause();
-		qnNo = 1; //start with qn 1
-		showQn(qnNo);
-		
-		//time, attempt no, and date update
-		updateInfo();
-		infoRefresh = setInterval(function(){updateInfo()}, 10000); //10 sec
-		clientsideTimeRefresh = setInterval(function() {clientsideTimeUpdate();},1000); //1 sec
 	});
 }
 
@@ -164,20 +163,26 @@ $(document).ready (function() {
 	
 	/*-------LOAD TEST-------*/
 	$('#start-test').click(function() {
+		startTest();
 		$.ajax({
 			url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
 		}).done(function(data) {
+			/*
 			if(data != 0) {
 				//show current configurations
 				data = JSON.parse(data);
 				if(data.testIsOpen==1) {
-					useConfig(data);
 					$('#instructions-screen').fadeOut("fast");
 					$('#question-nav').html("");
 					startTest();
 				} else {
 					customAlert("There is no ongoing test session.");
 				}
+			}*/
+			if(data != 0) {
+				getQnsAndStart();
+			} else {
+				customAlert("There is no ongoing test session.");
 			}
 		});
 	});
