@@ -113,6 +113,9 @@
   const NO_ANSWER = "noAnswer";
   const CORRECT = "correct";
 
+  const TEST_GENERATE_QUESTIONS_TYPE_TEST = "test";
+  const TEST_GENERATE_QUESTIONS_TYPE_ANSWER = "answer";
+
   // Sync with graph_library/constant.js file
 
   const EDGE_TYPE_UDE = 0;

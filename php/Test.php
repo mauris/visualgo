@@ -117,10 +117,6 @@
 
   $mode = $_GET["mode"];
 
-  if($mode == MODE_GENERATE_SEED){
-    echo(rand());
-  }
-
   if($mode == MODE_GENERATE_QUESTIONS){
     $qAmt = $_GET["qAmt"];
     $qSeed = $_GET["seed"];
@@ -177,27 +173,35 @@
     echo $testModeDb->validate($username, $password)? 1:0;
   }
 
-  else if($mode == MODE_TEST_BEGIN){
+  else if($mode == MODE_TEST_GENERATE_QUESTIONS){
     $username = $_GET["username"];
     $password = $_GET["password"];
+    $type = $_GET["type"];
     $testModeDb = new TestModeDatabase();
 
     $testParams = $testModeDb->getTestParams();
     $qSeed = $testParams["seed"];
 
-    if($testModeDb->validate($username, $password)){
-      generateQuestions(intval($testParams["questionAmount"]), $testParams["topics"]);
-
-      $qArrJson = array();
-      for($i = 0; $i < count($qArr);$i++){
-        $qArrJson[] = $qArr[$i]->toJsonObject();
+    if($type == TEST_GENERATE_QUESTIONS_TYPE_TEST){
+      if($testModeDb->validate($username, $password)){
+        $testModeDb->begin($username, $password);
       }
-      echo arrayOfJsonStringEncoder($qArrJson);
-      
-      $testModeDb->begin($username, $password);
+
+      else{
+        echo 0;
+        return;
+      }
     }
 
-    else echo 0;
+    else if($type != TEST_GENERATE_QUESTIONS_TYPE_ANSWER) return;
+
+    generateQuestions(intval($testParams["questionAmount"]), $testParams["topics"]);
+
+    $qArrJson = array();
+    for($i = 0; $i < count($qArr);$i++){
+      $qArrJson[] = $qArr[$i]->toJsonObject();
+    }
+    echo arrayOfJsonStringEncoder($qArrJson);
   }
 
   else if($mode == MODE_TEST_SUBMIT){

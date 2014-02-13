@@ -117,3 +117,6 @@ const MODE_ADMIN_RESET_ATTEMPT = 14;		//for control panel
 const UNANSWERED = "unanswered";
 const NO_ANSWER = "noAnswer";
 const CORRECT = "correct";
+
+const TEST_GENERATE_QUESTIONS_TYPE_TEST = "test";
+const TEST_GENERATE_QUESTIONS_TYPE_ANSWER = "answer";
