@@ -21,17 +21,23 @@
     QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 
+  $qSeed = 0;
+  $qArr = array();
+  $sAnsArr = array();
+  $ansList = array();
+  $sAnsCorrectness = array();
+  $score = 0;
+
   function generateQuestions($qAmt, $qTopics){
     global $questionGenerator;
     global $qSeed;
     global $qArr;
-    global $aArr;
-    global $aCorrectness;
-    global $score ;
+    global $sAnsArr;
+    global $ansList;
+    global $sAnsCorrectness;
+    global $score;
 
     srand((int)$qSeed);
-
-    $qTopics = explode(",", $qTopics);
 
     $qArr = array();
     $qAmtTopic = array();
@@ -58,23 +64,24 @@
     global $questionGenerator;
     global $qSeed;
     global $qArr;
-    global $aArr;
-    global $aCorrectness;
-    global $score ;
+    global $sAnsArr;
+    global $ansList;
+    global $sAnsCorrectness;
+    global $score;
 
     generateQuestions($qAmt, $qTopics);
 
     for($i = 0; $i < count($qArr);$i++){
-      if($aArr[$i][0] == UNANSWERED){
-        $aCorrectness[$i] = false;
+      if($sAnsArr[$i][0] == UNANSWERED){
+        $sAnsCorrectness[$i] = false;
         continue;
       }
-      else if($aArr[$i][0] == NO_ANSWER){
-        $aArr[$i] = array();
+      else if($sAnsArr[$i][0] == NO_ANSWER){
+        $sAnsArr[$i] = array();
       }
 
-      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
-      if($aCorrectness[$i]){
+      $sAnsCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$sAnsArr[$i]);
+      if($sAnsCorrectness[$i]){
         $score++;
       }
     }
@@ -84,34 +91,29 @@
       global $questionGenerator;
       global $qSeed;
       global $qArr;
-      global $aArr;
-      global $aCorrectness;
-      global $score ;
+      global $sAnsArr;
+      global $ansList;
+      global $sAnsCorrectness;
+      global $score;
 
       generateQuestions($qAmt, $qTopics);
 
       for($i = 0; $i < count($qArr);$i++){
-      if($aArr[$i][0] == UNANSWERED){
-        $aCorrectness[$i] = false;
-        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+      if($sAnsArr[$i][0] == UNANSWERED){
+        $sAnsCorrectness[$i] = false;
+        $ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
         continue;
-      } else if($aArr[$i][0] == NO_ANSWER){
-        $aArr[$i] = array();
+      } else if($sAnsArr[$i][0] == NO_ANSWER){
+        $sAnsArr[$i] = array();
       }
-      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
-      if($aCorrectness[$i]){
-        $aList[] = CORRECT;
+      $sAnsCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$sAnsArr[$i]);
+      if($sAnsCorrectness[$i]){
+        $ansList[] = CORRECT;
       } else {
-        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
+        $ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
       }
     }
   }
-
-  $qSeed = 0;
-  $qArr = array();
-  $aArr = array();
-  $aCorrectness = array();
-  $score = 0;
 
   $mode = $_GET["mode"];
 
@@ -123,6 +125,8 @@
     $qAmt = $_GET["qAmt"];
     $qSeed = $_GET["seed"];
     $qTopics = $_GET["topics"];
+
+    $qTopics = explode(",", $qTopics);
     
     generateQuestions($qAmt, $qTopics);
     // End of question generator
@@ -137,25 +141,27 @@
   }
 
   else if($mode == MODE_CHECK_ANSWERS){
-    $aArrCsv = $_GET["ans"];
+    $sAnsArrCsv = $_GET["ans"];
     $qSeed = $_GET["seed"];
     $qAmt = $_GET["qAmt"];
     $qTopics = $_GET["topics"];
-    // echo implode("|",$aArrCsv);
-    for($i = 0; $i < count($aArrCsv); $i++){
-      $aArr[] = explode(",",$aArrCsv[$i]);
+    // echo implode("|",$sAnsArrCsv);
+    for($i = 0; $i < count($sAnsArrCsv); $i++){
+      $sAnsArr[] = explode(",",$sAnsArrCsv[$i]);
     }
     $score = 0;
+    $qTopics = explode(",", $qTopics);
 
     checkAnswers($qAmt, $qTopics);
-
-    
 
     echo $score;
   }
 
   else if($mode == MODE_GET_ANSWERS){
-
+    $qSeed = $_GET["seed"];
+    $qAmt = $_GET["qAmt"];
+    $qTopics = $_GET["topics"];
+    $qTopics = explode(",", $qTopics);
   }
 
   else if($mode == MODE_GET_STUDENT_ANSWERS){
@@ -187,7 +193,7 @@
   else if($mode == MODE_TEST_SUBMIT){
     $username = $_GET["username"];
     $password = $_GET["password"];
-    $aArrCsv = $_GET["ans"];
+    $sAnsArrCsv = $_GET["ans"];
 
     $testModeDb = new TestModeDatabase();
     $params = $testModeDb->getTestParams();
@@ -197,60 +203,16 @@
     $qAmt = $params["questionAmount"];
     $qTopics = $params["topics"];
 
-    for($i = 0; $i < count($aArrCsv); $i++){
-      $aArr[] = explode(",",$aArrCsv[$i]);
+    for($i = 0; $i < count($sAnsArrCsv); $i++){
+      $sAnsArr[] = explode(",",$sAnsArrCsv[$i]);
     }
     $score = 0;
 
     // Question generator
-    srand((int)$qSeed);
-
-    // foreach($questionGenerator as $key => $value){
-    //   $value->seedRng(rand());
-    // }
-
-    $qArr = array();
-    $qAmtTopic = array();
-
-    // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
-
-    for($i = 0; $i < count($qTopics); $i++){
-      $qAmtTopic[] = 1;
-      $qAmt--;
-    }
-
-    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-      $addition = rand(1, $qAmt);
-      $qAmt -= $addition;
-      $qAmtTopic[$i] += $addition;
-    }
-
-    for($i = 0; $i < count($qTopics); $i++){
-      if(array_key_exists($qTopics[$i], $questionGenerator))
-        $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
-    }
-    // End of question generator
-
-    for($i = 0; $i < count($qArr);$i++){
-      if($aArr[$i][0] == UNANSWERED){
-        $aCorrectness[$i] = false;
-        continue;
-      }
-      else if($aArr[$i][0] == NO_ANSWER){
-        $aArr[$i] = array();
-      }
-      // echo($i);
-      $aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
-      if($aCorrectness[$i]){
-        $score++;
-        // echo 1;
-      }
-      // else echo 0;
-      // else echo $i.",";
-    }
+    checkAnswers($qAmt, $qTopics);
 
     $submissionParams = array();
-    $submissionParams["answer"] = $aArr;
+    $submissionParams["answer"] = $sAnsArr;
     $submissionParams["grade"] = $score;
     $testModeDb->submit($username, $password, $submissionParams);
 
@@ -277,64 +239,65 @@
 
     $testModeDb = new TestModeDatabase();
     $params = $testModeDb->getTestParams();
-    $aList = array();
 
     if($params["answerIsOpen"] != 0){
       $qSeed = $params["seed"];
       $qAmt = $params["questionAmount"];
       $qTopics = $params["topics"];
 
+      getAnswers($qAmt, $qTopics);
+
       // Question generator
-      srand((int)$qSeed);
+  //     srand((int)$qSeed);
 
-      // foreach($questionGenerator as $key => $value){
-      //   $value->seedRng(rand());
-      // }
+  //     // foreach($questionGenerator as $key => $value){
+  //     //   $value->seedRng(rand());
+  //     // }
 
-      $qArr = array();
-      $qAmtTopic = array();
-	  $retrievedA = $testModeDb->getUserAnswer($username, $password);
-	  for($n=0; $n<count($retrievedA);$n++) {
-		$aArr[$n] = $retrievedA[$n];
-	  }
+  //     $qArr = array();
+  //     $qAmtTopic = array();
+	 //  $retrievedA = $testModeDb->getUserAnswer($username, $password);
+	 //  for($n=0; $n<count($retrievedA);$n++) {
+		// $sAnsArr[$n] = $retrievedA[$n];
+	 //  }
 
-      // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
+  //     // $qArr += $questionGenerator[QUESTION_TOPIC_HEAP]->generateQuestion($qAmt);
 
-      for($i = 0; $i < count($qTopics); $i++){
-        $qAmtTopic[] = 1;
-        $qAmt--;
-      }
+  //     for($i = 0; $i < count($qTopics); $i++){
+  //       $qAmtTopic[] = 1;
+  //       $qAmt--;
+  //     }
 
-      for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-        $addition = rand(1, $qAmt);
-        $qAmt -= $addition;
-        $qAmtTopic[$i] += $addition;
-      }
+  //     for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
+  //       $addition = rand(1, $qAmt);
+  //       $qAmt -= $addition;
+  //       $qAmtTopic[$i] += $addition;
+  //     }
 
-      for($i = 0; $i < count($qTopics); $i++){
-        if(array_key_exists($qTopics[$i], $questionGenerator))
-          $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
-      }
-      // End of question generator
+  //     for($i = 0; $i < count($qTopics); $i++){
+  //       if(array_key_exists($qTopics[$i], $questionGenerator))
+  //         $qArr = array_merge($qArr, $questionGenerator[$qTopics[$i]]->generateQuestion($qAmtTopic[$i]));
+  //     }
+  //     // End of question generator
 	  
-      for($i = 0; $i < count($qArr);$i++){
-		if($aArr[$i][0] == UNANSWERED){
-			$aCorrectness[$i] = false;
-			$aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
-			continue;
-		} else if($aArr[$i][0] == NO_ANSWER){
-			$aArr[$i] = array();
-		}
-		$aCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$aArr[$i]);
-		if($aCorrectness[$i]){
-			$aList[] = CORRECT;
-		} else {
-	        $aList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$aArr[$i]);
-		}
-      }
+  //     for($i = 0; $i < count($qArr);$i++){
+		// if($sAnsArr[$i][0] == UNANSWERED){
+		// 	$sAnsCorrectness[$i] = false;
+		// 	$ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
+		// 	continue;
+		// } else if($sAnsArr[$i][0] == NO_ANSWER){
+		// 	$sAnsArr[$i] = array();
+		// }
+		// $sAnsCorrectness[$i] = $questionGenerator[$qArr[$i]->qTopic]->checkAnswer($qArr[$i],$sAnsArr[$i]);
+		// if($sAnsCorrectness[$i]){
+		// 	$ansList[] = CORRECT;
+		// } else {
+	 //        $ansList[] = $questionGenerator[$qArr[$i]->qTopic]->getAnswer($qArr[$i],$sAnsArr[$i]);
+		// }
+  //     }
     }
 
-    echo json_encode($aList);
+    echo json_encode($ansList);
   }
 
   else if($mode == MODE_TEST_GET_STUDENT_ANSWERS){
