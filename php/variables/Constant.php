@@ -95,21 +95,19 @@
   const ANSWER_AMT_ONE = 1;
   const ANSWER_AMT_MULTIPLE = 2;
 
-  const MODE_GENERATE_SEED = 0;			//unused
-  const MODE_GENERATE_QUESTIONS = 1;	//generate questions from seed, topics and no. of questions
-  const MODE_CHECK_ANSWERS = 2;			//training mode check answers - answers and scores not recorded
-  const MODE_GET_ANSWERS = 3;
-  const MODE_GET_STUDENT_ANSWERS = 4;
-  const MODE_LOGIN = 5;					//student login for test mode
-  const MODE_TEST_BEGIN = 6;			//test mode - start student timer and retrieve test config
-  const MODE_TEST_SUBMIT = 7;			//test mode check answers - answers and scores recorded in database
-  const MODE_TEST_GET_INFO = 8;   //test mode - return elapsed time for a student
-  const MODE_TEST_GET_ANSWERS = 9;
-  const MODE_TEST_GET_STUDENT_ANSWERS = 10;
-  const MODE_ADMIN = 11;				//admin login for control panel
-  const MODE_ADMIN_GET_CONFIG = 12;		//retrieve test config for control panel
-  const MODE_ADMIN_EDIT_CONFIG = 13;	//edit test config from control panel
-  const MODE_ADMIN_RESET_ATTEMPT = 14;	//reset student test attempt from control panel
+  const MODE_GENERATE_QUESTIONS = 0;      //for training and control panel
+  const MODE_TEST_GENERATE_QUESTIONS = 1;   //for test and ans key
+  const MODE_CHECK_ANSWERS = 2;       //for training and control panel
+  const MODE_GET_ANSWERS = 3;         //for training and control panel
+  const MODE_GET_STUDENT_ANSWERS = 4;     //for future use
+  const MODE_LOGIN = 5;           //for test and ans key
+  const MODE_TEST_SUBMIT = 7;         //for test
+  const MODE_TEST_GET_INFO = 8;       //for test and ans key
+  const MODE_TEST_GET_ANSWERS = 9;      //for ans key
+  const MODE_TEST_GET_STUDENT_ANSWERS = 10; //for ans key
+  const MODE_ADMIN = 11;            //for control panel
+  const MODE_ADMIN_GET_CONFIG = 12;     //for control panel
+  const MODE_ADMIN_EDIT_CONFIG = 13;      //for control panel
 
   const UNANSWERED = "unanswered";
   const NO_ANSWER = "noAnswer";
