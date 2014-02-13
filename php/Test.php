@@ -193,16 +193,15 @@
 
     if($type == TEST_GENERATE_QUESTIONS_TYPE_TEST){
       if($testModeDb->validate($username, $password) && $testParams["testIsOpen"]){
-        $testModeDb->begin($username, $password);
+        if(!$testModeDb->begin($username, $password)) return;
       }
 
       else{
-        echo 0;
         return;
       }
     }
 
-    else if($type != TEST_GENERATE_QUESTIONS_TYPE_ANSWER && !$testParams["answerIsOpen"]) return;
+    else if($type != TEST_GENERATE_QUESTIONS_TYPE_ANSWER || !$testParams["answerIsOpen"]) return;
 
     generateQuestions(intval($testParams["questionAmount"]), $testParams["topics"]);
 

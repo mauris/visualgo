@@ -77,6 +77,8 @@
 
       $startTime = date('Y-m-d H:i:s');
       mysqli_query($this->db, "UPDATE `test` SET `startTime` = '".$startTime."' WHERE `username` = '".$username."'");
+      
+      return true;
     }
 
     /*
