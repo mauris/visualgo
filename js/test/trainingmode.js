@@ -6,7 +6,6 @@ seed = (Math.floor(Math.random()*1000000000));
 function startTraining() {
 	nQns = getNumberOfQns();
 	var queryStr = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr);
 	$.ajax({
 		url: queryStr
 	}).done(function(data) {
@@ -38,7 +37,6 @@ function submitTraining() {
 	var ansStr = ansArr.join('&ans[]=');
 	ansArr.unshift(false);
 	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr); //to remove later
 	$.ajax({
 		url: queryStr
 	}).done(function(score) {
@@ -54,7 +52,6 @@ function startAns() {
 	var ansStr = ansArr.join('&ans[]=');
 	ansArr.unshift(false);
 	var queryStr = "php/Test.php?mode="+MODE_GET_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr); //to remove later
 	$.ajax({
 		url: queryStr
 	}).done(function(ansData) {

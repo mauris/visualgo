@@ -60,7 +60,6 @@ function submitTraining() {
 	var ansStr = ansArr.join('&ans[]=');
 	ansArr.unshift(false);
 	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
-	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
 	}).done(function(score) {
@@ -76,7 +75,6 @@ function startAns() {
 	var ansStr = ansArr.join('&ans[]=');
 	ansArr.unshift(false);
 	var queryStr = "php/Test.php?mode="+MODE_GET_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/"+queryStr); //to remove later
 	$.ajax({
 		url: queryStr
 	}).done(function(ansData) {

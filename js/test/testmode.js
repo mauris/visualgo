@@ -47,7 +47,6 @@ function submitTest() {
 	ansArr.shift();
 	var ansStr = ansArr.join('&ans[]=');
 	var queryStr = "php/Test.php?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
-	console.log(queryStr); //to remove later
 	$.ajax({
 		url: queryStr
 	}).done(function(score) {

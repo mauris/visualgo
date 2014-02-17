@@ -12,6 +12,30 @@ h2 {
 	margin-bottom: 30px;
 	font-size: 15px;
 }
+
+.right-links {
+	float: right;
+	position: relative;
+	margin-left: 10px;
+	padding: 15px 15px;
+	color: white;
+	text-align: center;
+	font-size: 14px;
+	cursor: pointer;
+}
+	/*#training-link:after {
+		content: " ";
+		position: absolute;
+		top: 100%;
+		right: 0px;
+		height: 0px;
+		width: 100%;
+		border-style:solid;
+		border-width:10px;
+		border-color: transparent;
+		border-right-color: red;
+	}*/
+
 #searchbar { text-align: center; }
 	#search {
 		width: 250px;

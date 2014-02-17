@@ -22,11 +22,9 @@ function getQns() {
 }
 
 function getAns() {
-	console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/php/Test.php?mode="+MODE_TEST_GET_STUDENT_ANSWERS+"&username="+studentid+"&password="+studentpw);
 	$.ajax({
 		url: "php/Test.php?mode="+MODE_TEST_GET_STUDENT_ANSWERS+"&username="+studentid+"&password="+studentpw
 	}).done(function(stAnsData) {
-		console.log("http://algorithmics.comp.nus.edu.sg/~onlinequiz/training/php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw);
 		$.ajax({
 			url: "php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw
 		}).done(function(ansData) {

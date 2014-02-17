@@ -1,4 +1,19 @@
 $( document ).ready(function() {
+	//training and test links
+	$('.right-links').css('background',surpriseColour);
+	$('#test-link').hide();
+	$('#ans-link').hide();
+	$.ajax({
+		url: "php/Test.php?mode="+MODE_CHECK_TEST_OPEN
+	}).done(function(data) {
+		data = JSON.parse(data);
+		if(data.testIsOpen == 1) {
+			$('#test-link').show();
+		}
+		if(data.answerIsOpen == 1) {
+			$('#ans-link').show();
+		}
+	});
 	
 	//thumbnail image animation on hover	
 	$('a.thumbnail').hover(function() {
