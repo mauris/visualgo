@@ -60,22 +60,14 @@ input[type=button], input[type=submit] {
 	#current-selection { padding-top: 20px; }
 	#ans-key { padding-top: 10px; }
 	#undo-ans , #clear-ans {
-		display: inline-block;
 		margin-top: 20px;
-		margin-right: 10px;
-		padding: 5px 8px;
-		background: #df3939;
-		color: white;
-		font-size: 14px;
-		font-weight: normal;
-		cursor: pointer;
+		width: 80px;
 	}
 		#undo-ans:hover, #clear-ans:hover { background: black; }
 	#viz { }
 		svg { 
 			position: fixed;
 			height: 350px;
-			bottom: 82px;
 			left: 50%;
 			margin-left: -450px;
 			z-index: -15;
@@ -131,15 +123,9 @@ input[type=button], input[type=submit] {
 		#info #student-name { font-size: 16px; text-transform: uppercase; }
 		#info #time-left { font-size: 30px; }
 		#submit-test {
-			display: inline-block;
 			margin-top: 15px;
-			background: #df3939;
-			color: white;
-			padding: 8px 12px;
-			font-size: 14px;
-			font-weight: bold;
+			width: 110px;
 			text-transform: uppercase;
-			cursor: pointer;
 		}
 			#submit-test:hover { background: black; }
 			
@@ -165,13 +151,8 @@ input[type=button], input[type=submit] {
 		font-weight: bold;
 	}
 	#goto-answer {
-		display: inline-block;
 		margin-top: 20px;
-		padding: 7px 10px;
-		font-size: 16px;
-		font-weight: normal;
-		color: white;
-		cursor: pointer;
+		width: 150px;
 	}
 	
 #custom-alert {

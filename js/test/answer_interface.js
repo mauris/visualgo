@@ -197,17 +197,15 @@ function showAnswerInterface(q) {
 				
 				//limit input to numbers
 				$('.number-input').change(function() {
-					var text = $(this).val();
-					var reg = /^\d+$/;
-					if(!reg.test(text)) { //not numeric value
-						$(this).val("");
-					} else { //mark as answered
-						$('#question-nav .qnno').eq(q-1).addClass('answered');
-						setAns(q, parseInt(text));
-					}
-					if($(this).val()=="") { //unanswered
+					var text = $(this).val().replace(/[^\0-9]/ig, "");
+					$(this).val(text);
+					if(text=="") { //unanswered
 						$('#question-nav .qnno').eq(q-1).removeClass('answered');
 						clearAns(q);
+					} else { //mark as answered
+						$('#question-nav .qnno').eq(q-1).addClass('answered');
+						$('.mcq-option .box').css('background', '#ddd');
+						setAns(q, parseInt(text));
 					}
 				});
 				
@@ -235,6 +233,7 @@ function showAnswerInterface(q) {
 				}
 				$('.mcq-option .box').css('background', '#ddd');
 				showRecordedAns(q);
+				$('.number-input').val("");
 			});
 		}
 		
@@ -265,6 +264,7 @@ function showAnswerInterface(q) {
 		}
 		showRecordedAns(q);
 	}
+	positionViz();
 }
 
 function showRecordedAns(q) {
@@ -483,9 +483,15 @@ function printCurrentSelection(q) {
 			}
 		}
 	}
+	//positionViz();
 }
 
 //helper functions
+function positionViz() {
+	var topDist = 60 + $('#qn-text').height() + 60;
+	$('svg').css('top', topDist+'px');
+}
+
 function getVClass(qraphJSON, vList) { //returns array
 	var toReturn = new Array();
 	for(var i=0; i<vList.length; i++){ //for each number in the vertex list

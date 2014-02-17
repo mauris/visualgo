@@ -61,6 +61,14 @@ function getAns() {
 				}
 				proc.push(raw[j]);
 			}
+			if(qnTypeArr[i+1] == INTERFACE_MULT_E) {
+				//make into pairs so that answer interface displays correctly
+				var newProc = new Array();
+				for(var k=0; k<proc.length; k+=2) {
+					newProc.push([proc[k],proc[k+1]]);
+				}
+				proc = newProc;
+			}
 			ansArr[i+1] = proc;
 		}
 	});

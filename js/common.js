@@ -53,6 +53,7 @@ $( document ).ready(function() {
 	});
 	
 	//facebook login stuff
+	/*
 	$('#fb-login').hide();
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -82,6 +83,6 @@ $( document ).ready(function() {
 				FB.login();
 			}
 		});
-	};
+	};*/
 	
 });

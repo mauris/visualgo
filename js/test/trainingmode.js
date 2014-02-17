@@ -21,7 +21,8 @@ function startTraining() {
 		$('#topics-screen').fadeOut("fast");
 		$('#test-screen').fadeIn("fast");
 		$('#ans-key').hide();
-		$('#submit-test').hide();
+		$('#info').show();
+		$('#restart-test').hide();
 		
 		//show first question
 		gw.startAnimation(qnGraphArr); //start graph widget
@@ -67,7 +68,8 @@ function startAns() {
 		$('#ans-key').show();
 		$('#undo-ans').hide();
 		$('#clear-ans').hide();
-		$('#info').hide();
+		$('#submit-test').hide();
+		$('#restart-test').show();
 				
 		$('#question-nav .qnno').removeClass('selected');
 		$('#question-nav .qnno').eq(0).addClass('selected');
@@ -75,6 +77,8 @@ function startAns() {
 		showQn(qnNo);
 	});
 }
+
+function checkComplete() {}
 
 $(document).ready (function() {
 	
@@ -110,7 +114,11 @@ $(document).ready (function() {
 	
 	/*-------START TRAINING-------*/
 	$('#start-training').click(function() {
-		startTraining();
+		if(topics.length > 0) {
+			startTraining();
+		} else {
+			customAlert("Please select some topics first!");
+		}
 	});
 
 	/*-------SUBMIT QUIZ-------*/
@@ -127,4 +135,9 @@ $(document).ready (function() {
 		MODE = "ANSWER";
 		startAns();
 	});	
+
+	/*-------RESTART QUIZ-------*/
+	$('#restart-test').click(function() {
+	    location.reload();
+	});
 });

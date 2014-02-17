@@ -85,7 +85,7 @@
     	<!--file upload input here-->
         <form action="UploadStudentData.php" method="post" enctype="multipart/form-data">
             <input type="file" name="file" id="file"><br>
-            <input id="upload-file" type="submit" name="submit" style="width: 220px;" value="Upload">
+            <input id="upload-file" type="submit" name="submit" style="width: 220px; margin-top: 10px;" value="Upload">
         </form>
     </form>
 </div>
@@ -99,8 +99,8 @@
         <div id="mcq"></div>
         <input class="number-input" type="text" autocomplete="off" title="Enter the numeric value"/>
         
-    	<div id='undo-ans' style="margin-right: 8px;">Undo</div>
-        <div id='clear-ans'>Clear</div>
+    	<input id="undo-ans" type="button" style="margin-right: 8px;" value="Undo">
+        <input id="clear-ans" type="button" value="Clear">
         <div id="current-selection"></div>
         <div id="ans-key"></div>
     </div>
@@ -108,7 +108,7 @@
 
 	<div id="info">
         <div id="time-left"></div>
-        <div id="submit-test">Submit Quiz</div>
+        <input id="submit-test" type="button" value="Submit Quiz">
     </div>
 	<div id="question-nav"></div>
 </div>
@@ -117,7 +117,7 @@
 	<div id="result-name"></div>
     You scored 
     <div id="score"></div>
-   <div id="goto-answer">Check your answers</div>
+    <input id="goto-answer" type="button" value="Check your answers">
 </div>
 
 <!--div id="left-bar"></div>
