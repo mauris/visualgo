@@ -391,6 +391,7 @@ $(document).ready (function() {
 		}
 	});
 	$('#reset').click(function() {
+		event.preventDefault();
 		var stName = $('#reset-attempt').val();
 		$.ajax({
 			url: "php/Test.php?mode="+MODE_ADMIN_RESET_ATTEMPT+"&password="+adminpw+"&username="+stName
@@ -404,13 +405,13 @@ $(document).ready (function() {
 	});
 	
 	/*-------STUDENT LIST FILE UPLOAD-------*/
-	$('input[type=file]').on('change', function(event) {
+	/*$('input[type=file]').on('change', function(event) {
 		studentListFile = event.target.files;
 	});
 	$('#upload-file').click(function() {
 		event.preventDefault();
 		uploadFile();
-	});
+	});*/
 
 	/*-------SUBMIT QUIZ-------*/
 	$('#submit-test').click(function() {

@@ -182,6 +182,17 @@
     echo $testModeDb->validate($username, $password)? 1:0;
   }
 
+  else if($mode == MODE_CHECK_TEST_OPEN){
+    $testModeDb = new TestModeDatabase();
+
+    $testParams = $testModeDb->getTestParams();
+    $returnVal = array();
+    $returnVal["testIsOpen"] = $testParams["testIsOpen"];
+    $returnVal["answerIsOpen"] = $testParams["answerIsOpen"];
+    
+    echo json_encode($returnVal);
+  }
+
   else if($mode == MODE_TEST_GENERATE_QUESTIONS){
     $username = $_GET["username"];
     $password = $_GET["password"];

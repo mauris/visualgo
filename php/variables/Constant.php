@@ -100,7 +100,8 @@
   const MODE_CHECK_ANSWERS = 2;       //for training and control panel
   const MODE_GET_ANSWERS = 3;         //for training and control panel
   const MODE_GET_STUDENT_ANSWERS = 4;     //for future use
-  const MODE_LOGIN = 5;           //for test and ans key
+  const MODE_CHECK_TEST_OPEN = 5;
+  const MODE_LOGIN = 6;           //for test and ans key
   const MODE_TEST_SUBMIT = 7;         //for test
   const MODE_TEST_GET_INFO = 8;       //for test and ans key
   const MODE_TEST_GET_ANSWERS = 9;      //for ans key
