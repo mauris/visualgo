@@ -47,8 +47,8 @@
       return $password == $user["password"];
     }
 
-    public function validateAdmin(){
-      return $password == ADMIN_PASSWORD;
+    public function validateAdmin($adminPwd){
+      return $adminPwd == ADMIN_PASSWORD;
     }
 
     public function exists($username){
@@ -78,7 +78,7 @@
     public function removeAllUsers($adminPwd){
       if(!$this->validateAdmin($adminPwd)) return false;
 
-      mysqli_query($this->db, "TRUNCATE 'user'");
+      mysqli_query($this->db, "TRUNCATE TABLE `user`");
     }
   }
 ?>

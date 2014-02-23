@@ -22,29 +22,20 @@
     fwrite($f, file_get_contents($_FILES['file']['tmp_name']));
 
     $filename = $_FILES['file']['tmp_name'];
-    $file_parts = pathinfo($filename);
-    switch($file_parts['extension']){
-        case "csv":
-        $rows = explode(";", file_get_contents($filename));
-        // Data: name, username, password
-        $dataTitle = explode(",", $rows[0]);
-        if($dataTitle[0][0] != "name" || $dataTitle[0][1] != "username" || $dataTitle[0][2] != "password"){
-          echo "Error: file doesn't contain proper information. The correct format is 'name', 'username', 'password'";
-          return;
-        }
-        $userDb->removeAllUsers(ADMIN_PASSWORD);
-        for($i = 1; $i < count($rows); $i++){ // Assume data contains title
-          $data = explode(",", $rows[i]);
-          $userDb->register($data[0], $data[1], $data[2]);
-        }
-
-        echo "Success";
-        break;
-
-        default:
-        echo "We only accept CSV files";
-        break;
+    $rows = explode(";", file_get_contents($filename));
+    // Data: name, username, password
+    $dataTitle = explode(",", $rows[0]);
+    if($dataTitle[0] != "name" || $dataTitle[1] != "username" || $dataTitle[2] != "password"){
+      echo "Error: file doesn't contain proper information. The correct format is 'name', 'username', 'password'";
+      return;
     }
+    $userDb->removeAllUsers(ADMIN_PASSWORD);
+    for($i = 1; $i < count($rows)-1; $i++){ // Assume data contains title
+      $data = explode(",", $rows[$i]);
+      $userDb->register($data[0], $data[1], $data[2]);
+    }
+
+    echo "Success";
 
   }
 
