@@ -47,6 +47,10 @@
       return $password == $user["password"];
     }
 
+    public function validateAdmin(){
+      return $password == ADMIN_PASSWORD;
+    }
+
     public function exists($username){
       $checkUsername = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username`='".$username."'");
       if(mysql_num_rows($result) == 0){
@@ -57,7 +61,7 @@
     }
 
     // TODO: secure this against SQL injection
-    public function register($username, $password, $name){
+    public function register($name, $username, $password){
       mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
         VALUES ('".$name."','".$username."','".$password."')");
     }
@@ -69,6 +73,12 @@
       $name = mysqli_fetch_assoc($name);
 
       return $name["name"];
+    }
+
+    public function removeAllUsers($adminPwd){
+      if(!$this->validateAdmin($adminPwd)) return false;
+
+      mysqli_query($this->db, "TRUNCATE 'user'");
     }
   }
 ?>

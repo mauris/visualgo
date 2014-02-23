@@ -1,7 +1,9 @@
 <?php
   require_once 'Everything.php';
 
-  $f = fopen('/Users/ivanreinaldo/Work-repo/phpout.txt', 'a');
+  $userDb = new UserDatabase();
+
+  $f = fopen('/Users/ivanreinaldo/Work-repo/phpout.txt', 'w');
 
   fwrite($f, "Test!");
 
@@ -14,10 +16,36 @@
     fwrite($f, "Size: " . ($_FILES["file"]["size"] / 1024));
     fwrite($f, "Stored in: " . $_FILES["file"]["tmp_name"]);
     $db = mysqli_connect("localhost",DB_USERNAME,DB_PASSWORD,DB_NAME);
-    mysqli_query($db, "INSERT INTO `fileUpload` (`testFile`) VALUES ('".file_get_contents($_FILES['uploadedfile']['tmp_name'])."')");
+    mysqli_query($db, "INSERT INTO `fileUpload` (`testFile`) VALUES ('".file_get_contents($_FILES['file']['tmp_name'])."')");
     fwrite($f, mysqli_error($db));
     fwrite($f, "file uploaded ");
-    fwrite($f, file_get_contents($_FILES['uploadedfile']['tmp_name']));
+    fwrite($f, file_get_contents($_FILES['file']['tmp_name']));
+
+    $filename = $_FILES['file']['tmp_name'];
+    $file_parts = pathinfo($filename);
+    switch($file_parts['extension']){
+        case "csv":
+        $rows = explode(";", file_get_contents($filename));
+        // Data: name, username, password
+        $dataTitle = explode(",", $rows[0]);
+        if($dataTitle[0][0] != "name" || $dataTitle[0][1] != "username" || $dataTitle[0][2] != "password"){
+          echo "Error: file doesn't contain proper information. The correct format is 'name', 'username', 'password'";
+          return;
+        }
+        $userDb->removeAllUsers(ADMIN_PASSWORD);
+        for($i = 1; $i < count($rows); $i++){ // Assume data contains title
+          $data = explode(",", $rows[i]);
+          $userDb->register($data[0], $data[1], $data[2]);
+        }
+
+        echo "Success";
+        break;
+
+        default:
+        echo "We only accept CSV files";
+        break;
+    }
+
   }
 
   fclose($f);
