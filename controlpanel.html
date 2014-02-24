@@ -76,14 +76,15 @@
     </form>
     
     <h1 id="more-settings">Student Settings<img class="rotateRight" src="img/arrow_black_right.png"/></h1>
-    <form class="more-settings" style="display: none;" action="php/UploadStudentData.php" method="post" enctype="multipart/form-data">        
+    <!--form class="more-settings" style="display: none;" action="php/UploadStudentData.php" method="post" enctype="multipart/form-data"-->
+    <form class="more-settings" style="display: none;" enctype="multipart/form-data">
         <h2>Reset student attempt</h2>
-    	<input id="reset-attempt" style="margin-right: 10px;" type="text" value="student id" autocomplete="off"/><!--
+        <input id="reset-attempt" style="margin-right: 10px;" type="text" value="student id" autocomplete="off"/><!--
         --><input id="reset" type="button" value="Reset" /><br/><br/>
-        
+           
         <h2>Change student list</h2>
-    	<!--file upload input here-->
-        <input type="file" name="file" id="file"><br>
+        <!--file upload input here-->
+        <input type="file" name="file" id="file" accept=".csv"><br>
         <input id="upload-file" type="submit" name="submit" style="width: 220px; margin-top: 10px;" value="Upload">
     </form>
 </div>
