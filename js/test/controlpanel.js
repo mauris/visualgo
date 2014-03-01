@@ -418,6 +418,8 @@ $(document).ready (function() {
 	    }).done(function(result) {
 	    	if(result == "Success") {
 	    		customAlert("Student list updated accordingly.");
+	    	} else {
+	    		alert(result);
 	    	}
 	    });
 	});

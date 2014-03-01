@@ -42,7 +42,7 @@
     $qArr = array();
     $qAmtTopic = array();
 
-    for($i = 0; $i < count($qTopics); $i++){
+    /*for($i = 0; $i < count($qTopics); $i++){
       $qAmtTopic[] = 1;
       $qAmt--;
     }
@@ -51,6 +51,15 @@
       $addition = rand(1, $qAmt);
       $qAmt -= $addition;
       $qAmtTopic[$i] += $addition;
+    }*/
+
+    $quotient = floor($qAmt/count($qTopics));
+    $remainder = $qAmt%count($qTopics);
+    for($i=0; $i < count($qTopics); $i++) {
+      $qAmtTopic[] = $quotient;
+    }
+    for($i=0; $i < $remainder; $i++) {
+      $qAmtTopic[$i] += 1;
     }
 
     for($i = 0; $i < count($qTopics); $i++){
