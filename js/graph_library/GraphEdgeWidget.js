@@ -462,10 +462,12 @@ var GraphEdgeWidget = function(graphVertexA, graphVertexB, edgeIdNumber, type, w
               .attr("font-family", attributeList["weight"]["font-family"])
               .attr("font-size", attributeList["weight"]["font-size"])
               .attr("font-weight", attributeList["weight"]["font-weight"])
-              .attr("text-anchor", attributeList["weight"]["text-anchor"]);
+              .attr("text-anchor", attributeList["weight"]["text-anchor"])
+              .attr("text-decoration", "underline");
               
     weightTextSpan.transition()
                   .duration(dur)
+                  .attr("dy", -5)
                   .text(function(){
                     return attributeList["weight"]["text"];
                   });
