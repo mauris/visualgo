@@ -9,6 +9,7 @@
   $ufdsQuestionGen = new UfdsQuestionGenerator();
   $mstQuestionGen = new MstQuestionGenerator();
   $ssspQuestionGen = new SsspQuestionGenerator();
+  $graphdsQuestionGen = new GraphdsQuestionGenerator();
   $graphTraversalQuestionGen = new GraphTraversalQuestionGenerator();
 
   $questionGenerator = array(
@@ -18,6 +19,7 @@
     QUESTION_TOPIC_UFDS => $ufdsQuestionGen,
     QUESTION_TOPIC_MST => $mstQuestionGen,
     QUESTION_TOPIC_SSSP => $ssspQuestionGen,
+    QUESTION_TOPIC_GRAPH_DS => $graphdsQuestionGen,
     QUESTION_TOPIC_GRAPH_TRAVERSAL => $graphTraversalQuestionGen
   );
 

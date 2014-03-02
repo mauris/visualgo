@@ -6,6 +6,7 @@
   const QUESTION_TOPIC_UFDS = "UFDS";
   const QUESTION_TOPIC_MST = "MST";
   const QUESTION_TOPIC_SSSP = "SSSP";
+  const QUESTION_TOPIC_GRAPH_DS = "Graphds";
   const QUESTION_TOPIC_GRAPH_TRAVERSAL = "GraphTraversal";
 
   // General in several data-structures
@@ -49,6 +50,9 @@
   const QUESTION_TYPE_FIND_SET_COMPRESSION = "findSetCompress";
   const QUESTION_TYPE_IS_SAME_SET = "isSameSet";
   
+  //Graph DS-specific
+  const QUESTION_TYPE_DUMMY = "dummy";
+
   //Graph Traversal-Specific
   const QUESTION_TYPE_DISCONNECT = "disconnect";
 
