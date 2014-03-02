@@ -151,6 +151,7 @@ var GraphEdgeWidget = function(graphVertexA, graphVertexB, edgeIdNumber, type, w
     graphVertexB.removeEdge(self);
 
     line.remove();
+    clickableArea.remove();
     weightText.remove();
   }
 
@@ -273,13 +274,21 @@ var GraphEdgeWidget = function(graphVertexA, graphVertexB, edgeIdNumber, type, w
     attributeList["weight"]["text"] = weight;
 
     line = edgeSvg.append("path");
+    clickableArea = edgeSvg.append("path");
 
     line.attr("id", attributeList["path"]["id"])
         .attr("class", attributeList["path"]["class"]);
 
+    clickableArea.attr("id", attributeList["path"]["id"] + "-clickable")
+        .attr("class", "clickable");
+
     try {
     if (attributeList["path"]["d"] != "MNaN,NaNLNaN,NaN")
     line.attr("d", attributeList["path"]["d"])
+        .attr("stroke", attributeList["path"]["stroke"])
+        .attr("stroke-width", attributeList["path"]["stroke-width"]);
+
+    clickableArea.attr("d", attributeList["path"]["d"])
         .attr("stroke", attributeList["path"]["stroke"])
         .attr("stroke-width", attributeList["path"]["stroke-width"]);
     } catch(err) {}
@@ -417,6 +426,13 @@ var GraphEdgeWidget = function(graphVertexA, graphVertexB, edgeIdNumber, type, w
           if(attributeList["path"]["class"] == "de" || attributeList["path"]["class"] == "bde") return "url(#arrow)";
           return null;
         });
+
+    clickableArea.transition()
+        .duration(dur)
+        .attr("d", attributeList["path"]["d"])
+        .attr("stroke", attributeList["path"]["stroke"])
+        .attr("stroke-width", attributeList["path"]["stroke-width"]*2)
+        .attr("opacity", 0);
 
     weightText.transition()
               .duration(dur)
