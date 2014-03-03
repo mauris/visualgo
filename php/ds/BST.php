@@ -152,6 +152,7 @@
       return $temp[$k-1];
     }
 
+    /*this function considers the root as a leaf if the BST has only 1 element (the root). It should not do this.*/
     public function getAllLeaves(){
       $leaves = array();
 

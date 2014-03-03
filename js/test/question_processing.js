@@ -1,3 +1,14 @@
+var definitionsArr = new Array();
+definitionsArr.push(['sequence','The order matters. Do not forget to include the starting point (if given) as the first selection.']);
+definitionsArr.push(['BST','The topmost vertex is the root']);
+definitionsArr.push(['AVL','The topmost vertex is the root']);
+definitionsArr.push(['heap','The topmost vertex is the root']);
+definitionsArr.push(['leaf','The root is not considered a leaf']);
+definitionsArr.push(['internal vertices','The root is not considered an internal vertex']);
+definitionsArr.push(['height','Height is defined as the number of edges from the root to the deepest leaf']);
+definitionsArr.push(['rank','Rank is defined as the 1-based index in the sorted list of elements of the tree']);
+definitionsArr.push(['O(n) Build Heap','As defined in the VisuAlgo heap visualisation']);
+
 function extractInfo(q, qnJSON) {
 	qnTextArr[q] = extractQnText(qnJSON.qTopic, qnJSON.qType, qnJSON.qParams);
 	qnTypeArr[q] = extractQnType(qnJSON.aType, qnJSON.aAmt);
@@ -86,6 +97,12 @@ function extractQnText(topic, type, params) { //returns string
 			toReturn = toReturn.replace(matches[i], params[p]);
 		}
 	}
+	for(var i=0; i<definitionsArr.length; i++) {
+		var regex = new RegExp(definitionsArr[i][0],"i");
+		var withTooltip = '<u title=\"'+definitionsArr[i][1]+'\">'+definitionsArr[i][0]+'</u>';
+		toReturn = toReturn.replace(regex, withTooltip);
+	}	
+
 	return toReturn;
 }
 

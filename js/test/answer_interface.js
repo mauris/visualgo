@@ -15,7 +15,7 @@ function showAnswerInterface(q) {
 	$('#vertexText text, #vertex circle, #edge path').unbind('click').css('cursor','auto');
 	$('#mcq').html("").hide(); $('.mcq-option .box').unbind('click').css('cursor','auto');
 	$('#subset').html("").hide(); $('#subset .faux-v').unbind('click').css('cursor','auto');
-	$('.number-input').hide().unbind('change');
+	$('.number-input').hide().unbind('change').attr('readonly',false);
 	$('#undo-ans').hide(); $('#clear-ans').hide(); $('#current-selection').html("").hide();
 	
 	if(MODE == "TRAINING") {
