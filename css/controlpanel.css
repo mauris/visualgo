@@ -82,6 +82,10 @@
 	}
 	#settings-screen #set-seed { width: 85px; color: black; }
 	#settings-screen #new-seed { margin-left: 10px; width: 105px; }
+	#settings-screen input[type=checkbox] {
+		margin-left: 10px;
+		margin-right: 5px;
+	}
 	#settings-screen .topic {
 		border-top: 1px solid #ccc;
 		border-left: 1px solid #ccc;
