@@ -130,6 +130,7 @@
 		  $PQ[] = $neighbourEdge;
 	  }
 	  usort($PQ, array('MST', 'tripleSort')); //by weight
+	  if(!$this->min) $PQ = array_reverse($PQ);
 	  
 	  while(!empty($PQ)) {
 	    $edge = array_shift($PQ); //edge is a (from, to, weight) triple
@@ -143,6 +144,7 @@
 			  $PQ[] = $neighbourEdge;
 		  }
 		  usort($PQ, array('MST', 'tripleSort')); //by weight
+		  if(!$this->min) $PQ = array_reverse($PQ);
 		}
 	  }
 	  return $edgeSet;
@@ -157,6 +159,7 @@
 		}
 		$edgeSet = array();
 		usort($edgeQ, array('MST', 'tripleSort')); //by weight
+		if(!$this->min) $edgeQ = array_reverse($edgeQ);
 		
 		$length = count($edgeQ);
 		for($i=0; $i<$length; $i++) {
@@ -169,7 +172,8 @@
 		return $edgeSet;
     }
 	
-	public function minimax($start, $end) { //on minimum ST
+	/*also handles maximin*/
+	public function minimax($start, $end) {
 		$tree = $this->prim($start); //edge triple list
 		//make adj list
 		$treeAdj = array();
@@ -201,21 +205,36 @@
 				}
 			}
 		}
-		//backward traverse path to find max on path
-		$ans = 0;
+		//backward traverse path to find min/max on path
+		if($this->min) {
+			$ans = 0;
+		} else {
+			$ans = INFINITY;
+		}
 		$ansTriple;
 		$v = $end;
 		while(isset($parent[$v])) {
 			$p = $parent[$v];
-			$weight = 0;
+			if($this->min) {
+				$weight = 0;
+			} else {
+				$weight = INFINITY;
+			}
 			for($i=0; $i<count($treeAdj[$p]); $i++) {
 				if($treeAdj[$p][$i]->v() == $v) {
 					$weight = $treeAdj[$p][$i]->w();
 				}
 			}
-			if($weight > $ans) {
-				$ans = $weight;
-				$ansTriple = new Triple($p,$v,$weight);
+			if($this->min) {
+				if($weight > $ans) {
+					$ans = $weight;
+					$ansTriple = new Triple($p,$v,$weight);
+				}
+			} else {
+				if($weight < $ans) {
+					$ans = $weight;
+					$ansTriple = new Triple($p,$v,$weight);
+				}
 			}
 			$v = $p;
 		}
