@@ -81,7 +81,9 @@ function extractQnText(topic, type, params) { //returns string
 			}
 		case QUESTION_TOPIC_GRAPH_DS:
 			switch(type) {
-				case QUESTION_TYPE_ADJMAT_SIZE: 	toReturn = GRAPH_DS_ADJMAT_SIZE; break;
+				case QUESTION_TYPE_DS_SIZE: 		toReturn = GRAPH_DS_DS_SIZE; break;
+				case QUESTION_TYPE_NEIGHBOURS:		toReturn = GRAPH_DS_NEIGHBOURS; break;
+				case QUESTION_TYPE_NONZERO:			toReturn = GRAPH_DS_NONZERO; break;
 			}
 		case QUESTION_TOPIC_GRAPH_TRAVERSAL:
 			switch(type) {
