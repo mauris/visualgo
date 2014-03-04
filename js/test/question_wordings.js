@@ -44,7 +44,7 @@ const SSSP_GREATER_LESS = "Click all vertices (in any order) in this directed we
 const SSSP_PATH = "Click the sequence of vertices that constitutes the shortest path from source vertex |source| to vertex |value|. If vertex |value| is unreachable from the source, select 'No Answer'. Note that all edge weights are printed closer to the arrowheads of the respective arrows.";
 const SSSP_PATH_WEIGHT = "What is the weight of the shortest path from source vertex |source| to vertex |value|? If |value| is unreachable from the source, select 'No Answer'. Note that all edge weights are printed closer to the arrowheads of the respective arrows.";
 
-const GRAPH_DS_DUMMY = "This is a dummy question.";
+const GRAPH_DS_ADJMAT_SIZE = "How many cells are there in the Adjacency Matrix for this graph?";
 
 const GRAPH_TRAVERSAL_TRAVERSAL = "Click the sequence of vertices that are visited by |subtype| from source vertex |value|. The neighbours of a vertex are listed in ascending vertex number.";
 const GRAPH_TRAVERSAL_DISCONNECT = "Click all vertices (in any order) that will cause the graph to be disconnected if deleted. Note that the vertex deletion is independent.";

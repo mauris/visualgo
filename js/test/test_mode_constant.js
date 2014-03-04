@@ -53,7 +53,7 @@ const QUESTION_TYPE_FIND_SET_COMPRESSION = "findSetCompress";
 const QUESTION_TYPE_IS_SAME_SET = "isSameSet";
 
 //Graph DS-specific
-const QUESTION_TYPE_DUMMY = "dummy";
+const QUESTION_TYPE_ADJMAT_SIZE = "adjmat";
 
 //Graph Traversal-Specific
 const QUESTION_TYPE_DISCONNECT = "disconnect";

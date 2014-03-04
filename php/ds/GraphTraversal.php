@@ -17,7 +17,7 @@ class GraphTraversal {
 	protected function init() {
 		$this->size = rand(6,10);
 		$this->graphTemplate = GraphTemplate::getGraph(array("numVertex" => $this->size, "directed" => $this->directed, "connected" => $this->connected));
-		$this->generateAdjList($this->graphTemplate); //array of array of Pairs
+		$this->adjList = generateAdjList($this->graphTemplate); //array of array of Pairs
 	}
 	
 	public function clearAll() {
@@ -26,23 +26,6 @@ class GraphTraversal {
 	
 	public function getAllElements() {
 		return array_keys($this->adjList);
-	}
-	
-	protected function generateAdjList($graph) {
-		$a = $graph["internalAdjList"];
-		$e = $graph["internalEdgeList"];
-	  
-	  	$akeys = array_keys($a);
-		for($i=0; $i<count($akeys); $i++) { //for each vertex
-			$temp = array();
-			foreach ($a[$akeys[$i]] as $key => $value) {
-				if(!is_string($key)) {
-					$new = new Pair($key, $e[$value]["weight"]);
-					$temp[] = $new;
-				}
-			}
-			$this->adjList[$akeys[$i]] = $temp;
-		}
 	}
 	
 	public function toGraphState(){
