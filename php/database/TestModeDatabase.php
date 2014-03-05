@@ -126,5 +126,12 @@
       $answer = mysqli_fetch_assoc($answer);
       return unserialize($answer["answer"]);
     }
+
+    public function getScoreboard(){
+      $scoreboard = mysqli_query($this->db, "SELECT `username`, `grade`, `timeTaken` FROM `test`");
+      $scoreboard = mysqli_fetch_assoc($scoreboard);
+      echo json_encode($scoreboard);
+      return $scoreboard;
+    }
   } 
 ?>
