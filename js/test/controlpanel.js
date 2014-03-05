@@ -295,11 +295,13 @@ $(document).ready (function() {
 	/*-------TOPIC SELECTION-------*/
 	$('.topic').click(function() {
 		if($(this).hasClass('topic-selected')) { //deselect it
+			$('#all-topics').prop('checked',false);
 			$(this).css('background', '#eee').css('color', 'black');
 			$(this).removeClass('topic-selected');
 			var indexToDel = topics.indexOf($(this).attr('name'));
 			topics.splice(indexToDel,1);
 		} else { //select it
+			$('#clear-topics').prop('checked',false);
 			$(this).css('background', surpriseColour).css('color', 'white');
 			$(this).addClass('topic-selected');
 			topics.push($(this).attr('name'));
@@ -312,6 +314,25 @@ $(document).ready (function() {
 			$(this).css('background', surpriseColour).css('color','white');
 		} else { //select it
 			$(this).css('background', '#eee').css('color','black');
+		}
+	});
+
+	$('#clear-topics').change(function() {
+		if(this.checked) {
+			$('#all-topics').prop('checked',false);
+			topics = new Array();
+			$('.topic').removeClass('topic-selected').css('background', '#eee').css('color', 'black');
+		}
+	});
+	$('#all-topics').change(function() {
+		if(this.checked) {
+			$('#clear-topics').prop('checked',false);
+			$('.topic').each(function(){
+				$('#clear-topics').prop('checked',false);
+				$(this).css('background', surpriseColour).css('color', 'white');
+				$(this).addClass('topic-selected');
+				if(topics.indexOf($(this).attr('name'))==-1) topics.push($(this).attr('name'));
+			});
 		}
 	});
 	

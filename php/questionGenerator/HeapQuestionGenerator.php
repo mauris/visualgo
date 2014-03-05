@@ -487,7 +487,7 @@
 	
 	protected function generateQuestionRelations($heapSize){
       $heap = $this->generateMaxHeap();
-      $amt = rand(16,31);
+      $amt = rand(8,15);
       $heap->buildRandomHeap($amt);
       $valIndex = rand(1, $heap->size());
       $val = $heap->getElementAtIndex($valIndex);

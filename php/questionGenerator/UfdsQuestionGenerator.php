@@ -127,7 +127,7 @@
       $qObj->aType = ANSWER_TYPE_VERTEX;
       $qObj->aAmt = ANSWER_AMT_MULTIPLE;
       $qObj->ordered = true;
-      $qObj->allowNoAnswer = false;
+      $qObj->allowNoAnswer = true;
       $qObj->graphState = $ufds->toGraphState();
       $qObj->internalDS = $ufds;
 
@@ -140,7 +140,7 @@
       $ans = array();
 
       foreach($ufdsContent as $key=>$value){
-        if(count($ufds->findSetNoPathCompression($key)) <= 2){
+        if(count($ufds->findSetNoPathCompression($key)) > 2){
           $ans[] = $key;
         }
       }

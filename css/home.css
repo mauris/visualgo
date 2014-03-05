@@ -169,3 +169,7 @@ h1 { font-size: 50px; }
 @media (min-width: 1024px) { /* more than 1024px */
 #list li {	width: 25%; }
 }
+
+@media (min-width: 1400px) { /* more than 1400px */
+#list li {	width: 20%; }
+}

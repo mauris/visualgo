@@ -44,16 +44,9 @@
     $qArr = array();
     $qAmtTopic = array();
 
-    /*for($i = 0; $i < count($qTopics); $i++){
-      $qAmtTopic[] = 1;
-      $qAmt--;
-    }
-
-    for($i = 0; $qAmt > 0; $i = ($i+1)%count($qAmtTopic)){
-      $addition = rand(1, $qAmt);
-      $qAmt -= $addition;
-      $qAmtTopic[$i] += $addition;
-    }*/
+    /*
+    FUTURE WORK: allow no. of questions for each topic to be set individually
+    */
 
     $quotient = floor($qAmt/count($qTopics));
     $remainder = $qAmt%count($qTopics);

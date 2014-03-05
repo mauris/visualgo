@@ -180,7 +180,13 @@
     }
 
     protected function generateQuestionMinimaxEdge(){
-      $mst = $this->generateMinST();
+      $subtypeArr = array(QUESTION_SUB_TYPE_MINST, QUESTION_SUB_TYPE_MAXST);
+      $minMax = rand(0,1);
+      if($minMax == 0) {
+        $mst = $this->generateMinST();
+      } else {
+        $mst = $this->generateMaxST();
+      }
       $mstContent = $mst->getAllElements();
       $vertexAIndex = rand(0, count($mstContent)-1);
       $vertexA = $mstContent[$vertexAIndex];
@@ -191,7 +197,7 @@
       $qObj = new QuestionObject();
       $qObj->qTopic = QUESTION_TOPIC_MST;
       $qObj->qType = QUESTION_TYPE_MINIMAX_EDGE;
-      $qObj->qParams = array("vertexA" => $vertexA, "vertexB" => $vertexB,"subtype" => QUESTION_SUB_TYPE_NONE, "directed" => false);
+      $qObj->qParams = array("vertexA" => $vertexA, "vertexB" => $vertexB,"subtype" => $subtypeArr[$minMax], "opp" => $subtypeArr[1-$minMax], "directed" => false);
       $qObj->aType = ANSWER_TYPE_EDGE;
       $qObj->aAmt = ANSWER_AMT_ONE;
       $qObj->ordered = false;

@@ -53,7 +53,9 @@ const QUESTION_TYPE_FIND_SET_COMPRESSION = "findSetCompress";
 const QUESTION_TYPE_IS_SAME_SET = "isSameSet";
 
 //Graph DS-specific
-const QUESTION_TYPE_DUMMY = "dummy";
+const QUESTION_TYPE_DS_SIZE = "dsSize";
+const QUESTION_TYPE_NEIGHBOURS = "neighbours";
+const QUESTION_TYPE_NONZERO = "nonzero";
 
 //Graph Traversal-Specific
 const QUESTION_TYPE_DISCONNECT = "disconnect";
@@ -91,6 +93,10 @@ const QUESTION_SUB_TYPE_DECIMAL = "integer";
 // Graph Traversal-Specific
 const QUESTION_SUB_TYPE_DFS = "DFS";
 const QUESTION_SUB_TYPE_BFS = "BFS";
+
+// MST-Specific
+const QUESTION_SUB_TYPE_MAXST = "max";
+const QUESTION_SUB_TYPE_MINST = "min";
 
 const ANSWER_TYPE_VERTEX = "vertex";
 const ANSWER_TYPE_VERTEX_MCQ = "vertexMcq";

@@ -1,4 +1,5 @@
 <?php
+  /*UFDS graph generator has to frequently create subtrees of height = 2*/
   class UFDS{
     protected $elements;
     protected $setAmt;
