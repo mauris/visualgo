@@ -204,7 +204,7 @@ $(document).ready (function() {
 	});
 	
 	/*-------LOG IN AUTHENTIFICATION-------*/
-	$('#login-go').click(function() {
+	$('#login-go').click(function(event) {
 		event.preventDefault();
 		adminpw = $('#login-pw').val();
 		//authentificate
@@ -342,7 +342,7 @@ $(document).ready (function() {
 	});
 	
 	/*-------SAVE TEST DEMO-------*/
-	$('#save').click(function() {
+	$('#save').click(function(event) {
 		event.preventDefault();
 		saveConfig();
 	});
@@ -409,7 +409,7 @@ $(document).ready (function() {
 			$(this).val("student id");
 		}
 	});
-	$('#reset').click(function() {
+	$('#reset').click(function(event) {
 		event.preventDefault();
 		var stName = $('#reset-attempt').val();
 		$.ajax({
@@ -424,7 +424,7 @@ $(document).ready (function() {
 	});
 	
 	/*-------STUDENT LIST FILE UPLOAD-------*/
-	$('#upload-file').click(function(){
+	$('#upload-file').click(function(event){
 		event.preventDefault();
 		var formData = new FormData($('.more-settings')[0]);
 		$.ajax({

@@ -42,7 +42,7 @@ $( document ).ready(function() {
 			var thisVizTags = allViz[i];
 			for(var j=0; j<thisVizTags.length; j++) {
 				//for all filters
-				if(filterList.indexOf(thisVizTags[j]) == -1) {
+				if($.inArray(thisVizTags[j],filterList) == -1) {
 					filterList.push(thisVizTags[j]);
 				}
 				//for individual viz filters

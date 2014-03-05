@@ -106,7 +106,7 @@ $(document).ready (function() {
 	});
 	
 	/*-------LOG IN AUTHENTIFICATION-------*/
-	$('#login-go').click(function() {
+	$('#login-go').click(function(event) {
 		event.preventDefault();
 		studentid = $('#login-id').val();
 		studentpw = $('#login-pw').val();

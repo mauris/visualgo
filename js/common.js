@@ -6,7 +6,7 @@ function getColours() {
 	var generatedColours = new Array();
 	while(generatedColours.length < 4) {
 		var n = (Math.floor(Math.random()*colourArray.length));
-		if(generatedColours.indexOf(n) == -1) {
+		if($.inArray(n, generatedColours) == -1) {
 			generatedColours.push(n);
 		}
 	}

@@ -84,20 +84,20 @@ $(document).ready (function() {
 	/*-------TOPIC SELECTION-------*/
 	$('#topics-screen .topic').each(function() {
 		if($(this).hasClass('topic-selected')) {
-			$(this).children('img').css('-webkit-filter', 'grayscale(0%)');
+			$(this).children('img').removeClass('grayscale');
 			topics.push($(this).attr('name'));
 		} else {
-			$(this).children('img').css('-webkit-filter', 'grayscale(100%)');
+			$(this).children('img').addClass('grayscale');
 		}
 	});
 	$('#topics-screen .topic').click(function() {
 		if($(this).hasClass('topic-selected')) { //deselect it
-			$(this).children('img').css('-webkit-filter', 'grayscale(100%)');
+			$(this).children('img').addClass('grayscale');
 			$(this).removeClass('topic-selected');
 			var indexToDel = topics.indexOf($(this).attr('name'));
 			topics.splice(indexToDel,1);
 		} else { //select it
-			$(this).children('img').css('-webkit-filter', 'grayscale(0%)');
+			$(this).children('img').removeClass('grayscale');
 			$(this).addClass('topic-selected');
 			topics.push($(this).attr('name'));
 		}
