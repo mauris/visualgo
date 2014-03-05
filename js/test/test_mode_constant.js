@@ -122,6 +122,7 @@ const MODE_ADMIN = 11;            //for control panel
 const MODE_ADMIN_GET_CONFIG = 12;     //for control panel
 const MODE_ADMIN_EDIT_CONFIG = 13;      //for control panel
 const MODE_ADMIN_RESET_ATTEMPT = 14;    //for control panel
+const MODE_GET_SCOREBOARD = 15;
 
 const UNANSWERED = "unanswered";
 const NO_ANSWER = "noAnswer";

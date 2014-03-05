@@ -128,10 +128,18 @@
     }
 
     public function getScoreboard(){
-      $scoreboard = mysqli_query($this->db, "SELECT `username`, `grade`, `timeTaken` FROM `test`");
-      $scoreboard = mysqli_fetch_assoc($scoreboard);
-      echo json_encode($scoreboard);
-      return $scoreboard;
+      $scoreboard = mysqli_query($this->db, "SELECT `username`, `grade`, `timeTaken` FROM `test` ORDER BY `grade` DESC, `timeTaken`, `username`");
+      $scoreboardItem;
+      $scoreboardArr = array();
+
+      while ($scoreboardItem = mysqli_fetch_assoc($scoreboard)) {
+        $name = mysqli_query($this->db, "SELECT `name` FROM `user` WHERE `username`='".$scoreboardItem["username"]."'");
+        $nameArr = mysqli_fetch_assoc($name);
+        $scoreboardItem["name"] = $nameArr["name"];
+        $scoreboardArr[] = $scoreboardItem;
+      }
+
+      return $scoreboardArr;
     }
   } 
 ?>

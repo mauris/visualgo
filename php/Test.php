@@ -348,6 +348,12 @@
     echo $adminDb->resetAttempt($username, $password)? 1:0;
   }
 
+  else if($mode == MODE_GET_SCOREBOARD){
+    $testModeDb = new TestModeDatabase();
+
+    echo json_encode($testModeDb->getScoreboard());
+  }
+
   else{
     echo "Your request will be processed shortly...";
   }
