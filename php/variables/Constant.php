@@ -175,7 +175,8 @@
   const GRAPH_TEMPLATE_CP3_4_17 = "cp4.17";
   const GRAPH_TEMPLATE_CP3_4_18 = "cp4.18";
   const GRAPH_TEMPLATE_CP3_4_19 = "cp4.19";
-  const GRAPH_TEMPLATE_BIDIRECTION_1 = "bidirection1";
+  const GRAPH_TEMPLATE_BIDIRECTED_1 = "bidirected1";
+  const GRAPH_TEMPLATE_DIRECTED_1 = "directed1";
 
   const INFINITY = 1000000000;
 ?>

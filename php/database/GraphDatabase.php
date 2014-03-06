@@ -633,7 +633,7 @@
               )
             )
         ),
-      GRAPH_TEMPLATE_BIDIRECTION_1 => array(
+      GRAPH_TEMPLATE_BIDIRECTED_1 => array(
           "internalAdjList" => array(
             0 => array(
               "cxPercentage" => 50,
@@ -734,7 +734,7 @@
       );
     protected static $graphTemplateIndex = array(
       GRAPH_TEMPLATE_TYPE_DIRECTED => array(
-        GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTION_1
+        GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTED_1
         ),
       GRAPH_TEMPLATE_TYPE_UNDIRECTED => array(
         GRAPH_TEMPLATE_K5, GRAPH_TEMPLATE_TESSELLATION, GRAPH_TEMPLATE_RAIL, GRAPH_TEMPLATE_CP4P10

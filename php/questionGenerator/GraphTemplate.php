@@ -602,7 +602,7 @@ class GraphTemplate{
             )
           )
       ),
-    GRAPH_TEMPLATE_BIDIRECTION_1 => array(
+    GRAPH_TEMPLATE_BIDIRECTED_1 => array(
         "internalAdjList" => array(
           0 => array(
             "cxPercentage" => 50,
@@ -699,11 +699,62 @@ class GraphTemplate{
               "vertexB" => 0
             )
           )
-      )
+      ),
+    // GRAPH_TEMPLATE_DIRECTED_1 => array(
+    //     "internalAdjList" => array(
+    //       0 => array(
+    //         "cxPercentage" => 5.6,
+    //         "cyPercentage" => 10,
+    //         1 =>0,
+    //         4 =>4
+    //         ),
+    //       1 => array(
+    //         "cxPercentage" => 16.7,
+    //         "cyPercentage" => 10,
+    //         2 =>1
+    //         ),
+    //       2 => array(
+    //         "cxPercentage" => 27.8,
+    //         "cyPercentage" => 10,
+    //         1 =>2,
+    //         3 =>3
+    //         ),
+    //       3 => array(
+    //         "cxPercentage" => 38.9,
+    //         "cyPercentage" => 10,
+    //         ),
+    //       4 => array(
+    //         "cxPercentage" => 16.7,
+    //         "cyPercentage" => 25
+    //         )
+    //       ),
+    //     "internalEdgeList" => array(
+    //       0 => array(
+    //           "vertexA" => 0,
+    //           "vertexB" => 1
+    //         ),
+    //       1 => array(
+    //           "vertexA" => 1,
+    //           "vertexB" => 2
+    //         ),
+    //       2 => array(
+    //           "vertexA" => 2,
+    //           "vertexB" => 1
+    //         ),
+    //       3 => array(
+    //           "vertexA" => 2,
+    //           "vertexB" => 3
+    //         ),
+    //       4 => array(
+    //           "vertexA" => 0,
+    //           "vertexB" => 4
+    //         )
+    //       )
+    //   ),
     );
   protected static $graphTemplateIndex = array(
     GRAPH_TEMPLATE_TYPE_DIRECTED => array(
-      GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTION_1
+      GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTED_1
       ),
     GRAPH_TEMPLATE_TYPE_UNDIRECTED => array(
       GRAPH_TEMPLATE_K5, GRAPH_TEMPLATE_TESSELLATION, GRAPH_TEMPLATE_RAIL, GRAPH_TEMPLATE_CP4P10
