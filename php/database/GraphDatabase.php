@@ -632,11 +632,109 @@
                 "vertexB" => 4
               )
             )
+        ),
+      GRAPH_TEMPLATE_BIDIRECTION_1 => array(
+          "internalAdjList" => array(
+            0 => array(
+              "cxPercentage" => 50,
+              "cyPercentage" => 20,
+              1 =>0,
+              5 =>7,
+              6 =>9,
+              7 =>8
+              ),
+            1 => array(
+              "cxPercentage" => 62.5,
+              "cyPercentage" => 40,
+              2 =>1
+              ),
+            2 => array(
+              "cxPercentage" => 50,
+              "cyPercentage" => 60,
+              3 =>2,
+              4 =>5
+              ),
+            3 => array(
+              "cxPercentage" => 37.5,
+              "cyPercentage" => 40,
+              0 =>3
+              ),
+            4 => array(
+              "cxPercentage" => 87.5,
+              "cyPercentage" => 40,
+              0 =>4
+              ),
+            5 => array(
+              "cxPercentage" => 12.5,
+              "cyPercentage" => 40,
+              2 =>6
+              ),
+            6 => array(
+              "cxPercentage" => 25,
+              "cyPercentage" => 10,
+              0 =>11
+              ),
+            7 => array(
+              "cxPercentage" => 75,
+              "cyPercentage" => 10,
+              0 =>10
+              )
+            ),
+          "internalEdgeList" => array(
+            0 => array(
+                "vertexA" => 0,
+                "vertexB" => 1
+              ),
+            1 => array(
+                "vertexA" => 1,
+                "vertexB" => 2
+              ),
+            2 => array(
+                "vertexA" => 2,
+                "vertexB" => 3
+              ),
+            3 => array(
+                "vertexA" => 3,
+                "vertexB" => 0
+              ),
+            4 => array(
+                "vertexA" => 4,
+                "vertexB" => 0
+              ),
+            5 => array(
+                "vertexA" => 2,
+                "vertexB" => 4
+              ),
+            6 => array(
+                "vertexA" => 5,
+                "vertexB" => 2
+              ),
+            7 => array(
+                "vertexA" => 0,
+                "vertexB" => 5
+              ),
+            8 => array(
+                "vertexA" => 0,
+                "vertexB" => 7
+              ),
+            9 => array(
+                "vertexA" => 0,
+                "vertexB" => 6
+              ),
+            10 => array(
+                "vertexA" => 7,
+                "vertexB" => 0
+              ),
+            11 => array(
+                "vertexA" => 6,
+                "vertexB" => 0
+              )
+            )
         )
       );
     protected static $graphTemplateIndex = array(
       GRAPH_TEMPLATE_TYPE_DIRECTED => array(
-        GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19
+        GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTION_1
         ),
       GRAPH_TEMPLATE_TYPE_UNDIRECTED => array(
         GRAPH_TEMPLATE_K5, GRAPH_TEMPLATE_TESSELLATION, GRAPH_TEMPLATE_RAIL, GRAPH_TEMPLATE_CP4P10
