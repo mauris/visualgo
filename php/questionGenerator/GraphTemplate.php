@@ -616,6 +616,62 @@ class GraphTemplate{
               "vertexB" => 4
             )
           )
+      ),
+    GRAPH_TEMPLATE_BIDIRECTION_1 => array(
+        "internalAdjList" => array(
+          0 => array(
+            "cxPercentage" => 50,
+            "cyPercentage" => 10,
+            "text" => 0,
+            1 =>0,
+            4 =>4
+            ),
+          1 => array(
+            "cxPercentage" => 16.7,
+            "cyPercentage" => 10,
+            "text" => 1,
+            2 =>1
+            ),
+          2 => array(
+            "cxPercentage" => 27.8,
+            "cyPercentage" => 10,
+            "text" => 2,
+            1 =>2,
+            3 =>3
+            ),
+          3 => array(
+            "cxPercentage" => 38.9,
+            "cyPercentage" => 10,
+            "text" => 3
+            ),
+          4 => array(
+            "cxPercentage" => 16.7,
+            "cyPercentage" => 25,
+            "text" => 4
+            )
+          ),
+        "internalEdgeList" => array(
+          0 => array(
+              "vertexA" => 0,
+              "vertexB" => 1
+            ),
+          1 => array(
+              "vertexA" => 1,
+              "vertexB" => 2
+            ),
+          2 => array(
+              "vertexA" => 2,
+              "vertexB" => 1
+            ),
+          3 => array(
+              "vertexA" => 2,
+              "vertexB" => 3
+            ),
+          4 => array(
+              "vertexA" => 0,
+              "vertexB" => 4
+            )
+          )
       )
     );
   protected static $graphTemplateIndex = array(
