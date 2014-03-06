@@ -669,6 +669,7 @@ class GraphTemplate{
     self::reduceVertex($template, $params["numVertex"], $connected, $params["directed"]);
     if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
     self::randomizeWeight($template);
+    self::randomizeDirection($template);
 
     return $template;
   }
@@ -707,32 +708,6 @@ class GraphTemplate{
 
     return $state;
   }
-
-  // protected static function reduceVertexUndirected(&$template, $numVertex, $connected){
-  //   $tempTemplate = array_copy($template);
-  //   $indexList = array_keys($template["internalAdjList"]);
-  //   while(count($indexList) > 0){
-  //     if(count($tempTemplate["internalAdjList"]) <= $numVertex) break;
-  //     $indexChosen = rand(0, count($indexList)-1);
-  //     $index = $indexList[$indexChosen];
-  //     $templateCopy = array_copy($tempTemplate);
-  //     $adjacent = $tempTemplate["internalAdjList"][$index];
-  //     unset($adjacent["cxPercentage"]);
-  //     unset($adjacent["cyPercentage"]);
-
-  //     foreach($adjacent as $key => $value){
-  //       unset($templateCopy["internalAdjList"][$key][$index]);
-  //       unset($templateCopy["internalEdgeList"][$value]);
-  //     }
-  //     unset($templateCopy["internalAdjList"][$index]);
-  //     if(!$connected || self::isConnected($templateCopy, FALSE)){
-  //       $tempTemplate = $templateCopy;
-  //     }
-  //     unset($indexList[$indexChosen]);
-  //     $indexList = array_values($indexList);
-  //   }
-  //   $template = $tempTemplate;
-  // }
 
   protected static function reduceVertex(&$template, $numVertex, $connected, $directed){
     $tempTemplate = array_copy($template);
@@ -779,6 +754,20 @@ class GraphTemplate{
       $weightList[] = $weight;
 
       $template["internalEdgeList"][$key]["weight"] = $weight;
+    }
+  }
+
+  protected static function randomizeDirection(&$template){
+    foreach($template["internalEdgeList"] as $key => $value){
+      if(rand(0,1) == 0) continue;
+      $vertexA = $value["vertexA"];
+      $vertexB = $value["vertexB"];
+      if(array_key_exists($vertexB, $template["internalAdjList"][$vertexA]) && array_key_exists($vertexA, $template["internalAdjList"][$vertexB]))
+        continue;
+      $template["internalEdgeList"][$key]["vertexA"] = $vertexB;
+      $template["internalEdgeList"][$key]["vertexB"] = $vertexA;
+      unset($template["internalAdjList"][$vertexA][$vertexB]);
+      $template["internalAdjList"][$vertexB][$vertexA] = $key;
     }
   }
 
