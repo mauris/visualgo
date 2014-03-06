@@ -617,62 +617,62 @@ class GraphTemplate{
             )
           )
       ),
-    GRAPH_TEMPLATE_BIDIRECTION_1 => array(
-        "internalAdjList" => array(
-          0 => array(
-            "cxPercentage" => 50,
-            "cyPercentage" => 10,
-            "text" => 0,
-            1 =>0,
-            4 =>4
-            ),
-          1 => array(
-            "cxPercentage" => 16.7,
-            "cyPercentage" => 10,
-            "text" => 1,
-            2 =>1
-            ),
-          2 => array(
-            "cxPercentage" => 27.8,
-            "cyPercentage" => 10,
-            "text" => 2,
-            1 =>2,
-            3 =>3
-            ),
-          3 => array(
-            "cxPercentage" => 38.9,
-            "cyPercentage" => 10,
-            "text" => 3
-            ),
-          4 => array(
-            "cxPercentage" => 16.7,
-            "cyPercentage" => 25,
-            "text" => 4
-            )
-          ),
-        "internalEdgeList" => array(
-          0 => array(
-              "vertexA" => 0,
-              "vertexB" => 1
-            ),
-          1 => array(
-              "vertexA" => 1,
-              "vertexB" => 2
-            ),
-          2 => array(
-              "vertexA" => 2,
-              "vertexB" => 1
-            ),
-          3 => array(
-              "vertexA" => 2,
-              "vertexB" => 3
-            ),
-          4 => array(
-              "vertexA" => 0,
-              "vertexB" => 4
-            )
-          )
-      )
+    // GRAPH_TEMPLATE_BIDIRECTION_1 => array(
+    //     "internalAdjList" => array(
+    //       0 => array(
+    //         "cxPercentage" => 50,
+    //         "cyPercentage" => 20,
+    //         "text" => 0,
+    //         1 =>0,
+    //         4 =>4
+    //         ),
+    //       1 => array(
+    //         "cxPercentage" => 16.7,
+    //         "cyPercentage" => 10,
+    //         "text" => 1,
+    //         2 =>1
+    //         ),
+    //       2 => array(
+    //         "cxPercentage" => 27.8,
+    //         "cyPercentage" => 10,
+    //         "text" => 2,
+    //         1 =>2,
+    //         3 =>3
+    //         ),
+    //       3 => array(
+    //         "cxPercentage" => 38.9,
+    //         "cyPercentage" => 10,
+    //         "text" => 3
+    //         ),
+    //       4 => array(
+    //         "cxPercentage" => 16.7,
+    //         "cyPercentage" => 25,
+    //         "text" => 4
+    //         )
+    //       ),
+    //     "internalEdgeList" => array(
+    //       0 => array(
+    //           "vertexA" => 0,
+    //           "vertexB" => 1
+    //         ),
+    //       1 => array(
+    //           "vertexA" => 1,
+    //           "vertexB" => 2
+    //         ),
+    //       2 => array(
+    //           "vertexA" => 2,
+    //           "vertexB" => 1
+    //         ),
+    //       3 => array(
+    //           "vertexA" => 2,
+    //           "vertexB" => 3
+    //         ),
+    //       4 => array(
+    //           "vertexA" => 0,
+    //           "vertexB" => 4
+    //         )
+    //       )
+    //   )
     );
   protected static $graphTemplateIndex = array(
     GRAPH_TEMPLATE_TYPE_DIRECTED => array(
@@ -697,6 +697,8 @@ class GraphTemplate{
    *   - "negativeCycle" => boolean, contains negative cycles or not
    * - Optionals for directed graphs =>
    *   - "isDag" => boolean, is DAG or not
+   *   - "directionChangeChance" => int between 0 and 100, chance (in percent) of changing direction of the edges compared to the one in the DB
+   *   - "bidirectionChangeChance" => int between 0 and 100, chance (in percent) of turning a certain non-bidirectional edge to a bidirectional AMONG THE EDGES CHANGED (so the actual chance is directionChangeChance*bidirectionChangeChance)
    */
 
   public static function getGraph($params){
@@ -704,6 +706,9 @@ class GraphTemplate{
     $templateBank;
     $loopBreaker = 0;
     $loopLimit = 10;
+
+    if(!array_key_exists("directionChangeChance", $params)) $params["directionChangeChance"] = 50;
+    if(!array_key_exists("bidirectionChangeChance", $params)) $params["bidirectionChangeChance"] = 10;
 
     // $graphDb = new GraphDatabase();
     // $template = $graphDb->getRandomTemplate($params);
@@ -725,7 +730,7 @@ class GraphTemplate{
     self::reduceVertex($template, $params["numVertex"], $connected, $params["directed"]);
     if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
     self::randomizeWeight($template);
-    self::randomizeDirection($template);
+    self::randomizeDirection($template, $params["directionChangeChance"], $params["bidirectionChangeChance"]);
 
     return $template;
   }
@@ -813,17 +818,32 @@ class GraphTemplate{
     }
   }
 
-  protected static function randomizeDirection(&$template){
+  /*
+   * directionChangeChance: number between 0 and 100
+   * bidirectionChangeChance: number between 0 and 100
+   */
+
+  protected static function randomizeDirection(&$template, $directionChangeChance, $bidirectionChangeChance){
     foreach($template["internalEdgeList"] as $key => $value){
-      if(rand(0,1) == 0) continue;
+      if(rand(1,100) > $directionChangeChance) continue;
       $vertexA = $value["vertexA"];
       $vertexB = $value["vertexB"];
       if(array_key_exists($vertexB, $template["internalAdjList"][$vertexA]) && array_key_exists($vertexA, $template["internalAdjList"][$vertexB]))
         continue;
       $template["internalEdgeList"][$key]["vertexA"] = $vertexB;
       $template["internalEdgeList"][$key]["vertexB"] = $vertexA;
-      unset($template["internalAdjList"][$vertexA][$vertexB]);
       $template["internalAdjList"][$vertexB][$vertexA] = $key;
+      unset($template["internalAdjList"][$vertexA][$vertexB]);
+      if(rand(1,100) > $bidirectionChangeChance){
+        $edgeList = array_keys($template["internalEdgeList"]);
+        sort($edgeList);
+        $lastKey = $edgeList[count($edgeList)-1];
+        $template["internalEdgeList"][$lastKey+1] = array(
+          "vertexA" => $vertexA,
+          "vertexB" => $vertexB,
+          );
+        $template["internalAdjList"][$vertexA][$vertexB] = $lastKey+1;
+      }
     }
   }
 
