@@ -1,0 +1,15 @@
+#main {
+	width: 600px;
+	margin: 0px auto;
+}
+
+table {
+	width: 600px;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid #ccc;
+	text-align: left;
+	padding: 5px 8px;
+}

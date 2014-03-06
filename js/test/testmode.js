@@ -103,6 +103,12 @@ function clientsideTimeUpdate() {
 
 $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
+	$('#to-scoreboard').css("background-color", surpriseColour);
+	$('#to-scoreboard').hover(function() {
+		$(this).css('background','black');
+	}, function() {
+		$(this).css('background',surpriseColour);
+	});
 	
 	/*-------LOG IN CSS-------*/
 	$('#login-id').focusin(function() {
