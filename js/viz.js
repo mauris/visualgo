@@ -131,12 +131,6 @@ $( document ).ready(function() {
 		$('#status').css('color', 'black');
 		$('#status-hide img').attr('src', 'img/arrow_black_right.png');
 	}
-
-	//title
-	$('#title a').click(function() {
-		$('#title a').removeClass('selected-viz');
-		$(this).addClass('selected-viz');
-	});
 	
 	//mmode menu
 	$('#mode-button').click(function() {

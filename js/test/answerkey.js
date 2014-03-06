@@ -74,6 +74,7 @@ function getAns() {
 
 $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
+	$('.right-links').css('background',surpriseColour);
 	
 	/*-------LOG IN CSS-------*/
 	$('#login-id').focusin(function() {

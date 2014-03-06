@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/viz.css">
 <link rel="stylesheet" href="css/test_common.css">
 <link rel="stylesheet" href="css/controlpanel.css">
+<link rel="stylesheet" href="css/scoreboard.css">
 
 <!--js-->
 <script src="js/external/jquery-1.10.2.js"></script>
@@ -28,12 +29,34 @@
 
 <body>
 
+<div id="top-bar">
+    <a id="home" href="index.html">Visu<span class="colour">Algo</span></a>
+    <span id="title">
+        <a id="scoreboard-tab" class="selected-viz">Scoreboard</a>
+        <a id="settings-tab">Test Settings</a>
+    </span>
+</div>
+
 <div id="login-screen">
     <form>
         <input id="login-pw" type="text" value="password"/>
         <input id="login-go" type="submit" value="LOG IN" />
         <div id="login-err"></div>
     </form>
+</div>
+
+<div id="scoreboard-screen">
+    <table>
+        <tr>
+            <th width="5%">No.</th>
+            <th width="20%">Matric Number</th> 
+            <th width="45%">Student Name</th>
+            <th width="15%">Score</th>
+            <th width="15%">Time Taken</th>
+        </tr>
+    </table>
+
+    <p>Current average score: <span id="avg"></span></p>
 </div>
 
 <div id="settings-screen">
@@ -47,7 +70,7 @@
     	<input id="set-seed" type="text" value="" autocomplete="off"/><!--
         --><input id="new-seed" type="button" value="Get new seed" /><br/><br/>
         
-        <h2 style="display: inline-block;">Topics<img src=""/></h2>
+        <h2 style="display: inline-block;">Topics</h2>
         <input type="checkbox" id="clear-topics">Clear all
         <input type="checkbox" id="all-topics">Select all
         <div id="select-topics"> <!--sync names with test mode constants-->
@@ -81,7 +104,7 @@
         <h2>Change student list</h2>
         <!--file upload input here-->
         <input type="file" name="file" id="file" accept=".csv"><br>
-        <input id="upload-file" type="submit" name="submit" style="width: 220px; margin-top: 10px;" value="Upload">
+        <input id="upload-file" type="submit" name="submit" style="width: 220px; margin: 10px 0px 20px;" value="Upload">
     </form>
 </div>
 
