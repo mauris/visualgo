@@ -700,61 +700,57 @@ class GraphTemplate{
             )
           )
       ),
-    // GRAPH_TEMPLATE_DIRECTED_1 => array(
-    //     "internalAdjList" => array(
-    //       0 => array(
-    //         "cxPercentage" => 5.6,
-    //         "cyPercentage" => 10,
-    //         1 =>0,
-    //         4 =>4
-    //         ),
-    //       1 => array(
-    //         "cxPercentage" => 16.7,
-    //         "cyPercentage" => 10,
-    //         2 =>1
-    //         ),
-    //       2 => array(
-    //         "cxPercentage" => 27.8,
-    //         "cyPercentage" => 10,
-    //         1 =>2,
-    //         3 =>3
-    //         ),
-    //       3 => array(
-    //         "cxPercentage" => 38.9,
-    //         "cyPercentage" => 10,
-    //         ),
-    //       4 => array(
-    //         "cxPercentage" => 16.7,
-    //         "cyPercentage" => 25
-    //         )
-    //       ),
-    //     "internalEdgeList" => array(
-    //       0 => array(
-    //           "vertexA" => 0,
-    //           "vertexB" => 1
-    //         ),
-    //       1 => array(
-    //           "vertexA" => 1,
-    //           "vertexB" => 2
-    //         ),
-    //       2 => array(
-    //           "vertexA" => 2,
-    //           "vertexB" => 1
-    //         ),
-    //       3 => array(
-    //           "vertexA" => 2,
-    //           "vertexB" => 3
-    //         ),
-    //       4 => array(
-    //           "vertexA" => 0,
-    //           "vertexB" => 4
-    //         )
-    //       )
-    //   ),
+    GRAPH_TEMPLATE_DIRECTED_1 => array(
+        "internalAdjList" => array(
+          1 => array(
+            "cxPercentage" => 50,
+            "cyPercentage" => 10,
+            3 =>0
+            ),
+          2 => array(
+            "cxPercentage" => 50,
+            "cyPercentage" => 30,
+            1 =>2
+            ),
+          3 => array(
+            "cxPercentage" => 60,
+            "cyPercentage" => 20,
+            2 =>1
+            ),
+          4 => array(
+            "cxPercentage" => 40,
+            "cyPercentage" => 20,
+            1 =>3,
+            2 =>4
+            )
+          ),
+        "internalEdgeList" => array(
+          0 => array(
+              "vertexA" => 1,
+              "vertexB" => 3
+            ),
+          1 => array(
+              "vertexA" => 3,
+              "vertexB" => 2
+            ),
+          2 => array(
+              "vertexA" => 2,
+              "vertexB" => 1
+            ),
+          3 => array(
+              "vertexA" => 4,
+              "vertexB" => 1
+            ),
+          4 => array(
+              "vertexA" => 4,
+              "vertexB" => 2
+            )
+          )
+      )
     );
   protected static $graphTemplateIndex = array(
     GRAPH_TEMPLATE_TYPE_DIRECTED => array(
-      GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTED_1
+      GRAPH_TEMPLATE_CP3_4_17, GRAPH_TEMPLATE_CP3_4_18, GRAPH_TEMPLATE_CP3_4_19, GRAPH_TEMPLATE_BIDIRECTED_1, GRAPH_TEMPLATE_DIRECTED_1
       ),
     GRAPH_TEMPLATE_TYPE_UNDIRECTED => array(
       GRAPH_TEMPLATE_K5, GRAPH_TEMPLATE_TESSELLATION, GRAPH_TEMPLATE_RAIL, GRAPH_TEMPLATE_CP4P10
@@ -807,8 +803,8 @@ class GraphTemplate{
 
     self::reduceVertex($template, $params["numVertex"], $connected, $params["directed"]);
     if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
-    self::randomizeWeight($template);
     self::randomizeDirection($template, $params["directionChangeChance"], $params["bidirectionChangeChance"]);
+    self::randomizeWeight($template);
 
     return $template;
   }
