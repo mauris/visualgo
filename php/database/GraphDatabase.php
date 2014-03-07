@@ -735,93 +735,93 @@
           "internalAdjList" => array(
             0 => array(
               "cxPercentage" => 60,
-              "cyPercentage" => 10,
+              "cyPercentage" => 5,
               3 =>0
               ),
             1 => array(
               "cxPercentage" => 40,
-              "cyPercentage" => 10,
+              "cyPercentage" => 5,
               0 =>26
               ),
             2 => array(
               "cxPercentage" => 50,
-              "cyPercentage" => 40,
+              "cyPercentage" => 35,
               1 =>2
               ),
             3 => array(
               "cxPercentage" => 65,
-              "cyPercentage" => 25,
+              "cyPercentage" => 20,
               2 =>1,
               5 =>19
               ),
             4 => array(
               "cxPercentage" => 35,
-              "cyPercentage" => 25,
+              "cyPercentage" => 20,
               1 =>3,
               2 =>4,
               12 =>5
               ),
             5 => array(
               "cxPercentage" => 80,
-              "cyPercentage" => 30,
+              "cyPercentage" => 25,
               6 =>20,
               8 =>27
               ),
             6 => array(
               "cxPercentage" => 90,
-              "cyPercentage" => 50,
+              "cyPercentage" => 45,
               7 =>24,
               8 =>21,
               10 =>23
               ),
             7 => array(
               "cxPercentage" => 85,
-              "cyPercentage" => 80,
+              "cyPercentage" => 75,
               10 =>25
               ),
             8 => array(
               "cxPercentage" => 65,
-              "cyPercentage" => 60,
+              "cyPercentage" => 55,
               10 =>22
               ),
             9 => array(
               "cxPercentage" => 55,
-              "cyPercentage" => 47.5,
+              "cyPercentage" => 42.5,
               5 => 18,
               11 =>16
               ),
             10 => array(
               "cxPercentage" => 60,
-              "cyPercentage" => 82,
+              "cyPercentage" => 77,
               9 =>17,
               11 =>15,
               14 =>14
               ),
             11 => array(
               "cxPercentage" => 39,
-              "cyPercentage" => 55,
+              "cyPercentage" => 50,
               12 =>8,
               14 =>13
               ),
             12 => array(
               "cxPercentage" => 22,
-              "cyPercentage" => 30,
+              "cyPercentage" => 25,
               13 =>7
               ),
             13 => array(
               "cxPercentage" => 11,
-              "cyPercentage" => 55,
+              "cyPercentage" => 50,
               11 =>9,
               15 =>11
               ),
             14 => array(
               "cxPercentage" => 39,
-              "cyPercentage" => 75,
+              "cyPercentage" => 70,
               13 =>10
               ),
             15 => array(
               "cxPercentage" => 16,
-              "cyPercentage" => 83,
+              "cyPercentage" => 78,
               14 =>12
               ),
             ),
