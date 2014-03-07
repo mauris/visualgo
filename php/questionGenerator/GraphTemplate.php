@@ -702,31 +702,101 @@ class GraphTemplate{
       ),
     GRAPH_TEMPLATE_DIRECTED_1 => array(
         "internalAdjList" => array(
-          1 => array(
-            "cxPercentage" => 50,
+          0 => array(
+            "cxPercentage" => 60,
             "cyPercentage" => 10,
             3 =>0
             ),
+          1 => array(
+            "cxPercentage" => 40,
+            "cyPercentage" => 10,
+            0 =>26
+            ),
           2 => array(
             "cxPercentage" => 50,
-            "cyPercentage" => 30,
+            "cyPercentage" => 40,
             1 =>2
             ),
           3 => array(
-            "cxPercentage" => 60,
-            "cyPercentage" => 20,
-            2 =>1
+            "cxPercentage" => 65,
+            "cyPercentage" => 25,
+            2 =>1,
+            5 =>19
             ),
           4 => array(
-            "cxPercentage" => 40,
-            "cyPercentage" => 20,
+            "cxPercentage" => 35,
+            "cyPercentage" => 25,
             1 =>3,
-            2 =>4
-            )
+            2 =>4,
+            12 =>5
+            ),
+          5 => array(
+            "cxPercentage" => 80,
+            "cyPercentage" => 30,
+            6 =>20,
+            8 =>27
+            ),
+          6 => array(
+            "cxPercentage" => 90,
+            "cyPercentage" => 50,
+            7 =>24,
+            8 =>21,
+            10 =>23
+            ),
+          7 => array(
+            "cxPercentage" => 85,
+            "cyPercentage" => 80,
+            10 =>25
+            ),
+          8 => array(
+            "cxPercentage" => 65,
+            "cyPercentage" => 60,
+            10 =>22
+            ),
+          9 => array(
+            "cxPercentage" => 55,
+            "cyPercentage" => 47.5,
+            5 => 18,
+            11 =>16
+            ),
+          10 => array(
+            "cxPercentage" => 60,
+            "cyPercentage" => 82,
+            9 =>17,
+            11 =>15,
+            14 =>14
+            ),
+          11 => array(
+            "cxPercentage" => 39,
+            "cyPercentage" => 55,
+            12 =>8,
+            14 =>13
+            ),
+          12 => array(
+            "cxPercentage" => 22,
+            "cyPercentage" => 30,
+            13 =>7
+            ),
+          13 => array(
+            "cxPercentage" => 11,
+            "cyPercentage" => 55,
+            11 =>9,
+            15 =>11
+            ),
+          14 => array(
+            "cxPercentage" => 39,
+            "cyPercentage" => 75,
+            13 =>10
+            ),
+          15 => array(
+            "cxPercentage" => 16,
+            "cyPercentage" => 83,
+            14 =>12
+            ),
           ),
         "internalEdgeList" => array(
           0 => array(
-              "vertexA" => 1,
+              "vertexA" => 0,
               "vertexB" => 3
             ),
           1 => array(
@@ -744,6 +814,94 @@ class GraphTemplate{
           4 => array(
               "vertexA" => 4,
               "vertexB" => 2
+            ),
+          5 => array(
+              "vertexA" => 4,
+              "vertexB" => 12
+            ),
+          7 => array(
+              "vertexA" => 12,
+              "vertexB" => 13
+            ),
+          8 => array(
+              "vertexA" => 11,
+              "vertexB" => 12
+            ),
+          9 => array(
+              "vertexA" => 13,
+              "vertexB" => 11
+            ),
+          10 => array(
+              "vertexA" => 14,
+              "vertexB" => 13
+            ),
+          11 => array(
+              "vertexA" => 13,
+              "vertexB" => 15
+            ),
+          12 => array(
+              "vertexA" => 15,
+              "vertexB" => 14
+            ),
+          13 => array(
+              "vertexA" => 11,
+              "vertexB" => 14
+            ),
+          14 => array(
+              "vertexA" => 10,
+              "vertexB" => 14
+            ),
+          15 => array(
+              "vertexA" => 10,
+              "vertexB" => 11
+            ),
+          16 => array(
+              "vertexA" => 9,
+              "vertexB" => 11
+            ),
+          17 => array(
+              "vertexA" => 10,
+              "vertexB" => 9
+            ),
+          18 => array(
+              "vertexA" => 9,
+              "vertexB" => 5
+            ),
+          19 => array(
+              "vertexA" => 3,
+              "vertexB" => 5
+            ),
+          20 => array(
+              "vertexA" => 5,
+              "vertexB" => 6
+            ),
+          21 => array(
+              "vertexA" => 6,
+              "vertexB" => 8
+            ),
+          22 => array(
+              "vertexA" => 8,
+              "vertexB" => 10
+            ),
+          23 => array(
+              "vertexA" => 6,
+              "vertexB" => 10
+            ),
+          24 => array(
+              "vertexA" => 6,
+              "vertexB" => 7
+            ),
+          25 => array(
+              "vertexA" => 7,
+              "vertexB" => 10
+            ),
+          26 => array(
+              "vertexA" => 1,
+              "vertexB" => 0
+            ),
+          27 => array(
+              "vertexA" => 5,
+              "vertexB" => 8
             )
           )
       )
