@@ -11,8 +11,8 @@ function populateTable(data) {
 		var min = Math.floor(data[i].timeTaken/60);
 		var sec = data[i].timeTaken%60;
 
-		//filter bottom 1/3
-		if(score <= (outof/3)) {
+		//filter bottom 1/2
+		if(score < (outof/2)) {
 			$('table tr:last').after('<tr><td>'+no+'</td><td>'+matricNo+'</td><td style="color:'+colourArray[3]+'">Hidden</td><td style="color:'+colourArray[3]+'">'+score+'</td><td>'+min+'m '+sec+'s</td></tr>');
 		} else {
 			$('table tr:last').after('<tr><td>'+no+'</td><td>'+matricNo+'</td><td>'+stName+'</td><td>'+score+'</td><td>'+min+'m '+sec+'s</td></tr>');
