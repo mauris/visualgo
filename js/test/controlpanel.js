@@ -18,7 +18,6 @@ if(surpriseColour == '#fec515' || surpriseColour == '#a7d41e') { //discard yello
 
 function loadTraining() {
 	$('#result-screen').fadeOut("fast");
-	$('#question-nav').html("");
 	if(topics.length > 0) {
 		startTraining();
 	} else {
@@ -98,6 +97,35 @@ function startAns() {
 	});
 }
 
+function populateTable() {
+	$('table').html('<tr><th width="5%">No.</th><th width="20%">Matric Number</th> <th width="45%">Student Name</th><th width="15%">Score</th><th width="15%">Time Taken</th></tr>');
+	$.ajax({
+		url: "php/Test.php?mode="+MODE_GET_SCOREBOARD
+	}).done(function(data) {
+		data = JSON.parse(data);
+		$('table').show();
+		var total = 0;
+		var nStudents = data.length;
+
+		for(var i=0; i<nStudents; i++) {
+			var no = i+1;
+			var matricNo = data[i].username;
+			var stName = data[i].name;
+			var score = data[i].grade;
+			var outof = data[i].questionAmount;
+			var min = Math.floor(data[i].timeTaken/60);
+			var sec = data[i].timeTaken%60;
+			$('table tr:last').after('<tr><td>'+no+'</td><td>'+matricNo+'</td><td>'+stName+'</td><td>'+score+'</td><td>'+min+'m '+sec+'s</td></tr>');
+
+			total += parseInt(score);
+		}
+
+		//calculate average score
+		var avg = (total/nStudents).toFixed(2);
+		$('#avg').html(avg);
+	});
+}
+
 /*-------SETTINGS PANEL FUNCTIONS-------*/
 function displayConfig(data) { //data is a JSON object
 	seed = data.seed;
@@ -159,32 +187,33 @@ function toggleMoreSettings() {
 	moreSettingsOpen = !moreSettingsOpen;
 }
 
-function uploadFile() {
-	event.stopPropagation();
-    event.preventDefault();
-	var data = new FormData();
-	$.each(studentListFile, function(key, value) {
-		data.append(key, value);
-	});
-	
-	 $.ajax({
-        url: 'php/Test.php?studentListFile',
-        type: 'POST',
-        data: data,
-        cache: false,
-        dataType: 'json',
-        processData: false, // Don't process the files
-        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-    }).done(function() {
-		alert("File uploaded!");
-	});
-}
-
 /*-------OVERRIDE TEST_COMMON.JS-------*/
 function checkComplete() {}
 
 $(document).ready (function() {
 	$('#question-nav').css("background-color", surpriseColour);
+	$('#settings-screen').height($(window).height() - 80);
+	$( window ).resize(function() {
+		$('#settings-screen').height($(window).height() - 80);
+	});
+
+	/*-------SWITCHING BETWEEN 'TABS'-------*/
+	$('#scoreboard-tab').click(function(){
+		$('#settings-screen').hide();
+		$('#test-screen').hide();
+		$('#result-screen').hide();
+		$('#scoreboard-screen').show();
+		populateTable();
+	});
+	$('#settings-tab').click(function(){
+		$('#scoreboard-screen').hide();
+		$('#result-screen').hide();
+		$('#settings-screen').show();
+		$('#test-screen').show();
+		if(topics.length > 0) {
+			startTraining();
+		}
+	});
 	
 	/*-------LOG IN CSS-------*/
 	$('#login-pw').focusin(function() {
@@ -214,6 +243,7 @@ $(document).ready (function() {
 			passed = parseInt(passed);
 			if(passed == 1) {
 				$('#login-err').html("");
+				$('#title').show();
 				$('#login-screen').fadeOut("fast");
 				$.ajax({
 					url: "php/Test.php?mode="+MODE_ADMIN_GET_CONFIG+"&password="+adminpw
@@ -221,10 +251,8 @@ $(document).ready (function() {
 					//show current configurations
 					data = JSON.parse(data);
 					displayConfig(data);
-					$('#settings-screen').fadeIn("fast");
-					if(topics.length > 0) {
-						startTraining();
-					}
+					populateTable();
+					$('#scoreboard-screen').fadeIn("fast");
 				});
 			} else {
 				$('#login-err').html("Incorrect password");

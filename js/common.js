@@ -28,6 +28,12 @@ $( document ).ready(function() {
 	
 	$('.colour').css("color", surpriseColour); //name
 	$('h4').css("background-color", surpriseColour); //about, contact us etc. button background
+
+	//title
+	$('#title a').click(function() {
+		$('#title a').removeClass('selected-viz');
+		$(this).addClass('selected-viz');
+	});
 	
 	//overlays stuff
 	$('#trigger-about').click(function(){

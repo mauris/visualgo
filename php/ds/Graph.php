@@ -51,6 +51,11 @@ function tripleSort($a, $b) { //a and b are triples
 	else return ($a->weight() > $b->weight());
 }
 
+function vertexSort($a, $b) { //a and b are pairs, for sorting adj list
+	if($a->v() == $b->v()) return ($a->w() - $b->w());
+	else return ($a->v() > $b->v());
+}
+
 function generateAdjList($graph) {
 	$a = $graph["internalAdjList"];
 	$e = $graph["internalEdgeList"];
@@ -65,6 +70,7 @@ function generateAdjList($graph) {
 				$temp[] = $new;
 			}
 		}
+		usort($temp, 'vertexSort'); //by vertex number
 		$adjList[$akeys[$i]] = $temp;
 	}
 	return $adjList;
