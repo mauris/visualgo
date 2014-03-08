@@ -429,7 +429,6 @@ var GraphEdgeWidget = function(graphVertexA, graphVertexB, edgeIdNumber, type, w
               
     weightTextSpan.transition()
                   .duration(dur)
-                  .attr("dy", -5)
                   .text(function(){
                     return attributeList["weight"]["text"];
                   });
