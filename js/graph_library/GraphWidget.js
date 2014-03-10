@@ -29,6 +29,9 @@ var vertexTextSvg = mainSvg.append("g")
 var edgeWeightSvg = mainSvg.append("g")
                           .attr("id", "edgeWeight");
 
+var edgeWeightPathSvg = mainSvg.append("g")
+                          .attr("id", "edgeWeightPath");
+
 var GraphWidget = function(){
   var self = this;
 
