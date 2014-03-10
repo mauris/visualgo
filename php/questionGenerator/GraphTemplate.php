@@ -939,8 +939,8 @@ class GraphTemplate{
     $loopBreaker = 0;
     $loopLimit = 10;
 
-    if(!array_key_exists("directionChangeChance", $params)) $params["directionChangeChance"] = 50;
-    if(!array_key_exists("bidirectionChangeChance", $params)) $params["bidirectionChangeChance"] = 10;
+    if(!array_key_exists("directionChangeChance", $params)) $params["directionChangeChance"] = GRAPH_TEMPLATE_EDGE_DIRECTION_CHANGE_DEFAULT_CHANCE;
+    if(!array_key_exists("bidirectionChangeChance", $params)) $params["bidirectionChangeChance"] = GRAPH_TEMPLATE_EDGE_BIDIRECTION_CHANGE_DEFAULT_CHANCE;
 
     $graphDb = new GraphDatabase();
     $template = $graphDb->getRandomTemplate($params);
