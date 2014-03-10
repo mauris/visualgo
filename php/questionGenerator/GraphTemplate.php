@@ -942,12 +942,12 @@ class GraphTemplate{
     if(!array_key_exists("directionChangeChance", $params)) $params["directionChangeChance"] = 50;
     if(!array_key_exists("bidirectionChangeChance", $params)) $params["bidirectionChangeChance"] = 10;
 
-    // $graphDb = new GraphDatabase();
-    // $template = $graphDb->getRandomTemplate($params);
-    // $template = unserialize($template);
+    $graphDb = new GraphDatabase();
+    $template = $graphDb->getRandomTemplate($params);
+    $template = unserialize($template);
 
-    if($params["directed"]) $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED];
-    else $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED];
+    // if($params["directed"]) $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_DIRECTED];
+    // else $templateBank = self::$graphTemplateIndex[GRAPH_TEMPLATE_TYPE_UNDIRECTED];
 
     while(count($template["internalAdjList"]) < $params["numVertex"] && $loopBreaker < $loopLimit){
       $templateName = $templateBank[rand(0, count($templateBank)-1)];
