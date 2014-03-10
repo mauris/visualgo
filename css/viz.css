@@ -181,9 +181,12 @@ html { overflow-y: auto; } /*override common.css*/
 #current-action {
 	bottom: 320px;
 	right: 60px;
-	width: auto;
+	width: 400px;
 	display: none;
 	background: #eee;
+	overflow: normal;
+	white-space: normal;
+	text-align: right;
 }
 	#current-action p{ color: black; font-weight: bold; font-size: 20px; }
 	

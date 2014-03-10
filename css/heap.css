@@ -11,6 +11,7 @@
 	}
 	#buildv1-go p { padding: 8px 8px 7px; }
 	#buildv1-sample p { padding: 8px 8px 7px; }
+	#buildv1-random p { padding: 8px 8px 7px; }
 	#buildv1-err { padding: 8px 0px 7px; }
 	
 .buildv2 { bottom: 146px; }
@@ -22,6 +23,7 @@
 	}
 	#buildv2-go p { padding: 5px 8px; }
 	#buildv2-sample p { padding: 5px 8px; }
+	#buildv2-random p { padding: 5px 8px; }
 	#buildv2-err { padding: 5px 0px; }
 	
 .insert { bottom: 119px; }

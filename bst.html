@@ -54,6 +54,7 @@
     <div id="current-action" class="panel"><p></p></div>
     
     <div id="actions" class="panel">
+    	<p id="create">Create</p>
         <p id="search">Search</p>
 		<p id="insert">Insert</p>
 		<p id="remove">Remove</p>
@@ -64,6 +65,11 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
+    	<div class="create action-menu-pullout">
+    		<div id="create-random" class="execAction new-menu-option coloured-menu-option" onClick=random()><p>Random</p></div>
+    		<div id="create-err" class="err"></div>
+    	</div>
+
     	<div class="search action-menu-pullout">
             <div id="find-min" class="execAction new-menu-option coloured-menu-option" onClick=findMin()><p>Find Min</p></div>
             <div id="find-max" class="execAction new-menu-option coloured-menu-option" onClick=findMax()><p>Find Max</p></div>
@@ -197,9 +203,6 @@
 	//title changing
 	$('#title-BST').click(function() {
 		if(isPlaying) {	stop(); }
-		closeSearch();
-		closeInsert();
-		closeRemove();
 		showActionsPanel();
 		hideStatusPanel();
 		hideCodetracePanel();
@@ -207,14 +210,22 @@
 	});
 	$('#title-AVL').click(function() {
 		if(isPlaying) {	stop(); }
-		closeSearch();
-		closeInsert();
-		closeRemove();
 		showActionsPanel();
 		hideStatusPanel();
 		hideCodetracePanel();
 		bstWidget.isAVL(true);
 	});
+
+	function random() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if((mode=="exploration")&&bstWidget.generateRandom()) {
+				 $('#progress-bar').slider( "option", "max", 0);
+				closeCreate();
+				isPlaying = false;
+			}
+		}, 500)
+	}
 
 	function findMin() {
 		if(isPlaying) {	stop(); }

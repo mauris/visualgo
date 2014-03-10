@@ -2,6 +2,7 @@
 var actionsWidth = 150;
 var statusCodetraceWidth = 420;
 
+var isCreateOpen = false;
 var isSearchOpen = false;
 var isInsertOpen = false;
 var isRemoveOpen = false;
@@ -9,6 +10,19 @@ var isSuccOpen = false;
 var isPredOpen = false;
 var isInorderOpen = false;
 
+function openCreate() {
+	if(!isCreateOpen) {
+		$('.create').fadeIn('fast');
+		isCreateOpen = true;
+	}
+}
+function closeCreate() {
+	if(isCreateOpen) {
+		$('.create').fadeOut('fast');
+		$('#create-err').html("");
+		isCreateOpen = false;
+	}
+}
 function openSearch() {
 	if(!isSearchOpen) {
 		$('.search').fadeIn('fast');
@@ -90,6 +104,7 @@ function closeInorder() {
 
 //
 function hideEntireActionsPanel() {
+	closeCreate();
 	closeSearch();
 	closeInsert();
 	closeRemove();
@@ -102,7 +117,17 @@ function hideEntireActionsPanel() {
 $( document ).ready(function() {
 	
 	//action pullouts
+	$('#create').click(function() {
+		closeSearch();
+		closeInsert();
+		closeRemove();
+		closeSucc();
+		closePred();
+		closeInorder();
+		openCreate();
+	});
 	$('#search').click(function() {
+		closeCreate();
 		closeInsert();
 		closeRemove();
 		closeSucc();
@@ -111,6 +136,7 @@ $( document ).ready(function() {
 		openSearch();
 	});
 	$('#insert').click(function() {
+		closeCreate();
 		closeSearch();
 		closeRemove();
 		closeSucc();
@@ -119,6 +145,7 @@ $( document ).ready(function() {
 		openInsert();
 	});
 	$('#remove').click(function() {
+		closeCreate();
 		closeSearch();
 		closeInsert();
 		closeSucc();
@@ -127,6 +154,7 @@ $( document ).ready(function() {
 		openRemove();
 	});
 	$('#successor').click(function() {
+		closeCreate();
 		closeSearch();
 		closeInsert();
 		closeRemove();
@@ -135,6 +163,7 @@ $( document ).ready(function() {
 		openSucc();
 	});
 	$('#predecessor').click(function() {
+		closeCreate();
 		closeSearch();
 		closeInsert();
 		closeRemove();
@@ -143,6 +172,7 @@ $( document ).ready(function() {
 		openPred();
 	});
 	$('#inorder').click(function() {
+		closeCreate();
 		closeSearch();
 		closeInsert();
 		closeRemove();

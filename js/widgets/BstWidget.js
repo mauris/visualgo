@@ -119,11 +119,11 @@ var BST = function(){
   }
 
   this.generateRandom = function(){
-    var vertexAmt = (int)(Math.random()*7 + 5);
+    var vertexAmt = Math.floor((Math.random()*7 + 5));
 
     var initArr = [];
-    while(initArr.length < vertextAmt){
-      initArr.push((int)(Math.random()*100));
+    while(initArr.length < vertexAmt){
+      initArr.push(Math.floor(1+Math.random()*98));
     }
 
     if(isAVL){
@@ -145,6 +145,7 @@ var BST = function(){
     else{
       init(initArr);
     }
+    return true;
   }
 
   this.isAVL = function(bool){
