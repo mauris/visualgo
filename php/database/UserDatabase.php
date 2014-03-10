@@ -32,6 +32,10 @@
     }
 
     protected function init(){
+      // $this->insertMockUsers();
+    }
+
+    protected function insertMockUsers(){
       mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
         VALUES ('"."Ivan"."','"."ivan"."','"."test1"."')");
       mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
