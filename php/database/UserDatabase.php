@@ -68,6 +68,9 @@
     public function register($name, $username, $password){
       mysqli_query($this->db, "INSERT IGNORE INTO `user` (`name`, `username`, `password`)
         VALUES ('".$name."','".$username."','".$password."')");
+
+      mysqli_query($this->db, "INSERT IGNORE INTO `test` (`username`, `answer`, `grade`, `timeTaken`, `startTime`, `attemptCount`)
+          VALUES ('".$username."','".""."','"."0"."','"."0"."','".date('Y-m-d H:i:s')."','"."0"."')");
     }
 
     public function getName($username, $password){
