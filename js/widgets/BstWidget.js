@@ -119,7 +119,32 @@ var BST = function(){
   }
 
   this.generateRandom = function(){
-    
+    var vertexAmt = (int)(Math.random()*7 + 5);
+
+    var initArr = [];
+    while(initArr.length < vertextAmt){
+      initArr.push((int)(Math.random()*100));
+    }
+
+    if(isAVL){
+      initArr.sort();
+      var initArrAvl = [];
+      if(initArr.length%2 != 0){
+        initArrAvl.push(initArr[initArr.length/2]);
+        initArr.splice(initArr.length/2, 1);
+      }
+      while(initArr.length > 0){
+        initArrAvl.push(initArr[initArr.length/2]);
+        initArrAvl.push(initArr[initArr.length/2 - 1]);
+        initArr.splice(initArr.length/2 - 1, 2);
+      }
+
+      init(initArrAvl);
+    }
+
+    else{
+      init(initArr);
+    }
   }
 
   this.isAVL = function(bool){
@@ -2058,6 +2083,10 @@ var BST = function(){
 
   function init(initArr){
     var i;
+
+    internalBst = {};
+    amountVertex = 0;
+    internalBst["root"] = null;
 
     for(i = 0; i < initArr.length; i++){
       var parentVertex = internalBst["root"];
