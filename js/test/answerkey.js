@@ -28,10 +28,13 @@ function getAns() {
 		$.ajax({
 			url: "php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw
 		}).done(function(ansData) {
+			var score =0;
+
 			//store into anskeyArr array
 			ansData = JSON.parse(ansData);
 			for(var i=0; i<ansData.length; i++) {
 				anskeyArr[i+1] = ansData[i];
+				if(ansData[i] == CORRECT) score++;
 			}
 			
 			//switch screens
@@ -40,6 +43,7 @@ function getAns() {
 			$('#login-err').html("");
 			$('#login-screen').fadeOut("fast");
 			$('#test-screen').fadeIn("fast");
+			$('#infoscore').html(score+"/"+ansData.length);
 						
 			//show first question
 			gw.startAnimation(qnGraphArr); //start graph widget
