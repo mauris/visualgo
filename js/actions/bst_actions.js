@@ -5,6 +5,8 @@ var statusCodetraceWidth = 420;
 var isSearchOpen = false;
 var isInsertOpen = false;
 var isRemoveOpen = false;
+var isSuccOpen = false;
+var isPredOpen = false;
 var isInorderOpen = false;
 
 function openSearch() {
@@ -46,6 +48,32 @@ function closeRemove() {
 		isRemoveOpen = false;
 	}
 }
+function openSucc() {
+	if(!isSuccOpen) {
+		$('.successor').fadeIn('fast');
+		isSuccOpen = true;
+	}
+}
+function closeSucc() {
+	if(isSuccOpen) {
+		$('.successor').fadeOut('fast');
+		$('#succ-err').html("");
+		isSuccOpen = false;
+	}
+}
+function openPred() {
+	if(!isPredOpen) {
+		$('.predecessor').fadeIn('fast');
+		isPredOpen = true;
+	}
+}
+function closePred() {
+	if(isPredOpen) {
+		$('.predecessor').fadeOut('fast');
+		$('#pred-err').html("");
+		isPredOpen = false;
+	}
+}
 function openInorder() {
 	if(!isInorderOpen) {
 		$('.inorder').fadeIn('fast');
@@ -65,6 +93,8 @@ function hideEntireActionsPanel() {
 	closeSearch();
 	closeInsert();
 	closeRemove();
+	closeSucc();
+	closePred();
 	closeInorder();
 	hideActionsPanel();
 }
@@ -75,26 +105,49 @@ $( document ).ready(function() {
 	$('#search').click(function() {
 		closeInsert();
 		closeRemove();
+		closeSucc();
+		closePred();
 		closeInorder();
 		openSearch();
 	});
 	$('#insert').click(function() {
 		closeSearch();
 		closeRemove();
+		closeSucc();
+		closePred();
 		closeInorder();
 		openInsert();
 	});
 	$('#remove').click(function() {
 		closeSearch();
 		closeInsert();
+		closeSucc();
+		closePred();
 		closeInorder();
 		openRemove();
 	});
-	
+	$('#successor').click(function() {
+		closeSearch();
+		closeInsert();
+		closeRemove();
+		closePred();
+		closeInorder();
+		openSucc();
+	});
+	$('#predecessor').click(function() {
+		closeSearch();
+		closeInsert();
+		closeRemove();
+		closeSucc();
+		closeInorder();
+		openPred();
+	});
 	$('#inorder').click(function() {
 		closeSearch();
 		closeInsert();
 		closeRemove();
+		closeSucc();
+		closePred();
 		openInorder();
 	});
 	
