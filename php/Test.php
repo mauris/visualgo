@@ -285,6 +285,7 @@
       $qAmt = $params["questionAmount"];
       $qTopics = $params["topics"];
       $retrievedA = $testModeDb->getUserAnswer($username, $password);
+      if($retrievedA == false) return;
       for($n=0; $n<count($retrievedA);$n++) {
         $sAnsArr[$n] = $retrievedA[$n];
       }
