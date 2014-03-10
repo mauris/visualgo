@@ -32,7 +32,7 @@
     }
 
     public function validate($password){
-      return $password == ADMIN_PASSWORD;
+      return $password === ADMIN_PASSWORD;
     }
 
     /*

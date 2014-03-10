@@ -963,6 +963,7 @@ class GraphTemplate{
     if(!$connected && self::isConnected($template, $params["directed"])) self::disconnect($template, $params["directed"]);
     self::randomizeDirection($template, $params["directionChangeChance"], $params["bidirectionChangeChance"]);
     self::randomizeWeight($template);
+    self::randomizeVertexNumber($template);
 
     return $template;
   }
@@ -1051,6 +1052,48 @@ class GraphTemplate{
     // echo "<br/><br/>";
 
     $template = $tempTemplate;
+  }
+
+  protected static function randomizeVertexNumber(&$template){
+    $originalKeys = array_keys($template["internalAdjList"]);
+    $modifiedKeys = array();
+
+    for($i = 0; count($originalKeys) > 0; $i++){
+      $selectedKey = rand(0, count($originalKeys)-1);
+      $modifiedKeys[$originalKeys[$selectedKey]] = $i;
+      unset($originalKeys[$selectedKey]);
+      $originalKeys = array_values($originalKeys);
+    }
+
+    $tempAdjList = array();
+
+    foreach($modifiedKeys as $oldKey => $newKey){
+      $tempAdjList[$newKey] = $template["internalAdjList"][$oldKey];
+
+      // echo json_encode($template)."<br/>";
+
+      $tempConnectivity = array();
+
+      foreach($tempAdjList[$newKey] as $key => $value){
+        if($key === "cxPercentage" || $key === "cyPercentage"){
+          $tempConnectivity[$key] = $tempAdjList[$newKey][$key];
+          continue;
+        }
+        $tempConnectivity[$modifiedKeys[$key]] = $tempAdjList[$newKey][$key];
+      }
+
+      $tempAdjList[$newKey] = $tempConnectivity;
+    }
+
+    $template["internalAdjList"] = $tempAdjList;
+
+    foreach($template["internalEdgeList"] as $key => $value){
+      $template["internalEdgeList"][$key]["vertexA"] = $modifiedKeys[$value["vertexA"]];
+      $template["internalEdgeList"][$key]["vertexB"] = $modifiedKeys[$value["vertexB"]];
+    }
+
+    // echo json_encode($template);
+    // echo "<br/><br/>";
   }
 
   protected static function randomizeWeight(&$template){

@@ -48,11 +48,11 @@
       $user = mysqli_query($this->db, "SELECT * FROM `user` WHERE `username` = '".$username."'");
       $user = mysqli_fetch_assoc($user);
 
-      return $password == $user["password"];
+      return $password === $user["password"];
     }
 
     public function validateAdmin($adminPwd){
-      return $adminPwd == ADMIN_PASSWORD;
+      return $adminPwd === ADMIN_PASSWORD;
     }
 
     public function exists($username){
