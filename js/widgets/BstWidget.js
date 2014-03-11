@@ -120,24 +120,45 @@ var BST = function(){
 
   this.generateRandom = function(){
     var vertexAmt = Math.floor((Math.random()*7 + 5));
-
     var initArr = [];
+
     while(initArr.length < vertexAmt){
-      initArr.push(Math.floor(1+Math.random()*98));
+      var random = Math.floor(1+Math.random()*98);
+      if(initArr.indexOf(random) < 0) initArr.push(random);
     }
 
     if(isAVL){
-      initArr.sort();
       var initArrAvl = [];
-      if(initArr.length%2 != 0){
-        initArrAvl.push(initArr[initArr.length/2]);
-        initArr.splice(initArr.length/2, 1);
+
+      var recursion = function(startVal, endVal){
+        var total = startVal + endVal + 1;
+        if(total < 1) return;
+        if(startVal > endVal) return;
+        if(total == 1) initArrAvl.push(initArr[startVal]);
+        else if(total%2 != 0){
+          initArrAvl.push(initArr[parseInt(total/2)]);
+          recursion(startVal, parseInt(total/2)-1);
+          recursion(parseInt(total/2)+1, endVal);
+        }
+        else{
+          initArrAvl.push(initArr[parseInt(total/2)-1]);
+          initArrAvl.push(initArr[parseInt(total/2)]);
+          recursion(startVal, parseInt(total/2)-2);
+          recursion(parseInt(total/2)+1, endVal);
+        }
       }
-      while(initArr.length > 0){
-        initArrAvl.push(initArr[initArr.length/2]);
-        initArrAvl.push(initArr[initArr.length/2 - 1]);
-        initArr.splice(initArr.length/2 - 1, 2);
-      }
+
+      initArr.sort();
+      recursion(0, initArr.length -1);
+      // if(initArr.length%2 != 0){
+      //   initArrAvl.push(initArr[parseInt(initArr.length/2)]);
+      //   initArr.splice(parseInt(initArr.length/2), 1);
+      // }
+      // while(initArr.length > 0){
+      //   initArrAvl.push(initArr[initArr.length/2-1]);
+      //   initArrAvl.push(initArr[initArr.length/2]);
+      //   initArr.splice(initArr.length/2 - 1, 2);
+      // }
 
       init(initArrAvl);
     }
@@ -2085,9 +2106,7 @@ var BST = function(){
   function init(initArr){
     var i;
 
-    internalBst = {};
-    amountVertex = 0;
-    internalBst["root"] = null;
+    clearScreen();
 
     for(i = 0; i < initArr.length; i++){
       var parentVertex = internalBst["root"];
