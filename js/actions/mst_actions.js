@@ -1,10 +1,24 @@
 var actionsWidth = 150;
 var statusCodetraceWidth = 430;
 
+var isCreateOpen = false;
 var isSamplesOpen = false;
 var isKruskalsOpen = false;
 var isPrimsOpen = false;
 
+function openCreate() {
+	if(!isCreateOpen) {
+		$('.create').fadeIn('fast');
+		isCreateOpen = true;
+	}
+}
+function closeCreate() {
+	if(isCreateOpen) {
+		$('.create').fadeOut('fast');
+		$('#create-err').html("");
+		isCreateOpen = false;
+	}
+}
 function openSamples() {
 	if(!isSamplesOpen) {
 		$('.samples').fadeIn('fast');
@@ -46,6 +60,7 @@ function closePrims() {
 }
 
 function hideEntireActionsPanel() {
+	closeCreate();
 	closeSamples();
 	closeKruskals();
 	closePrims();
@@ -55,19 +70,29 @@ function hideEntireActionsPanel() {
 $( document ).ready(function() {
 	
 	//action pullouts
+	$('#create').click(function() {
+		closeSamples();
+		closePrims();
+		closeKruskals();
+		openCreate();
+	});
+
 	$('#samples').click(function() {
+		closeCreate();
 		closePrims();
 		closeKruskals();
 		openSamples();
 	})
 	
 	$('#prims').click(function() {
+		closeCreate();
 		closeSamples();
 		closeKruskals();
 		openPrims();
 	});
 	
 	$('#kruskals').click(function() {
+		closeCreate();
 		closeSamples();
 		closePrims();
 		openKruskals();

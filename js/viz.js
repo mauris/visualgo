@@ -84,6 +84,22 @@ function triggerRightPanels() {
 	showCodetracePanel();
 }
 
+function extractQnGraph(graph) {
+	var vList = graph.internalAdjList;
+	var eList = graph.internalEdgeList;
+	for(var key in vList) {
+		var temp;
+		var v = vList[key];
+		temp = v.cxPercentage;
+		v.cxPercentage = v.cx;
+		v.cx = (temp/100)*MAIN_SVG_WIDTH;
+		temp = v.cyPercentage;
+		v.cyPercentage = v.cy;
+		v.cy = (temp/100)*MAIN_SVG_HEIGHT;
+	}
+	return graph;
+}
+
 $( document ).ready(function() {
 	var actionsHeight = ($('#actions p').length)*27 + 10;
 	$('#actions').css('height', actionsHeight);

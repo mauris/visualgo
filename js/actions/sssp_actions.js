@@ -1,11 +1,28 @@
 var actionsWidth = 150;
 var statusCodetraceWidth = 410;
 
+//create is currently hidden in the UI, but functions are
+//available here in the case that it should be added again in the future
+
+var isCreateOpen = false;
 var isSamplesOpen = false;
 var isBFSOpen = false;
 var isBellmanFordsOpen = false;
 var isDijkstrasOpen = false;
 
+function openCreate() {
+	if(!isCreateOpen) {
+		$('.create').fadeIn('fast');
+		isCreateOpen = true;
+	}
+}
+function closeCreate() {
+	if(isCreateOpen) {
+		$('.create').fadeOut('fast');
+		$('#create-err').html("");
+		isCreateOpen = false;
+	}
+}
 function openSamples() {
 	if(!isSamplesOpen) {
 		$('.samples').fadeIn('fast');
@@ -60,6 +77,7 @@ function closeDijkstras() {
 }
 
 function hideEntireActionsPanel() {
+	closeCreate();
 	closeSamples();
 	closeBFS();
 	closeBellmanFords();
@@ -68,7 +86,16 @@ function hideEntireActionsPanel() {
 }
 
 $( document ).ready(function() {
+	$('#create').click(function() {
+		openCreate();
+		closeSamples();
+		closeBFS();
+		closeBellmanFords();
+		closeDijkstras();
+	});
+
 	$('#sample').click(function() {
+		closeCreate();
 		openSamples();
 		closeBFS();
 		closeBellmanFords();
@@ -76,6 +103,7 @@ $( document ).ready(function() {
 	});
 	
 	$('#bfs').click(function() {
+		closeCreate();
 		closeSamples();
 		openBFS();
 		closeBellmanFords();
@@ -83,6 +111,7 @@ $( document ).ready(function() {
 	});
 
 	$('#bellmanford').click(function() {
+		closeCreate();
 		closeSamples();
 		closeBFS();
 		openBellmanFords();
@@ -90,6 +119,7 @@ $( document ).ready(function() {
 	});
 	
 	$('#dijkstra').click(function() {
+		closeCreate();
 		closeSamples();
 		closeBFS();
 		closeBellmanFords();

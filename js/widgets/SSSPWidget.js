@@ -1427,6 +1427,17 @@ var SSSP = function(){
     return true;
   }
 
+//BEWARE: buggy because of graph form and createState()
+  this.initRandom = function(graph) {
+    internalAdjList = graph.internalAdjList;
+    internalEdgeList = graph.internalEdgeList;
+    amountVertex = internalAdjList.length;
+    amountEdge = internalEdgeList.length;
+    var newState = createState(internalAdjList, internalEdgeList);
+
+    graphWidget.updateGraph(newState, 500);
+  }
+
   function createState(internalAdjListObject, internalEdgeListObject, vertexHighlighted, edgeHighlighted, vertexTraversed, edgeTraversed){
     if(vertexHighlighted == null) vertexHighlighted = {};
     if(edgeHighlighted == null) edgeHighlighted = {};

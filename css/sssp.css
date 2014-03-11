@@ -1,6 +1,11 @@
 @charset "utf-8";
 
 /*all action pullout (input) stuff here*/
+/*
+.create { bottom: 173px; }
+	#create-err { padding: 8px 0px 7px }
+*/
+
 .samples { bottom: 146px; }
 	.samples p { padding: 8px 8px 7px; }
 	#samples-err { padding: 8px 0px 7px; }
