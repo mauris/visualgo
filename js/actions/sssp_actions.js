@@ -1,9 +1,6 @@
 var actionsWidth = 150;
 var statusCodetraceWidth = 410;
 
-//create is currently hidden in the UI, but functions are
-//available here in the case that it should be added again in the future
-
 var isCreateOpen = false;
 var isSamplesOpen = false;
 var isBFSOpen = false;

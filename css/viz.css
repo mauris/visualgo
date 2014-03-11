@@ -183,7 +183,7 @@ html { overflow-y: auto; } /*override common.css*/
 	right: 60px;
 	width: 400px;
 	display: none;
-	background: #eee;
+	background: none;
 	overflow: normal;
 	white-space: normal;
 	text-align: right;

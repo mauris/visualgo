@@ -52,7 +52,7 @@
     <div id="current-action" class="panel"><p></p></div>
     
     <div id="actions" class="panel">
-        <!--p id="create" class="execAction" onclick=createRandom()>Random Graph</p-->
+        <p id="create" class="execAction" onclick=createRandom()>Random Graph</p>
         <p id="sample" class="execAction">Sample Graphs</p>
         <p id="bfs" class="execAction">BFS</p>
         <p id="bellmanford" class="execAction">Bellman Ford's Algo</p>
@@ -61,9 +61,9 @@
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
-        <!--div class="create action-menu-pullout">
+        <div class="create action-menu-pullout">
             <div id="create-err" class="err"></div>
-        </div-->
+        </div>
         <div class="samples action-menu-pullout">
             <div id="sample1" class="execAction new-menu-option coloured-menu-option" onclick=sample(SSSP_EXAMPLE_CP3_4_3)><p>CP3 4.3 (unweighted)</p></div>
             <div id="sample2" class="execAction new-menu-option coloured-menu-option" onclick=sample(SSSP_EXAMPLE_CP3_4_17)><p>CP3 4.17</p></div>
@@ -182,23 +182,15 @@
   var gw = ssspWidget.getGraphWidget();
   ssspWidget.examples(SSSP_EXAMPLE_CP3_4_17);
 
-  /* BEWARE: buggy because of graph form and ssspWidget.createState()
   function createRandom() {
     if(isPlaying) { stop(); }
     if (mode=="exploration") {
-      var n = Math.floor(5 + Math.random()*6);
-      $.ajax({
-        url: "php/Graph.php?numVertex="+n+"&directed="+1+"&connected="+1
-      }).done(function(graph){
-        graph = extractQnGraph(JSON.parse(graph));
-        console.log(graph);
-        ssspWidget.initRandom(graph);
-      })
+      ssspWidget.initRandom();
       $('#progress-bar').slider( "option", "max", 0);
       closeSamples();
       isPlaying = false;
     }
-  }*/
+  }
 
   function sample(id) {
     if(isPlaying) { stop(); }

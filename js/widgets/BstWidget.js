@@ -5,7 +5,7 @@
 var BST = function(){
   var self = this;
   var graphWidget = new GraphWidget();
-  var isAVL = true;
+  var isAVL = false;
 
   var valueRange = [1, 100]; // Range of valid values of BST vertexes allowed
   var maxHeightAllowed = 10;

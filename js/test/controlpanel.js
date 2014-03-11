@@ -21,12 +21,13 @@ function loadTraining() {
 	if(topics.length > 0) {
 		startTraining();
 	} else {
-		alert("Select some topics first!");
+		customAlert("Select some topics first!");
 	}
 }
 
 function startTraining() {
 	$.ajax({
+
 		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
 	}).done(function(data) {
 		MODE = "TRAINING";
@@ -157,7 +158,6 @@ function displayConfig(data) { //data is a JSON object
 }
 
 function saveConfig() {
-	loadTraining();
 	$.ajax({
 		url: "php/Test.php?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
 	}).done(function(passed) {
@@ -372,7 +372,12 @@ $(document).ready (function() {
 	/*-------SAVE TEST DEMO-------*/
 	$('#save').click(function(event) {
 		event.preventDefault();
-		saveConfig();
+		if(testOn) {
+			customAlert("You cannot change the configurations while the test is running.");
+		} else {
+			loadTraining();
+			saveConfig();
+		}
 	});
 	
 	/*-------TOGGLE TEST-------*/
@@ -468,7 +473,7 @@ $(document).ready (function() {
 	    	if(result == "Success") {
 	    		customAlert("Student list updated accordingly.");
 	    	} else {
-	    		alert(result);
+	    		customAlert(result);
 	    	}
 	    });
 	});

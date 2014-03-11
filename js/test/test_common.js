@@ -18,6 +18,8 @@ var nAnswered = 0;
 
 function customAlert(msg) {
 	$('#custom-alert p').html(msg);
+	var m = -1*($('#custom-alert').outerHeight()/2);
+	$('#custom-alert').css('margin-top',m+'px');
 	$('#dark-overlay').fadeIn(function(){
 		$('#custom-alert').fadeIn(function() {
 			setTimeout(function(){ $('#custom-alert').fadeOut(function() { $('#dark-overlay').fadeOut();});}, 1000);

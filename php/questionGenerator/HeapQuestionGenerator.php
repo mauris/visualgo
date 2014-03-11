@@ -524,8 +524,8 @@
         $ansindex = $indexof*2 + 1;
       }
     
-      $ans;
-      if ($ansindex>0 || $ansindex<(count($all))) {
+      $ans = array();
+      if ($ansindex>0 && $ansindex<(count($all))) {
         $ans = $all[$ansindex];
       }
 
