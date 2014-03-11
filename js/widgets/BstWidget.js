@@ -123,7 +123,7 @@ var BST = function(){
     var initArr = [];
 
     while(initArr.length < vertexAmt){
-      var random = parseInt(Math.floor(1+Math.random()*98));
+      var random = Math.floor(1+Math.random()*98);
       if($.inArray(random, initArr) < 0) initArr.push(random);
     }
 
@@ -454,12 +454,12 @@ var BST = function(){
     var ans;
 
     if(vertexText == null || vertexText == undefined || isNaN(vertexText)){
-      $('#predecessor-err').html("Please fill in a valid value!");
+      $('#pred-err').html("Please fill in a valid value!");
       return false;
     }
 
     if(internalBst[vertexText] == null){
-      $('#predecessor-err').html("Please fill in a value present inside the BST!");
+      $('#pred-err').html("Please fill in a value present inside the BST!");
       return false;
     }
 
@@ -650,12 +650,12 @@ var BST = function(){
     var ans;
 
     if(vertexText == null || vertexText == undefined || isNaN(vertexText)){
-      $('#successor-err').html("Please fill in a valid value!");
+      $('#succ-err').html("Please fill in a valid value!");
       return false;
     }
 
     if(internalBst[vertexText] == null){
-      $('#successor-err').html("Please fill in a value present inside the BST!");
+      $('#succ-err').html("Please fill in a value present inside the BST!");
       return false;
     }
 
