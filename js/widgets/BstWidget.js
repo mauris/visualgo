@@ -123,14 +123,14 @@ var BST = function(){
     var initArr = [];
 
     while(initArr.length < vertexAmt){
-      var random = Math.floor(1+Math.random()*98);
-      if(initArr.indexOf(random) < 0) initArr.push(random);
+      var random = parseInt(Math.floor(1+Math.random()*98));
+      if($.inArray(random, initArr)) initArr.push(random);
     }
 
     if(isAVL){
       var initArrAvl = [];
 
-      var recursion = function(startVal, endVal){
+      function recursion(startVal, endVal){
         var total = startVal + endVal + 1;
         if(total < 1) return;
         if(startVal > endVal) return;
@@ -148,7 +148,11 @@ var BST = function(){
         }
       }
 
-      initArr.sort();
+      function sortNumber(a, b){
+        return a-b;
+      }
+
+      initArr.sort(sortNumber);
       recursion(0, initArr.length -1);
       // if(initArr.length%2 != 0){
       //   initArrAvl.push(initArr[parseInt(initArr.length/2)]);
@@ -159,7 +163,9 @@ var BST = function(){
       //   initArrAvl.push(initArr[initArr.length/2]);
       //   initArr.splice(initArr.length/2 - 1, 2);
       // }
-
+      console.log(typeof initArr[0])
+      console.log(initArr);
+      console.log(initArrAvl);
       init(initArrAvl);
     }
 
