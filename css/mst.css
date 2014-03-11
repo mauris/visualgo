@@ -1,9 +1,12 @@
 @charset "utf-8";
 
 /*all action pullout (input) stuff here*/
+.create { bottom: 146px; }
+	#create-err { padding: 8px 0px 7px }
+
 .samples { bottom: 119px; }
-	.samples p { padding: 8px 8px 7px; }
-	#samples-err { padding: 8px 0px 7px; }
+	.samples p { padding: 5px 8px; }
+	#samples-err { padding: 5px 0px; }
 
 .kruskals { bottom: 92px; }
 	#kruskals-err { padding: 5px 0px; }
