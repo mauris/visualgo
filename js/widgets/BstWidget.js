@@ -124,7 +124,7 @@ var BST = function(){
 
     while(initArr.length < vertexAmt){
       var random = parseInt(Math.floor(1+Math.random()*98));
-      if($.inArray(random, initArr)) initArr.push(random);
+      if($.inArray(random, initArr) < 0) initArr.push(random);
     }
 
     if(isAVL){
@@ -142,9 +142,9 @@ var BST = function(){
         }
         else{
           initArrAvl.push(initArr[parseInt(total/2)-1]);
-          initArrAvl.push(initArr[parseInt(total/2)]);
+          // initArrAvl.push(initArr[parseInt(total/2)]);
           recursion(startVal, parseInt(total/2)-2);
-          recursion(parseInt(total/2)+1, endVal);
+          recursion(parseInt(total/2), endVal);
         }
       }
 
