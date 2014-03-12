@@ -60,13 +60,26 @@
 		<p id="is_convex" class="execAction" onclick=isConvex()>isConvex</p>
         <p id="cut_polygon" class="execAction" onclick=cutPolygon()>Cut polygon</p>
         <p id="point_inside" class="execAction" onclick=checkPointInsidePolygon()>Check point inside</p>
-        <p id="graham">Graham Scan</p>
+        <p id="graham" class="execAction" onclick=grahamScan()>Graham Scan</p>
 	</div>
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
-        <div id="graham-go" class="execAction" onclick=goGrahamScan()><p>GO</p></div>
-        
+        <div class="perimeter action-menu-pullout">
+            <div id="perimeter-err" class="err"></div>
+        </div>
+        <div class="is_convex action-menu-pullout">
+            <div id="is_convex-err" class="err"></div>
+        </div>
+        <div class="cut_polygon action-menu-pullout">
+            <div id="cut_polygon-err" class="err"></div>
+        </div>
+        <div class="point_inside action-menu-pullout">
+            <div id="point_inside-err" class="err"></div>
+        </div>
+        <div class="graham action-menu-pullout">
+            <div id="graham-err" class="err"></div>
+        </div>
     </div>
     <div id="status" class="panel"><p></p></div>
     <div id="status-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide status panel"/></div>
@@ -124,117 +137,92 @@
 	$('#play').hide();
 
 	var GeometryWidget = new Geometry();
-		
-	//showTree();
+    var gw = GeometryWidget.getGraphWidget(); //usage of gw is inconsistent with other widgets >:(
 
-	$('#graham').click(function() {
-        GeometryWidget.initGrahamScan();
-        openGrahamScan();
-    });
-	
     function clearScreen() {
         if (isPlaying) stop();
         GeometryWidget.clrscr();
-        closeGrahamScan();
     }
 
     function perimeter() {
         if(isPlaying) { stop(); }
-        var gw = GeometryWidget.getGraphWidget();
-        isPlaying = true;
-        closeGrahamScan();
+        gw = GeometryWidget.getGraphWidget();
         setTimeout( function() {
-            if ((mode=="exploration")&&GeometryWidget.findPerimeter()) {
+            if((mode=="exploration")&&GeometryWidget.findPerimeter()) {
                 $('#current-action').show();
                 $('#current-action p').html("Find perimeter");
                 $('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
                 triggerRightPanels();
                 isPlaying = true;
             }
-        }, 500);
+        }, 500)
     }
 
     function isConvex() {
         if(isPlaying) { stop(); }
-        var gw = GeometryWidget.getGraphWidget();
-        isPlaying = true;
-        closeGrahamScan();
+        gw = GeometryWidget.getGraphWidget();
         setTimeout( function() {
-            if ((mode=="exploration")&&GeometryWidget.isConvex()) {
+            if((mode=="exploration")&&GeometryWidget.isConvex()) {
                 $('#current-action').show();
-                $('#current-action p').html("Check convex");
+                $('#current-action p').html("Check if convex");
                 $('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
                 triggerRightPanels();
                 isPlaying = true;
             }
-        }, 500);   
+        }, 500)
     }
 
-    function goGrahamScan() {
+    function grahamScan() {
         if(isPlaying) { stop(); }
-        //clearScreen();
-        isPlaying = true;
-        var gw = GeometryWidget.getGraphWidget();
+        GeometryWidget.initGrahamScan();
+        gw = GeometryWidget.getGraphWidget();
         setTimeout( function() {
-            if ((mode=="exploration")&&GeometryWidget.grahamScan()) {
+            if((mode=="exploration")&&GeometryWidget.grahamScan()) {
                 $('#current-action').show();
-                $('#current-action p').html("Graham scan");
+                $('#current-action p').html("Graham Scan");
                 $('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
-                closeGrahamScan();
                 triggerRightPanels();
                 isPlaying = true;
             }
-        }, 500);      
+        }, 500)
     }
 
     function checkPointInsidePolygon() {
-        if (isPlaying) { stop(); }
-        var gw = GeometryWidget.getGraphWidget();
-        isPlaying = true;
-        closeGrahamScan();
+        if(isPlaying) { stop(); }
+        gw = GeometryWidget.getGraphWidget();
         setTimeout( function() {
-            if ((mode=="exploration")&&GeometryWidget.checkPointInsidePolygon()) {
-                /*
+            if((mode=="exploration")&&GeometryWidget.checkPointInsidePolygon()) {
                 $('#current-action').show();
-                $('#current-action p').html("Check point is inside polygon");
+                $('#current-action p').html("Check if point is in polygon: Click to draw your point");
                 $('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
                 triggerRightPanels();
-                isPlaying = true;*/
-                $('#current-action').show();
-                $('#current-action p').html("Click to draw your point");
+                isPlaying = true;
             }
-        }, 500); 
+        }, 500)
     }
 
     function cutPolygon() {
-        if (isPlaying) { stop(); }
-        var gw = GeometryWidget.getGraphWidget();
-        isPlaying = true;
-        closeGrahamScan();
+        if(isPlaying) { stop(); }
+        gw = GeometryWidget.getGraphWidget();
         setTimeout( function() {
-            if ((mode=="exploration")&&GeometryWidget.doCutPolygon()) {
-                /*
+            if((mode=="exploration")&&GeometryWidget.doCutPolygon()) {
                 $('#current-action').show();
-                $('#current-action p').html("Check point is inside polygon");
+                $('#current-action p').html("Cut polygon: click to draw your 2 points");
                 $('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
                 triggerRightPanels();
-                isPlaying = true;*/
-                $('#current-action').show();
-                $('#current-action p').html("Click to draw your 2 points");
+                isPlaying = true;
             }
-        }, 500); 
-
+        }, 500)
     }
-
 
     var isPaused = false;
     function isAtEnd() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         return (gw.getCurrentIteration()==(gw.getTotalIteration()-1));
     }
     
     function pause() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             isPaused = true;
             gw.pause();
@@ -243,7 +231,7 @@
         }
     }
     function play() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             isPaused = false;
             $('#pause').show();
@@ -256,35 +244,35 @@
         }
     }
     function stepForward() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             pause();
             gw.forceNext(250);
         }
     }
     function stepBackward() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             pause();
             gw.forcePrevious(250);  
         }
     }
     function goToBeginning() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             gw.jumpToIteration(0,0);
             pause();
         }
     }
     function goToEnd() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         if(isPlaying) {
             gw.jumpToIteration(gw.getTotalIteration()-1,0);
             pause();
         }
     }
     function stop() {
-        var gw = GeometryWidget.getGraphWidget();
+        gw = GeometryWidget.getGraphWidget();
         try {
             gw.stop();
         } catch(err) {}
@@ -292,6 +280,7 @@
         isPlaying = false;
         $('#pause').show();
         $('#play').hide();
+        $('#current-action').hide();
     }
 
     //shortcut keys for playback controls

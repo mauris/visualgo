@@ -23,17 +23,21 @@ $( document ).ready(function() {
 	});
 	
 	//tags
-	var sssp = new Array("sssp", "shortest path", "cs2020", "cs2010", "bellman ford", "dijkstra", "single source shortest path");
+	var sssp = new Array("sssp", "shortest path", "cs2020", "cs2010", "bellman ford", "dijkstra", "single source shortest path", "graphs");
 	var sorting = new Array("sorting", "cs2020", "cs1020", "array", "list", "data structure");
 	var bitmask = new Array("bitmask", "bit manipulation", "cs3233", "cs2020", "cs2010", "array", "list", "data structure", "set");
 	var linked = new Array("linked", "list", "stack", "queue", "cs2020", "cs1020", "array", "data structure");
 	var bst = new Array("bst", "binary search tree", "adelson velskii landis", "avl", "table", "cs2020", "cs2010", "recursion", "recursive", "data structure", "set"); 
 	var heap = new Array("heap", "binary heap", "priority queue", "cs2020", "cs2010", "recursion", "recursive", "data structure");
 	var union = new Array("union", "union find disjoint sets", "ufds", "cs3233", "cs2020", "cs2010", "array", "tree", "set");
-	var graphs = new Array("graphs", "tree");
+	var graphs = new Array("graphs", "tree", "cs2010", "cs2020");
 	var mst = new Array("mst", "tree", "min", "spanning", "cs2020", "cs2010");
+	var traversal = new Array("traversal", "graphs", "bfs", "dfs", "cs2010", "cs2020");
+	var suffixtree = new Array("suffixtree", "tree");
+	var suffixarray = new Array("suffixarray", "array");
+	var geometry = new Array("geometry", "polygon", "graham scan");
 	
-	var allViz = new Array(sssp, sorting, bitmask, linked, bst, heap, union, graphs, mst);
+	var allViz = new Array(sssp, sorting, bitmask, linked, bst, heap, union, graphs, mst, traversal,suffixtree,suffixarray,geometry);
 	
 	//generate tags
 	function createFilters() {
