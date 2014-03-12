@@ -142,7 +142,6 @@ var BST = function(){
         }
         else{
           initArrAvl.push(initArr[parseInt(total/2)-1]);
-          // initArrAvl.push(initArr[parseInt(total/2)]);
           recursion(startVal, parseInt(total/2)-2);
           recursion(parseInt(total/2), endVal);
         }
@@ -154,18 +153,6 @@ var BST = function(){
 
       initArr.sort(sortNumber);
       recursion(0, initArr.length -1);
-      // if(initArr.length%2 != 0){
-      //   initArrAvl.push(initArr[parseInt(initArr.length/2)]);
-      //   initArr.splice(parseInt(initArr.length/2), 1);
-      // }
-      // while(initArr.length > 0){
-      //   initArrAvl.push(initArr[initArr.length/2-1]);
-      //   initArrAvl.push(initArr[initArr.length/2]);
-      //   initArr.splice(initArr.length/2 - 1, 2);
-      // }
-      console.log(typeof initArr[0])
-      console.log(initArr);
-      console.log(initArrAvl);
       init(initArrAvl);
     }
 
@@ -173,6 +160,27 @@ var BST = function(){
       init(initArr);
     }
     return true;
+  }
+
+  this.generateSkewed = function(side) {
+    if(isAVL) {
+      $('#create-err').html("AVL trees are not skewed. Select the BST header to use this action.");
+      return false;
+    } else {
+      var vertexAmt = Math.floor((Math.random()*3 + 3));
+      var initArr = new Array();
+      while(initArr.length < vertexAmt){
+        var random = Math.floor(1+Math.random()*98);
+        if($.inArray(random, initArr) < 0) initArr.push(random);
+      }
+      if(side=="left") {
+        initArr.sort( function(a,b){return b-a} );
+      } else if(side=="right") {
+        initArr.sort( function(a,b){return a-b} );
+      }
+      init(initArr);
+      return true;
+    }
   }
 
   this.isAVL = function(bool){

@@ -3,6 +3,8 @@
 /*all action pullout (input) stuff here*/
 .create { bottom: 227px; }
 	#create-random p { padding: 7px 8px 8px; }
+	#create-skewed-left p { padding: 7px 8px 8px; }
+	#create-skewed-right p { padding: 7px 8px 8px; }
 	#create-err { padding: 8px 0px 7px; } /* currently unused*/
 
 .search { bottom: 200px; }
@@ -77,7 +79,7 @@
 		margin-left: -10px;
 	}
 #bst-tutorial-3 {
-	bottom: 200px;
+	bottom: 280px;
 	left: 60px;
 	width: 220px;
 }

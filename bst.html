@@ -67,6 +67,8 @@
     <!--put all the extra action pullouts (input) and error messages here-->
     	<div class="create action-menu-pullout">
     		<div id="create-random" class="execAction new-menu-option coloured-menu-option" onClick=random()><p>Random</p></div>
+    		<div id="create-skewed-left" class="execAction new-menu-option coloured-menu-option" onClick=skewed('left')><p>Skewed Left</p></div>
+    		<div id="create-skewed-right" class="execAction new-menu-option coloured-menu-option" onClick=skewed('right')><p>Skewed Right</p></div>
     		<div id="create-err" class="err"></div>
     	</div>
 
@@ -220,6 +222,17 @@
 		if(isPlaying) {	stop(); }
 		setTimeout( function() {
 			if((mode=="exploration")&&bstWidget.generateRandom()) {
+				 $('#progress-bar').slider( "option", "max", 0);
+				closeCreate();
+				isPlaying = false;
+			}
+		}, 500)
+	}
+
+	function skewed(side) {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if((mode=="exploration")&&bstWidget.generateSkewed(side)) {
 				 $('#progress-bar').slider( "option", "max", 0);
 				closeCreate();
 				isPlaying = false;
