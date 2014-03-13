@@ -6,8 +6,6 @@
 .init { bottom: 173px; }
 	#init-input input {
 		width: 25px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#init-go p { padding: 8px 8px 7px; }
@@ -16,8 +14,6 @@
 .sample { bottom: 146px; }
 	#sample-input input {
 		width: 25px;
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#sample-go p { padding: 5px 8px; }
@@ -26,8 +22,6 @@
 .find { bottom: 119px; }
 	#find-input input {
 		width: 25px;
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#find-go p { padding: 5px 8px; }
@@ -35,8 +29,6 @@
 
 .isSameSet { bottom: 92px; }
 	#isSameSet-input input {
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 		width: 16px;
 	}
@@ -45,8 +37,6 @@
 	
 .union { bottom: 60px; }
 	#union-input input {
-		background: black;
-		color: white;
 		padding: 8px;
 		width: 16px;
 	}

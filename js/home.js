@@ -36,8 +36,9 @@ $( document ).ready(function() {
 	var suffixtree = new Array("suffixtree", "tree");
 	var suffixarray = new Array("suffixarray", "array");
 	var geometry = new Array("geometry", "polygon", "graham scan");
+	var recursion = new Array("recursion", "tree", "cs1010", "recursive", "dynamic programming");
 	
-	var allViz = new Array(sssp, sorting, bitmask, linked, bst, heap, union, graphs, mst, traversal,suffixtree,suffixarray,geometry);
+	var allViz = new Array(sssp, sorting, bitmask, linked, bst, heap, union, graphs, mst, traversal,suffixtree,suffixarray,geometry, recursion);
 	
 	//generate tags
 	function createFilters() {

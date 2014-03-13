@@ -43,9 +43,7 @@
 /*action pullout stuff*/
 .setFlags { bottom: 200px; }
 	#setFlags-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 8px 8px 8px;
 	}
 	#setFlags-go p { padding: 7px 8px 8px; }
@@ -53,9 +51,7 @@
 		
 .set { bottom: 173px; }
 	#set-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#set-go p { padding: 5px 8px; }
@@ -63,9 +59,7 @@
 
 .check { bottom: 146px; }
 	#check-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#check-go p { padding: 5px 8px; }
@@ -73,9 +67,7 @@
 		
 .toggle {	bottom: 119px; }
 	#toggle-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#toggle-go p { padding: 5px 8px; }
@@ -83,9 +75,7 @@
 		
 .clear { bottom: 92px; }
 	#clear-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#clear-go p { padding: 5px 8px; }

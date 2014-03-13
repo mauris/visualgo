@@ -5,8 +5,6 @@
 .buildv1 { bottom: 173px; }
 	#buildv1-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#buildv1-go p { padding: 8px 8px 7px; }
@@ -17,8 +15,6 @@
 .buildv2 { bottom: 146px; }
 	#buildv2-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#buildv2-go p { padding: 5px 8px; }
@@ -28,9 +24,7 @@
 	
 .insert { bottom: 119px; }
 	#insert-input input {
-		background: black;
 		width: 25px;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#insert-go p { padding: 5px 8px; }

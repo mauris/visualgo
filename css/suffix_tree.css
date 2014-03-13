@@ -5,8 +5,6 @@
 .build{ bottom: 146px; }
 	#build-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#build-go p { padding: 8px 8px 7px; }
@@ -15,8 +13,6 @@
 .search { bottom: 119px; }
 	#search-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#search-go p { padding: 5px 8px; }
@@ -28,8 +24,6 @@
 .lcs { bottom: 60px; }
 	#lcs-input input {
 		width: 78px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#lcs-go p { padding: 8px 8px 7px; }

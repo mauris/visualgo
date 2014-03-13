@@ -14,8 +14,6 @@
 .prims { bottom: 60px; }
 	#prims-input input {
 		width: 25px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#prims-go p { padding: 8px 8px 7px; }

@@ -205,6 +205,7 @@ html { overflow-y: auto; } /*override common.css*/
 		padding-right: 15px;
 	}
 	.action-menu-pullout { display: none; position: fixed; }
+	.action-menu-pullout input { background: black; color: white; }
 	.new-menu-option { margin-left: 3px; }
 	.err { color: red; margin-left: 6px; }
 	

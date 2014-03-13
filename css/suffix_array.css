@@ -5,18 +5,14 @@
 .build { bottom: 173px; }
 	#build-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
-	#build-go p { padding: 5px 8px 7px; }
+	#build-go p { padding: 8px 8px 7px; }
 	#build-err { padding: 8px 0px 7px; }
 
 .search { bottom: 146px; }
 	#search-input input {
 		width: 200px;
-		background: black;
-		color: white;
 		padding: 6px 8px 5px;
 	}
 	#search-go p { padding: 5px 8px; }		
@@ -31,82 +27,80 @@
 .lcs { bottom: 60px; }
 	#lcs-input input {
 		width: 78px;
-		background: black;
-		color: white;
 		padding: 8px;
 	}
 	#lcs-go p { padding: 8px 8px 7px; }
 	#lcs-err { padding: 8px 0px 7px; }
 
 /*tutorial dialogs*/
-#suffixtree-tutorial-1 {
+#suffixarray-tutorial-1 {
 	top: 60px;
 	left: 60px;
 	width: 250px;
 }
-#suffixtree-tutorial-2 {
-	bottom: 200px;
+#suffixarray-tutorial-2 {
+	bottom: 225px;
 	left: 60px;
 	width: 220px;
 }
-	#suffixtree-tutorial-2:before {
+	#suffixarray-tutorial-2:before {
 		top: 100%;
 		left: 20%;
 		border-top-color: black;
 		margin-left: -10px;
 	}
-#suffixtree-tutorial-3 {
+#suffixarray-tutorial-3 {
 	top: 400px;
 	left: 50%;
 	width: 200px;
 	margin-left: -110px;
 }
-	#suffixtree-tutorial-3:before {
+	#suffixarray-tutorial-3:before {
 		bottom: 100%;
 		left: 50%;
 		border-bottom-color: black;
 		margin-left: -10px;
 	}
-#suffixtree-tutorial-4 {
+#suffixarray-tutorial-4 {
 	bottom: 335px;
 	right: 150px;
 	width: 200px;
 }
-	#suffixtree-tutorial-4:before {
+	#suffixarray-tutorial-4:before {
 		top: 100%;
 		left: 20%;
 		border-top-color: black;
 		margin-left: -10px;
 	}
-#suffixtree-tutorial-5 {
+#suffixarray-tutorial-5 {
 	bottom: 275px;
 	right: 170px;
 	width: 180px;
 }
-	#suffixtree-tutorial-5:before {
+	#suffixarray-tutorial-5:before {
 		top: 100%;
 		left: 20%;
 		border-top-color: black;
 		margin-left: -10px;
 	}
-#suffixtree-tutorial-6 {
+#suffixarray-tutorial-6 {
 	bottom: 70px;
 	left: 50%;
 	width: 220px;
 	margin-left: -120px;
 }
-	#suffixtree-tutorial-6:before {
+	#suffixarray-tutorial-6:before {
 		top: 100%;
 		left: 50%;
 		border-top-color: black;
 		margin-left: -10px;
 	}
-#suffixtree-tutorial-7 {
+#suffixarray-tutorial-7 {
 	top: 70px;
 	right: 60px;
 	width: 150px;
 }
-	#suffixtree-tutorial-7:before {
+	#suffixarray-tutorial-7:before {
 		bottom: 100%;
 		left: 50%;
 		border-bottom-color: black;
