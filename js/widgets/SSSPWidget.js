@@ -492,8 +492,34 @@ var SSSP = function(){
     amountEdge = TEMPLATES[templateNo][3];
 
     //change edge weights
-    for(key in internalEdgeList) {
-      internalEdgeList[key]["weight"] = Math.floor(Math.random()*100)-50; //-50-49
+    var keys = Object.keys(internalEdgeList);
+    var nVertices = Object.keys(internalAdjList).length/2;
+    var nEdges = keys.length/2;
+    for(var i=0; i<nEdges; i++) {
+      var newWeight = Math.floor(Math.random()*100)-50; //-50-49
+      internalEdgeList[keys[i]]["weight"] = newWeight;
+      internalEdgeList[keys[i+nEdges]]["weight"] = newWeight; //graph on right
+    }
+
+    //for graphs without bi-directional edges, randomly change edge directions
+    if(templateNo == SSSP_EXAMPLE_CP3_4_17 || templateNo == SSSP_EXAMPLE_CP3_4_18) {
+      for(var i=0; i<nEdges; i++) {
+        var flipEdge = Math.floor(Math.random()*2); //0 or 1
+        if(flipEdge == 1) {
+          //then flip edge
+          var origA = internalEdgeList[keys[i]]["vertexA"];
+          var origB = internalEdgeList[keys[i]]["vertexB"];
+          internalEdgeList[keys[i]]["vertexA"] = origB;
+          internalEdgeList[keys[i]]["vertexB"] = origA;
+          internalEdgeList[keys[i+nEdges]]["vertexA"] = origB+nVertices; //graph on right
+          internalEdgeList[keys[i+nEdges]]["vertexB"] = origA+nVertices; //graph on right
+          //correct vertex adj list also
+          delete internalAdjList[origA][origB];
+          delete internalAdjList[origA+nVertices][origB+nVertices]; //graph on right
+          internalAdjList[origB][origA] = i;
+          internalAdjList[origB+nVertices][origA+nVertices] = i+nEdges; //graph on right
+        }
+      }
     }
 
     var newState = createState(internalAdjList, internalEdgeList);

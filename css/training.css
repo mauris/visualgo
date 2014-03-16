@@ -30,6 +30,9 @@
 		width: 110px;
 	}
 
+#info #submit-test {
+	margin-top: 0px;
+}
 #info #restart-test {
 	display: fixed;
 	top: 60px;
