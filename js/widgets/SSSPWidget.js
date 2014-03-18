@@ -498,9 +498,14 @@ var SSSP = function(){
     for(var i=0; i<nEdges; i++) {
       var newWeight;
       if(allowNegative) {
-        newWeight = Math.floor(Math.random()*100)-20; //-20-79
+        var confirmNeg  = Math.floor(Math.random()*nEdges);
+        if(i == confirmNeg) { //so that confirm is at least 1 edge with negative weight
+          newWeight = Math.floor(Math.random()*20)-20; //-20 to -1
+        } else {
+          newWeight = Math.floor(Math.random()*100)-20; //-20 to 79
+        }
       } else {
-        newWeight = Math.floor(Math.random()*50); // 0-49
+        newWeight = Math.floor(Math.random()*50); // 0 to 49
       }
       internalEdgeList[keys[i]]["weight"] = newWeight;
       internalEdgeList[keys[i+nEdges]]["weight"] = newWeight; //graph on right
