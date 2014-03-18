@@ -129,10 +129,6 @@ h2 {
 	font-weight: bold;
 	padding: 20px;
 }
-
-#temp { text-align: center; margin-bottom: 100px; }
-	#temp p { font-size: 18px; margin-bottom: 10px; }
-	#temp a { padding: 7px 10px; color: white; font-size: 16px; }
 	
 @media (min-width: 320px) { /* 320-480px */
 
