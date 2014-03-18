@@ -2,6 +2,7 @@
 
 /*all action pullout (input) stuff here*/
 .create { bottom: 173px; }
+	.create p { padding: 8px 8px 7px; }
 	#create-err { padding: 8px 0px 7px }
 
 .samples { bottom: 146px; }

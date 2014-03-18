@@ -56,20 +56,27 @@ function getAns() {
 		//store into anskeyArr array
 		for(var i=0; i<stAnsData.length; i++) {
 			var raw = stAnsData[i];
-			var proc = new Array();
-			for(var j=0; j<raw.length; j++) {
-				if(!isNaN(parseInt(raw[j]))) { //double negative, i.e. is a number
-					raw[j] = parseInt(raw[j]);
+			var proc;
+			if(raw.length==0) {
+				proc = NO_ANSWER;
+			} else if(raw[0] == UNANSWERED) {
+				proc = UNANSWERED;
+			} else {
+				proc = new Array();
+				for(var j=0; j<raw.length; j++) {
+					if(!isNaN(parseInt(raw[j]))) { //double negative, i.e. is a number
+						raw[j] = parseInt(raw[j]);
+					}
+					proc.push(raw[j]);
 				}
-				proc.push(raw[j]);
-			}
-			if(qnTypeArr[i+1] == INTERFACE_MULT_E) {
-				//make into pairs so that answer interface displays correctly
-				var newProc = new Array();
-				for(var k=0; k<proc.length; k+=2) {
-					newProc.push([proc[k],proc[k+1]]);
+				if(qnTypeArr[i+1] == INTERFACE_MULT_E) {
+					//make into pairs so that answer interface displays correctly
+					var newProc = new Array();
+					for(var k=0; k<proc.length; k+=2) {
+						newProc.push([proc[k],proc[k+1]]);
+					}
+					proc = newProc;
 				}
-				proc = newProc;
 			}
 			ansArr[i+1] = proc;
 		}

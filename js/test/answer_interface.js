@@ -414,7 +414,7 @@ function printCurrentSelection(q) {
 		}
 	} else if(MODE == "ANSWER") {
 		//#current-selection
-		if(thisList == UNANSWERED || thisList.length == 0) { //unanswered - former for training, latter for test
+		if(thisList == UNANSWERED) {
 			$('#current-selection').html("<strong>You did not answer this question.</strong>").css('color','#df3939').show();
 		} else {
 			if(thisList != NO_ANSWER) {

@@ -52,16 +52,18 @@
     <div id="current-action" class="panel"><p></p></div>
     
     <div id="actions" class="panel">
-        <p id="create" class="execAction" onclick=createRandom()>Random Graph</p>
-        <p id="sample" class="execAction">Sample Graphs</p>
-        <p id="bfs" class="execAction">BFS</p>
-        <p id="bellmanford" class="execAction">Bellman Ford's Algo</p>
-        <p id="dijkstra" class="execAction">Dijkstra's Algo</p>
+        <p id="create">Random Graph</p>
+        <p id="sample">Sample Graphs</p>
+        <p id="bfs">BFS</p>
+        <p id="bellmanford">Bellman Ford's Algo</p>
+        <p id="dijkstra">Dijkstra's Algo</p>
     </div>
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
     <!--put all the extra action pullouts (input) and error messages here-->
         <div class="create action-menu-pullout">
+            <div id="randomPositive" class="execAction new-menu-option coloured-menu-option" onclick=createRandom(false)><p>Positive Weights Only</p></div>
+            <div id="randomPositive" class="execAction new-menu-option coloured-menu-option" onclick=createRandom(true)><p>With Negative Weights</p></div>
             <div id="create-err" class="err"></div>
         </div>
         <div class="samples action-menu-pullout">
@@ -182,10 +184,10 @@
   var gw = ssspWidget.getGraphWidget();
   ssspWidget.examples(SSSP_EXAMPLE_CP3_4_17);
 
-  function createRandom() {
+  function createRandom(allowNegative) {
     if(isPlaying) { stop(); }
     if (mode=="exploration") {
-      ssspWidget.initRandom();
+      ssspWidget.initRandom(allowNegative);
       $('#progress-bar').slider( "option", "max", 0);
       closeSamples();
       isPlaying = false;

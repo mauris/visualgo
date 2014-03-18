@@ -484,7 +484,7 @@ var SSSP = function(){
   }*/
 
   //Temporary version
-  this.initRandom = function() {
+  this.initRandom = function(allowNegative) {
     var templateNo = Math.floor(Math.random()*4); //0-3
     internalAdjList = $.extend(true, {}, TEMPLATES[templateNo][0]);
     internalEdgeList = $.extend(true, {}, TEMPLATES[templateNo][1]);
@@ -496,7 +496,12 @@ var SSSP = function(){
     var nVertices = Object.keys(internalAdjList).length/2;
     var nEdges = keys.length/2;
     for(var i=0; i<nEdges; i++) {
-      var newWeight = Math.floor(Math.random()*100)-50; //-50-49
+      var newWeight;
+      if(allowNegative) {
+        newWeight = Math.floor(Math.random()*100)-20; //-20-79
+      } else {
+        newWeight = Math.floor(Math.random()*50); // 0-49
+      }
       internalEdgeList[keys[i]]["weight"] = newWeight;
       internalEdgeList[keys[i+nEdges]]["weight"] = newWeight; //graph on right
     }
