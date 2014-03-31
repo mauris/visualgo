@@ -5,9 +5,9 @@ seed = (Math.floor(Math.random()*1000000000));
 
 function startTraining() {
 	nQns = getNumberOfQns();
-	var queryStr = "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString();
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_GENERATE_QUESTIONS, qAmt: nQns, seed: seed, topics: topics.toString()}
 	}).done(function(data) {
 		data = JSON.parse(data);
 		init();
@@ -34,11 +34,11 @@ function startTraining() {
 function submitTraining() {
 	//get score
 	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
+	var ansFlattened = ansArr.join('|').split("|");
 	ansArr.unshift(false);
-	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_CHECK_ANSWERS, qAmt: nQns, seed: seed, topics: topics.toString(), ans: ansFlattened}
 	}).done(function(score) {
 		score = parseInt(score);
 		$('#score').html(score+" out of "+nQns);
@@ -49,11 +49,11 @@ function submitTraining() {
 
 function startAns() {
 	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
+	var ansFlattened = ansArr.join('|').split("|");
 	ansArr.unshift(false);
-	var queryStr = "php/Test.php?mode="+MODE_GET_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_GET_ANSWERS, qAmt: nQns, seed: seed, topics: topics.toString(), ans: ansFlattened}
 	}).done(function(ansData) {
 		//store into anskeyArr array
 		ansData = JSON.parse(ansData);

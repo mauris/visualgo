@@ -27,8 +27,8 @@ function loadTraining() {
 
 function startTraining() {
 	$.ajax({
-
-		url: "php/Test.php?mode="+MODE_GENERATE_QUESTIONS+"&qAmt="+nQns+"&seed="+seed+"&topics="+topics.toString()
+		url: "php/Test.php",
+		data: {mode: MODE_GENERATE_QUESTIONS, qAmt: nQns, seed: seed, topics: topics.toString()}
 	}).done(function(data) {
 		MODE = "TRAINING";
 		
@@ -55,13 +55,13 @@ function startTraining() {
 }
 
 function submitTraining() {
-	//get score
 	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
+	var ansFlattened = ansArr.join("|").split('|');
 	ansArr.unshift(false);
-	var queryStr = "php/Test.php?mode="+MODE_CHECK_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	//get score
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_CHECK_ANSWERS, qAmt: nQns, seed: seed, topics: topics.toString(), ans: ansFlattened}
 	}).done(function(score) {
 		score = parseInt(score);
 		$('#score').html(score+" out of "+nQns);
@@ -72,11 +72,12 @@ function submitTraining() {
 
 function startAns() {
 	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
+	var ansFlattened = ansArr.join("|").split('|');
 	ansArr.unshift(false);
-	var queryStr = "php/Test.php?mode="+MODE_GET_ANSWERS+"&ans[]="+ansStr+"&seed="+seed+"&qAmt="+nQns+"&topics="+topics.toString();
+	var queryStr = "php/Test.php";
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_GET_ANSWERS, qAmt: nQns, seed: seed, topics: topics.toString(), ans: ansFlattened}
 	}).done(function(ansData) {
 		//store into anskeyArr array
 		ansData = JSON.parse(ansData);
@@ -101,7 +102,8 @@ function startAns() {
 function populateTable() {
 	$('table').html('<tr><th width="5%">No.</th><th width="20%">Matric Number</th> <th width="45%">Student Name</th><th width="15%">Score</th><th width="15%">Time Taken</th></tr>');
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_GET_SCOREBOARD
+		url: "php/Test.php",
+		data: {mode: MODE_GET_SCOREBOARD}
 	}).done(function(data) {
 		data = JSON.parse(data);
 		$('table').show();
@@ -159,7 +161,8 @@ function displayConfig(data) { //data is a JSON object
 
 function saveConfig() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_ADMIN_EDIT_CONFIG+"&password="+adminpw+"&seed="+seed+"&topics="+topics.toString()+"&questionAmount="+nQns+"&timeLimit="+timeLimit+"&maxAttemptCount="+maxAttemptCount+"&testIsOpen="+(testOn?1:0)+"&answerIsOpen="+(ansOn?1:0)
+		url: "php/Test.php",
+		data: {mode: MODE_ADMIN_EDIT_CONFIG, password: adminpw, seed: seed, questionAmount: nQns, topics: topics.toString(), timeLimit: timeLimit, maxAttemptCount: maxAttemptCount, testIsOpen: (testOn?1:0), answerIsOpen: (ansOn?1:0)}
 	}).done(function(passed) {
 		customAlert("New test configurations have been saved.");
 	});
@@ -232,13 +235,14 @@ $(document).ready (function() {
 		}
 	});
 	
-	/*-------LOG IN AUTHENTIFICATION-------*/
+	/*-------LOG IN AUTHENTICATION-------*/
 	$('#login-go').click(function(event) {
 		event.preventDefault();
 		adminpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_ADMIN+"&password="+adminpw
+			url: "php/Test.php",
+			data: {mode: MODE_ADMIN, password: adminpw}
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
@@ -246,7 +250,8 @@ $(document).ready (function() {
 				$('#title').show();
 				$('#login-screen').fadeOut("fast");
 				$.ajax({
-					url: "php/Test.php?mode="+MODE_ADMIN_GET_CONFIG+"&password="+adminpw
+					url: "php/Test.php",
+					data: {mode: MODE_ADMIN_GET_CONFIG, password: adminpw}
 				}).done(function(data) {
 					//show current configurations
 					data = JSON.parse(data);
@@ -446,7 +451,8 @@ $(document).ready (function() {
 		event.preventDefault();
 		var stName = $('#reset-attempt').val();
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_ADMIN_RESET_ATTEMPT+"&password="+adminpw+"&username="+stName
+			url: "php/Test.php",
+			data: {mode: MODE_ADMIN_RESET_ATTEMPT, password: adminpw, username: stName}
 		}).done(function(success) {
 			if(success==1) {
 				customAlert("Attempt for "+stName+" has been reset.");

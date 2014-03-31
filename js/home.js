@@ -4,7 +4,8 @@ $( document ).ready(function() {
 	$('#test-link').hide();
 	$('#ans-link').hide();
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_CHECK_TEST_OPEN
+		url: "php/Test.php",
+		data: {mode: MODE_CHECK_TEST_OPEN}
 	}).done(function(data) {
 		data = JSON.parse(data);
 		if(data.testIsOpen == 1) {

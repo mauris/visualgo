@@ -5,7 +5,8 @@ var anskeyArr = new Array();
 
 function getQns() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_ANSWER
+		url: "php/Test.php",
+		data: {mode: MODE_TEST_GENERATE_QUESTIONS, username: studentid, password: studentpw, type: TEST_GENERATE_QUESTIONS_TYPE_ANSWER}
 	}).done(function(data) {
 		if(data != 0) {
 			data = JSON.parse(data);
@@ -23,10 +24,12 @@ function getQns() {
 
 function getAns() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_TEST_GET_STUDENT_ANSWERS+"&username="+studentid+"&password="+studentpw
+		url: "php/Test.php",
+		data: {mode: MODE_TEST_GET_STUDENT_ANSWERS, username: studentid, password: studentpw}
 	}).done(function(stAnsData) {
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_TEST_GET_ANSWERS+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php",
+			data: {mode: MODE_TEST_GET_ANSWERS, username: studentid, password: studentpw}
 		}).done(function(ansData) {
 			var score =0;
 
@@ -117,20 +120,22 @@ $(document).ready (function() {
 		}
 	});
 	
-	/*-------LOG IN AUTHENTIFICATION-------*/
+	/*-------LOG IN AUTHENTICATION-------*/
 	$('#login-go').click(function(event) {
 		event.preventDefault();
 		studentid = $('#login-id').val();
 		studentpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php",
+			data: {mode: MODE_LOGIN, username: studentid, password: studentpw}
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
 				getQns();
 				$.ajax({//get name to display
-					url: "php/Test.php?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
+					url: "php/Test.php",
+					data: {mode: MODE_TEST_GET_INFO, username: studentid, password: studentpw}
 				}).done(function(data) {
 					data = JSON.parse(data);
 					var studentname = data.name;

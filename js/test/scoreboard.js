@@ -51,12 +51,14 @@ String.prototype.replaceAt=function(index, character) {
 
 $(document).ready(function() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_CHECK_TEST_OPEN
+		url: "php/Test.php",
+		data: {mode: MODE_CHECK_TEST_OPEN}
 	}).done(function(data) {
 		data = JSON.parse(data);
 		if(data.answerIsOpen == 1) {
 			$.ajax({
-				url: "php/Test.php?mode="+MODE_GET_SCOREBOARD
+				url: "php/Test.php",
+				data: {mode: MODE_GET_SCOREBOARD}
 			}).done(function(data) {
 				data = JSON.parse(data);
 				$('table').show();

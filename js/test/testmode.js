@@ -9,7 +9,8 @@ var timeLeft;
 
 function startTest() {
 	$.ajax({
-		url: "php/Test.php?mode="+MODE_TEST_GENERATE_QUESTIONS+"&username="+studentid+"&password="+studentpw+"&type="+TEST_GENERATE_QUESTIONS_TYPE_TEST
+		url: "php/Test.php",
+		data: {mode: MODE_TEST_GENERATE_QUESTIONS, username: studentid, password: studentpw, type: TEST_GENERATE_QUESTIONS_TYPE_TEST}
 	}).done(function(data) {
 		if(data != 0) {
 			data = JSON.parse(data);
@@ -45,10 +46,11 @@ function startTest() {
 function submitTest() {
 	//get score
 	ansArr.shift();
-	var ansStr = ansArr.join('&ans[]=');
-	var queryStr = "php/Test.php?mode="+MODE_TEST_SUBMIT+"&ans[]="+ansStr+"&username="+studentid+"&password="+studentpw;
+	var ansFlattened = ansArr.join('|').split("|");
+	ansArr.unshift(false);
 	$.ajax({
-		url: queryStr
+		url: "php/Test.php",
+		data: {mode: MODE_TEST_SUBMIT, username: studentid, password: studentpw, ans: ansFlattened}
 	}).done(function(score) {
 		score = parseInt(score);
 		if(score >= 0) {
@@ -70,7 +72,8 @@ function submitTest() {
 /*-------INFO/TIME UPDATE FUNCTIONS-------*/
 function updateInfo() {
 	$.ajax({//update timer
-		url: "php/Test.php?mode="+MODE_TEST_GET_INFO+"&username="+studentid+"&password="+studentpw
+		url: "php/Test.php",
+		data: {mode: MODE_TEST_GET_INFO, username: studentid, password: studentpw}
 	}).done(function(data) {
 		data = JSON.parse(data);
 		availableTime = data.timeLimit;
@@ -140,14 +143,15 @@ $(document).ready (function() {
 		}
 	});
 	
-	/*-------LOG IN AUTHENTIFICATION-------*/
+	/*-------LOG IN AUTHENTICATION-------*/
 	$('#login-go').click(function(event) {
 		event.preventDefault();
 		studentid = $('#login-id').val();
 		studentpw = $('#login-pw').val();
 		//authentificate
 		$.ajax({
-			url: "php/Test.php?mode="+MODE_LOGIN+"&username="+studentid+"&password="+studentpw
+			url: "php/Test.php",
+			data: {mode: MODE_LOGIN, username: studentid, password: studentpw}
 		}).done(function(passed) {
 			passed = parseInt(passed);
 			if(passed == 1) {
