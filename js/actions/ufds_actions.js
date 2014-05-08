@@ -123,5 +123,23 @@ $( document ).ready(function() {
 		closeIsSameSet();
 		openUnion();
 	});
+
+	//tutorial mode
+	$('#ufds-tutorial-1 .tutorial-next').click(function() {
+		showActionsPanel();
+	});
+	$('#ufds-tutorial-2 .tutorial-next').click(function() {
+		hideEntireActionsPanel();
+	});
+	$('#ufds-tutorial-3 .tutorial-next').click(function() {
+		showStatusPanel();
+	});
+	$('#ufds-tutorial-4 .tutorial-next').click(function() {
+		hideStatusPanel();
+		showCodetracePanel();
+	});
+	$('#ufds-tutorial-5 .tutorial-next').click(function() {
+		hideCodetracePanel();
+	});
 	
 });

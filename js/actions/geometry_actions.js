@@ -132,4 +132,22 @@ $( document ).ready(function() {
 		closePointInside();
 		openGraham();
 	});
+
+	//tutorial mode
+	$('#geometry-tutorial-1 .tutorial-next').click(function() {
+		showActionsPanel();
+	});
+	$('#geometry-tutorial-2 .tutorial-next').click(function() {
+		hideEntireActionsPanel();
+	});
+	$('#geometry-tutorial-3 .tutorial-next').click(function() {
+		showStatusPanel();
+	});
+	$('#geometry-tutorial-4 .tutorial-next').click(function() {
+		hideStatusPanel();
+		showCodetracePanel();
+	});
+	$('#geometry-tutorial-5 .tutorial-next').click(function() {
+		hideCodetracePanel();
+	});
 })

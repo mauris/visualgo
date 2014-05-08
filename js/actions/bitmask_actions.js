@@ -157,4 +157,20 @@ $( document ).ready(function() {
 	});
 	
 	//tutorial mode
+	$('#bitmask-tutorial-1 .tutorial-next').click(function() {
+		showActionsPanel();
+	});
+	$('#bitmask-tutorial-2 .tutorial-next').click(function() {
+		hideEntireActionsPanel();
+	});
+	$('#bitmask-tutorial-3 .tutorial-next').click(function() {
+		showStatusPanel();
+	});
+	$('#bitmask-tutorial-4 .tutorial-next').click(function() {
+		hideStatusPanel();
+		showCodetracePanel();
+	});
+	$('#bitmask-tutorial-5 .tutorial-next').click(function() {
+		hideCodetracePanel();
+	});
 });

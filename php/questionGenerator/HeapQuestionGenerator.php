@@ -148,7 +148,7 @@
       $heap = $qObj->internalDS;
       $varToBeInserted = $qObj->qParams["value"];
       $ans = $heap->insert($varToBeInserted);
-
+      
       return $ans;
     }
 
