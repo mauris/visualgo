@@ -1,7 +1,7 @@
 <?php
 
-  const ADMIN_PASSWORD = "test";
-  const DB_USERNAME = "onlinequiz";
-  const DB_PASSWORD = "roseivanfyp";
-  const DB_NAME = "visualgo";
+  const ADMIN_PASSWORD = "secret,askadmin";
+  const DB_USERNAME = "secret,askadmin";
+  const DB_PASSWORD = "secret,askadmin";
+  const DB_NAME = "secret,askadmin";
 ?>
